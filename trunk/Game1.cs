@@ -18,6 +18,8 @@ namespace F.U.E.L
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Camera camera;
+        Map map;
 
         public Game1()
         {
@@ -33,7 +35,9 @@ namespace F.U.E.L
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Create camera and add to components list
+            camera = new Camera(this, new Vector3(0, 10, 10), Vector3.Zero, -Vector3.UnitZ);
+            Components.Add(camera);
 
             base.Initialize();
         }
@@ -44,10 +48,9 @@ namespace F.U.E.L
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            map = new Map(Content.Load<Model>(@"Models\simplePlatform"));
         }
 
         /// <summary>
@@ -70,8 +73,6 @@ namespace F.U.E.L
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
@@ -83,7 +84,7 @@ namespace F.U.E.L
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            map.Draw(camera);
 
             base.Draw(gameTime);
         }
