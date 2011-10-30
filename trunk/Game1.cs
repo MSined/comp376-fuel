@@ -50,7 +50,7 @@ namespace F.U.E.L
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            map = new Map(Content.Load<Model>(@"Models\simplePlatform"));
+            map = new Map(Content.Load<Model>(@"Models\planeModel"));
         }
 
         /// <summary>
