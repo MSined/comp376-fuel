@@ -7,6 +7,10 @@ namespace F.U.E.L
 {
     class Character : Objects
     {
+        int sp;
 
+        public Character()
+        {
+        }
     }
 }
