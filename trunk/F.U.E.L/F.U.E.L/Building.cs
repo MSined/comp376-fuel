@@ -11,7 +11,6 @@ namespace F.U.E.L
     class Building : Object
     {
         public Model model { get; protected set; }
-        protected Matrix world = Matrix.Identity;
 
         public Building(Game game, Model[] modelComponents, Vector3 position,
             float angle)
@@ -36,14 +35,11 @@ namespace F.U.E.L
                     be.EnableDefaultLighting();
                     be.Projection = camera.projection;
                     be.View = camera.view;
-                    be.World = GetWorld() * mesh.ParentBone.Transform;
+                    be.World = world * mesh.ParentBone.Transform;
                 }
 
                 mesh.Draw();
             }
         }
-
-        public Matrix GetWorld() { return world; }
-        public Vector3 getPosition() { return position; }
     }
 }

@@ -8,24 +8,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Map
+    class Map : GameComponent
     {
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
         private Building b;
         private Building g;
-
+        
         public Map(Game game, Model[] modelComponents)
+            : base(game)
         {
             model = modelComponents[0];
             Model[] m1 = new Model[1];
             m1[0] = modelComponents[1];
 
             Model[] m2 = new Model[1];
-            m2[0] = modelComponents[1];
+            m2[0] = modelComponents[2];
 
             this.b = new Building(game, m1, new Vector3(2, 0, -4), 0f);
-            this.g = new Generator(game, m2, new Vector3(0, 0, 0), 0f);
+            this.g = new Generator(game, m2, new Vector3(3, 0, -4), 0f);
         }
 
         public void Update() { }
@@ -46,13 +47,11 @@ namespace F.U.E.L
                     be.SpecularPower = 10f;
                     be.Projection = camera.projection;
                     be.View = camera.view;
-                    be.World = GetWorld() * mesh.ParentBone.Transform;
+                    be.World = world * mesh.ParentBone.Transform;
                 }
 
                 mesh.Draw();
             }
         }
-
-        public Matrix GetWorld() { return world; }
     }
 }

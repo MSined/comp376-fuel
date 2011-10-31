@@ -10,6 +10,7 @@ namespace F.U.E.L
 {
     class Object : GameComponent
     {
+        protected Matrix world = Matrix.Identity;
         protected Model[] modelComponents { get; private set; }
         public Vector3 position { get; protected set; }
 
@@ -18,6 +19,7 @@ namespace F.U.E.L
         {
             this.modelComponents = modelComponents;
             this.position = position;
+            this.world = Matrix.CreateTranslation(position);
         }
         
     }
