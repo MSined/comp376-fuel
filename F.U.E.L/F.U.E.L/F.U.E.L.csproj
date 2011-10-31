@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building.cs" />
+    <Compile Include="Bullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Enemy.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shots.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="Tower.cs" />
     <Compile Include="Waypoint.cs" />

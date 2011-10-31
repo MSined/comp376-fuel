@@ -8,15 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Building
+    class Building : Object
     {
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
-        private Vector3 position;
 
-        public Building(Model m, float angle, Vector3 position)
+        public Building(Game game, Model[] modelComponents, Vector3 position,
+            float angle)
+            : base(game, modelComponents, position)
         {
-            model = m;
+            model = modelComponents[0];
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);
             this.position = position;
         }

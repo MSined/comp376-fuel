@@ -40,3 +40,24 @@ C:\Users\Nicholas\Desktop\blah blah\F.U.E.L\F.U.E.L\obj\x86\Debug\ResolveAssembl
 C:\Users\Nicholas\Desktop\blah blah\F.U.E.L\F.U.E.L\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Nicholas\Desktop\blah blah\F.U.E.L\F.U.E.L\obj\x86\Debug\F.U.E.L.exe
 C:\Users\Nicholas\Desktop\blah blah\F.U.E.L\F.U.E.L\obj\x86\Debug\F.U.E.L.pdb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\enemyModel.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\generatorModel.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\planeModel.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\playerModel.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\towerModel.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\enemyTexture.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\generatorTexture.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\planeTexture.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\playerTexture.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\towerTexture.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\enemyTexture_0.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\generatorTexture_0.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\planeTexture_0.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\playerTexture_0.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\towerTexture_0.xnb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\F.U.E.L.exe
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\bin\x86\Debug\F.U.E.L.pdb
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\obj\x86\Debug\ResolveAssemblyReference.cache
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\obj\x86\Debug\F.U.E.L.exe
+G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.L\obj\x86\Debug\F.U.E.L.pdb
