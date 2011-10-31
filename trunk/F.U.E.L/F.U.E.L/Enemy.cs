@@ -8,35 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Enemy : Player
+    class Enemy : Character
     {
-        private Character target;
-        private float atkRange;
-        private int atk;//damage deal
-        private float atkTimer;
-        private float atkInterval;
-
-        public Enemy() { }
-        public Enemy(int atk, float atkRange, float atkInterval,
-            int sp, Vector2 spawnPoint, Weapon[] weapons, int[] attributes, float speed,
-            int hp, Vector2 lookDirection,
-            Model[] components, Vector3 position, Vector3 velocity) 
+        private Object target;
+        
+        public Enemy(Game game, Model[] modelComponents, Vector3 position,
+            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
+            )
+            : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons)
         {
-            this.atk = atk;
-            this.atkRange = atkRange;
-            this.atkInterval = atkInterval;
-            atkTimer = 0;
 
-            base.sp = sp;
-            base.spawnPoint = spawnPoint;
-            base.weapons = weapons;
-            base.attributes = attributes;
-            base.speed = speed;
-            base.hp = hp;
-            base.lookDirection = lookDirection;
-            base.components = components;
-            base.position = position;
-            base.velocity = velocity;
         }
 
         private void chooseTarget(List<Generator> generators, List<Tower> towers, Player player) 
@@ -58,9 +39,9 @@ namespace F.U.E.L
                     target = i;
                 }
             }
-            if ((player.getPosition() - this.position).Length() < distance)
+            if ((player.position - this.position).Length() < distance)
             {
-                distance = (player.getPosition() - this.position).Length();
+                distance = (player.position - this.position).Length();
                 target = player;
             }
         }
@@ -68,15 +49,16 @@ namespace F.U.E.L
         {
             Vector2 a = distanceToTarget / distanceToTarget.Length() * speed;
             velocity = new Vector3(a.X, 0, a.Y);
-            position.X += velocity.X;
-            position.Y += velocity.Y;
+            position += velocity;
         }
 
+        
         public void enemyUpdate(GameTime gameTime, List<Generator> generators, List<Tower> towers, Player player) {
             if (target == null)
             {//no target yet, chooseTarget
                 chooseTarget(generators, towers, player);   
             }//end choose target
+                /*
             else//have target 
             {
                 Vector2 to_target = new Vector2(target.getPosition().X - this.position.X, target.getPosition().Y - this.position.Y);
@@ -105,6 +87,7 @@ namespace F.U.E.L
                     lookAngle = (float)Math.Asin(lookDirection.Y / lookDirection.Length()) + MathHelper.ToRadians(180);
                 }
             }
+                 * */
         }
     }
 }

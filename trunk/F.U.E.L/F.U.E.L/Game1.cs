@@ -18,6 +18,9 @@ namespace F.U.E.L
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Model planeModel, towerModel, generatorModel;
+
         Camera camera;
         Map map;
 
@@ -50,7 +53,16 @@ namespace F.U.E.L
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            map = new Map(Content.Load<Model>(@"Models\planeModel"), Content.Load<Model>(@"Models\towerModel"), Content.Load<Model>(@"Models\generatorModel"));
+            planeModel = Content.Load<Model>(@"Models\planeModel");
+            towerModel = Content.Load<Model>(@"Models\towerModel");
+            generatorModel = Content.Load<Model>(@"Models\generatorModel");
+
+            Model[] a = new Model[3];
+            a[0] = planeModel;
+            a[1] = towerModel;
+            a[2] = generatorModel;
+            map = new Map(this, a);
+            
         }
 
         /// <summary>

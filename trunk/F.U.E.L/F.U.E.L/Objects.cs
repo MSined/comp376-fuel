@@ -8,22 +8,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Objects
+    class Object : GameComponent
     {
-        protected Model[] components;
-        protected Vector3 position;
-        protected Vector3 velocity;
+        protected Model[] modelComponents { get; private set; }
+        public Vector3 position { get; protected set; }
 
-        public Objects()
+        public Object(Game game, Model[] modelComponents, Vector3 position)
+            : base(game)
         {
+            this.modelComponents = modelComponents;
+            this.position = position;
         }
-
-        public Model[] getComponents() { return components; }
-        public Vector3 getPosition() { return position; }
-        public Vector3 getVelocity() { return velocity; }
-
-        public void setComponents(Model[] components){ this.components = components; }
-        public void setPosition(Vector3 position){ this.position = position; }
-        public void setVelocity(Vector3 velocity) { this.velocity = velocity; }
+        
     }
 }

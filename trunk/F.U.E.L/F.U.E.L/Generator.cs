@@ -8,9 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Generator : Character
+    class Generator : Building
     {
-        public Generator(Model m, float angle, Vector3 position)
+        public Generator(Game game, Model[] modelComponents, Vector3 position,
+            float angle)
+            : base(game, modelComponents, position, angle)
         {
 
         }

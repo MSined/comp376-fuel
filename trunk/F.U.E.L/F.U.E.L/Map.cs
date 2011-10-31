@@ -13,13 +13,19 @@ namespace F.U.E.L
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
         private Building b;
-        //private Building g;
+        private Building g;
 
-        public Map(Model m, Model bmodel, Model gmodel)
+        public Map(Game game, Model[] modelComponents)
         {
-            model = m;
-            this.b = new Building(bmodel, 0f, new Vector3(2,0,-4));
-            //this.g = new Generator(gmodel, 0f, new Vector3(0,0,0));
+            model = modelComponents[0];
+            Model[] m1 = new Model[1];
+            m1[0] = modelComponents[1];
+
+            Model[] m2 = new Model[1];
+            m2[0] = modelComponents[1];
+
+            this.b = new Building(game, m1, new Vector3(2, 0, -4), 0f);
+            this.g = new Generator(game, m2, new Vector3(0, 0, 0), 0f);
         }
 
         public void Update() { }
@@ -27,7 +33,7 @@ namespace F.U.E.L
         public void Draw(Camera camera)
         {
             b.Draw(camera);
-            //g.Draw(camera);
+            g.Draw(camera);
 
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);

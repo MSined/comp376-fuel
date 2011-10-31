@@ -10,11 +10,11 @@ namespace F.U.E.L
 {
     class Factory : Building
     {
-        public Factory(Model m, float angle, Vector3 position)
-            : base(m, angle, position)
+        public Factory(Game game, Model[] modelComponents, Vector3 position,
+            float angle)
+            : base(game, modelComponents, position, angle)
         {
 
         }
-
     }
 }
