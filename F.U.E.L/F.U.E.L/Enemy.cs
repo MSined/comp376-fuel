@@ -25,17 +25,17 @@ namespace F.U.E.L
             float distance = 9999;
             foreach (Generator i in generators)
             {
-                if ((i.getPosition() - this.position).Length() < distance)
+                if ((i.position - this.position).Length() < distance)
                 {
-                    distance = (i.getPosition() - this.position).Length();
+                    distance = (i.position - this.position).Length();
                     target = i;
                 }
             }
             foreach (Tower i in towers)
             {
-                if ((i.getPosition() - this.position).Length() < distance)
+                if ((i.position - this.position).Length() < distance)
                 {
-                    distance = (i.getPosition() - this.position).Length();
+                    distance = (i.position - this.position).Length();
                     target = i;
                 }
             }
