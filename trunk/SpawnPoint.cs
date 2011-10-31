@@ -5,7 +5,7 @@ using System.Text;
 
 namespace F.U.E.L
 {
-    class SpawnPoint : Building
+    class SpawnPoint 
     {
 
     }
