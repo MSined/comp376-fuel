@@ -22,22 +22,47 @@ namespace F.U.E.L
             
         }
 
-        public void playerUpdate(GamePadThumbSticks thumbSticks) 
+        public override void Update(GameTime gameTime) 
         {
-            lookDirection = new Vector3(thumbSticks.Left.X, 0, thumbSticks.Left.Y);
-            velocity = new Vector3(thumbSticks.Left.X, 0, thumbSticks.Left.Y);
-            /*
-            if (lookDirection.X > 0)
+            //Hack to get it working on a computer
+            KeyboardState k = Keyboard.GetState();
+            if (k.IsKeyDown(Keys.Up) || k.IsKeyDown(Keys.Down) || k.IsKeyDown(Keys.Left) || k.IsKeyDown(Keys.Right))
             {
-                lookAngle = (float)Math.Atan(lookDirection.Y / lookDirection.X);
-            }
-            else 
-            {
-                lookAngle = (float)Math.Atan(lookDirection.Y / lookDirection.X) + MathHelper.ToRadians(180);
-            }
-             * */
+                lookDirection = new Vector3(0, 0, 0);
+                if (k.IsKeyDown(Keys.Up))
+                    lookDirection += new Vector3(0, 0, -1);
 
-            position += velocity;
+                if (k.IsKeyDown(Keys.Down))
+                    lookDirection += new Vector3(0, 0, 1);
+
+                if (k.IsKeyDown(Keys.Left))
+                    lookDirection += new Vector3(-1, 0, 0);
+
+                if (k.IsKeyDown(Keys.Right))
+                    lookDirection += new Vector3(1, 0, 0);
+            }
+
+            velocity = new Vector3(0, 0, 0);
+            if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.D))
+            {
+                
+                if (k.IsKeyDown(Keys.W))
+                    velocity += new Vector3(0, 0, -1);
+
+                if (k.IsKeyDown(Keys.S))
+                    velocity += new Vector3(0, 0, 1);
+
+                if (k.IsKeyDown(Keys.A))
+                    velocity += new Vector3(-1, 0, 0);
+
+                if (k.IsKeyDown(Keys.D))
+                    velocity += new Vector3(1, 0, 0);
+            }
+
+            //velocity = new Vector3(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X, 0, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
+
+            base.Update(gameTime);
         }
+
     }
 }

@@ -10,7 +10,7 @@ namespace F.U.E.L
 {
     class Enemy : Character
     {
-        private Object target;
+        private Object target = null;
         
         public Enemy(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
@@ -20,10 +20,10 @@ namespace F.U.E.L
 
         }
 
-        private void chooseTarget(List<Generator> generators, List<Tower> towers, Player player) 
+        private void chooseTarget(List<Building> generators, List<Tower> towers, Player player) 
         {
             float distance = 9999;
-            foreach (Generator i in generators)
+            foreach (Building i in generators)
             {
                 if ((i.position - this.position).Length() < distance)
                 {
@@ -51,12 +51,22 @@ namespace F.U.E.L
             velocity = new Vector3(a.X, 0, a.Y);
             position += velocity;
         }
-
         
-        public void enemyUpdate(GameTime gameTime, List<Generator> generators, List<Tower> towers, Player player) {
+        public override void Update(GameTime gameTime) {
+            List<Building> buildings = new List<Building>();
+            List<Tower> towers = new List<Tower>();
+            Player player = null;
             if (target == null)
             {//no target yet, chooseTarget
-                chooseTarget(generators, towers, player);   
+                foreach (GameComponent p in game.Components)
+                {
+                    if (p is Player)
+                    {
+                        Player player1 = (Player)p;
+                        chooseTarget( buildings, towers, player1);  
+                    }
+                    
+                }
             }//end choose target
                 /*
             else//have target 
@@ -87,7 +97,12 @@ namespace F.U.E.L
                     lookAngle = (float)Math.Asin(lookDirection.Y / lookDirection.Length()) + MathHelper.ToRadians(180);
                 }
             }
-                 * */
+            * */
+
+
+            velocity = target.position - this.position;
+
+            base.Update(gameTime);
         }
     }
 }
