@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace F.U.E.L
 {
@@ -20,7 +21,7 @@ namespace F.U.E.L
         protected int selectedWeapon { get; private set; }
         protected int[] attributes { get; private set; }
 
-        protected Vector3 lookDirection = new Vector3(0, 0, 0);
+        protected Vector3 lookDirection = new Vector3(1, 0, 0);
         protected Vector3 velocity = new Vector3(0,0,0);
         protected float speed;
 
@@ -38,6 +39,24 @@ namespace F.U.E.L
 
             this.spawnPoint = spawnPoint;
 
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            lookDirection.Normalize();
+
+            float angle = (float) Math.Asin(lookDirection.X) + MathHelper.ToRadians(180);
+            if (lookDirection.Z > 0)
+            {
+                angle = MathHelper.ToRadians(180) - angle;
+            }
+
+            world = Matrix.CreateRotationY(-angle) * Matrix.CreateTranslation(position);
+
+            if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0)) velocity.Normalize();
+            position += speed * velocity;
+
+            base.Update(gameTime);
         }
 
         public void Draw(Camera camera)

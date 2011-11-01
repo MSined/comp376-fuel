@@ -26,6 +26,9 @@ namespace F.U.E.L
         Player player;
         Enemy[] enemy = new Enemy[4];
 
+        private Map getMap(){
+            return map;
+        }
 
         public Game1()
         {
@@ -71,16 +74,17 @@ namespace F.U.E.L
             Model[] e = new Model[1];
             e[0] = enemyModel;
             Weapon[] w = new Weapon[1];
-            enemy[0] = new Enemy(this, e, new Vector3(-4f, 0, -2), 10, 10, 1, new SpawnPoint(), w);
-            enemy[1] = new Enemy(this, e, new Vector3(-3, 0, -2.5f), 10, 10, 1, new SpawnPoint(), w);
-            enemy[2] = new Enemy(this, e, new Vector3(-4, 0, -3), 10, 10, 1, new SpawnPoint(), w);
-            enemy[3] = new Enemy(this, e, new Vector3(-3.5f, 0, -3.2f), 10, 10, 1, new SpawnPoint(), w);
+            enemy[0] = new Enemy(this, e, new Vector3(-4f, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[1] = new Enemy(this, e, new Vector3(-3, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[2] = new Enemy(this, e, new Vector3(-4, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[3] = new Enemy(this, e, new Vector3(-3.5f, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
 
             playerModel = Content.Load<Model>(@"Models\playerModel");
             Model[] p = new Model[1];
             p[0] = playerModel;
 
-            player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 1, new SpawnPoint(), w);
+            player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 0.2f, new SpawnPoint(), w);
+            Components.Add(player);
             
         }
 
@@ -103,6 +107,12 @@ namespace F.U.E.L
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            player.Update(gameTime);
+            foreach (Enemy e in enemy)
+            {
+                e.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }

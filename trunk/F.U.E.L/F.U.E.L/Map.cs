@@ -12,8 +12,7 @@ namespace F.U.E.L
     {
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
-        private Building b;
-        private Building g;
+        public List<Building> buildings { get; protected set; }
         
         public Map(Game game, Model[] modelComponents)
             : base(game)
@@ -25,16 +24,19 @@ namespace F.U.E.L
             Model[] m2 = new Model[1];
             m2[0] = modelComponents[2];
 
-            this.b = new Building(game, m1, new Vector3(2, 0, -4), 0f);
-            this.g = new Generator(game, m2, new Vector3(3, 0, -4), 0f);
+            buildings = new List<Building>();
+            this.buildings.Add(new Building(game, m1, new Vector3(2, 0, -4), 0f));
+            this.buildings.Add(new Generator(game, m2, new Vector3(3, 0, -4), 0f));
         }
 
         public void Update() { }
 
         public void Draw(Camera camera)
         {
-            b.Draw(camera);
-            g.Draw(camera);
+            foreach (Building b in buildings)
+            {
+                b.Draw(camera);
+            }
 
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
