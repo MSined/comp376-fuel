@@ -71,7 +71,7 @@ namespace F.U.E.L
             Model[] p = new Model[1];
             p[0] = playerModel;
             Weapon[] w = new Weapon[1];
-            w[0] = new Weapon(this, p, new Vector3(1, 0, 0), 10, 5, 1000000);
+            w[0] = new Weapon(this, p, new Vector3(1, 0, 0), 30, 5, 1000000);
             player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 0.08f, new SpawnPoint(), w);
             Components.Add(player);
 
