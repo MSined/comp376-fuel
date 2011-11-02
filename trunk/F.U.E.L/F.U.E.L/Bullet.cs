@@ -10,14 +10,14 @@ namespace F.U.E.L
 {
     class Bullet : Object
     {
-        int range, damage;
+        float range, damage;
         float distanceTraveled;
         Vector3 direction;
 
         private const float speed = 0.1f;
 
         public Bullet(Game game, Model[] modelComponents, Vector3 position,
-            Vector3 direction, int range, int damage)
+            Vector3 direction, float range, float damage)
             : base(game, modelComponents, position)
         {
             this.range = range;
@@ -30,7 +30,7 @@ namespace F.U.E.L
         {
             position += Vector3.Multiply(direction, speed);
             world = Matrix.CreateTranslation(position);
-            distanceTraveled += direction.Length();
+            distanceTraveled += Vector3.Multiply(direction, speed).Length();
             if (distanceTraveled > range)
                 game.Components.Remove(this);
         }

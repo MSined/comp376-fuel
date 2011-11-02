@@ -11,7 +11,7 @@ namespace F.U.E.L
     class AOEBullet : Bullet
     {
         public AOEBullet(Game game, Model[] modelComponents, Vector3 position,
-            Vector3 direction, int range, int damage)
+            Vector3 direction, float range, float damage)
             : base(game, modelComponents, position, direction, range, damage)
         {
             
