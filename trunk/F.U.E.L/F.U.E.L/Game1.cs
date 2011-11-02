@@ -66,22 +66,31 @@ namespace F.U.E.L
             map = new Map(this, a);
             Components.Add(map);
 
-            enemyModel = Content.Load<Model>(@"Models\enemyModel");
-            Model[] e = new Model[1];
-            e[0] = enemyModel;
-            Weapon[] w = new Weapon[1];
-            enemy[0] = new Enemy(this, e, new Vector3(-4f, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[1] = new Enemy(this, e, new Vector3(-3, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[2] = new Enemy(this, e, new Vector3(-4, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[3] = new Enemy(this, e, new Vector3(-3.5f, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
 
             playerModel = Content.Load<Model>(@"Models\playerModel");
             Model[] p = new Model[1];
             p[0] = playerModel;
-
+            Weapon[] w = new Weapon[1];
+            w[0] = new Weapon(this, p, new Vector3(1, 0, 0), 10, 5, 1000000);
             player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 0.08f, new SpawnPoint(), w);
             Components.Add(player);
+
+
+            enemyModel = Content.Load<Model>(@"Models\enemyModel");
+            Model[] em = new Model[1];
+            em[0] = enemyModel;
             
+            enemy[0] = new Enemy(this, em, new Vector3(-4f, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[1] = new Enemy(this, em, new Vector3(-3, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[2] = new Enemy(this, em, new Vector3(-4, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[3] = new Enemy(this, em, new Vector3(-3.5f, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
+
+            foreach (Enemy e in enemy)
+            {
+                Components.Add(e);
+            }
+
+
         }
 
         /// <summary>
@@ -104,10 +113,21 @@ namespace F.U.E.L
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            foreach (GameComponent gc in Components)
+
+            GameComponent[] gcc = new GameComponent[Components.Count];
+            Components.CopyTo(gcc,0);
+            foreach (GameComponent gc in gcc)
             {
                 gc.Update(gameTime);
             }
+
+            /*
+            player.Update(gameTime);
+            foreach (Enemy e in enemy)
+            {
+                e.Update(gameTime);
+            }
+             * */
 
             base.Update(gameTime);
         }
@@ -119,6 +139,15 @@ namespace F.U.E.L
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            foreach (GameComponent gc in Components)
+            {
+                if (gc is Object)
+                {
+                    Object o = (Object)gc;
+                    o.Draw(camera);
+                }
+            }
 
             player.Draw(camera); 
             foreach (Enemy e in enemy){

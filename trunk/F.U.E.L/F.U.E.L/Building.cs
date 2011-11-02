@@ -23,7 +23,7 @@ namespace F.U.E.L
 
         //public void Update() {}
 
-        public void Draw(Camera camera)
+        public override void Draw(Camera camera)
         {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);

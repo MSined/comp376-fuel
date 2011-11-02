@@ -79,12 +79,12 @@ namespace F.U.E.L
             // Camera moves along its direction matrix (where it is looking)
             if (Mouse.GetState().ScrollWheelValue < scrollWheelValue)
             {
-                cameraPosition -= cameraDirection * 1f;
+                cameraDistFromPlayer -= cameraDirection * 1f;
                 scrollWheelValue = Mouse.GetState().ScrollWheelValue;
             }
             else if (Mouse.GetState().ScrollWheelValue > scrollWheelValue)
             {
-                cameraPosition += cameraDirection * 1f;
+                cameraDistFromPlayer += cameraDirection * 1f;
                 scrollWheelValue = Mouse.GetState().ScrollWheelValue;
             }
 

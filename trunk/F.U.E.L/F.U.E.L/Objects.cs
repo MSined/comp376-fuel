@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Object : GameComponent
+    abstract class Object : GameComponent
     {
         public Game1 game { get; private set; }
         protected Matrix world = Matrix.Identity;
@@ -23,6 +23,8 @@ namespace F.U.E.L
             this.position = position;
             this.world = Matrix.CreateTranslation(position);
         }
-        
+
+        public abstract void Draw(Camera camera);
+
     }
 }

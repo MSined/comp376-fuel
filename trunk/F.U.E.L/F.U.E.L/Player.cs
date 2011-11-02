@@ -59,14 +59,19 @@ namespace F.U.E.L
                     velocity += new Vector3(1, 0, 0);
             }
 
+            if (k.IsKeyDown(Keys.Space))
+                weapons[selectedWeapon].shoot(position, lookDirection);
+
             //Gamepad Support
             /*
             GamePadState gp = GamePad.GetState(PlayerIndex.One);
             lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
 
+            if (gp.Triggers.Right > 0) weapons[selectedWeapon].shoot(lookDirection);
+
             velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             */
-             
+
             base.Update(gameTime);
         }
 

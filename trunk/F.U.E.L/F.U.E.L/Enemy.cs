@@ -20,29 +20,24 @@ namespace F.U.E.L
 
         }
 
-        private void chooseTarget(List<Building> generators, List<Tower> towers, Player player) 
+        private void chooseTarget(List<Building> buildings, List<Player> players) 
         {
-            float distance = 9999;
-            foreach (Building i in generators)
+            float distance = float.PositiveInfinity;
+            foreach (Building b in buildings)
             {
-                if ((i.position - this.position).Length() < distance)
+                if ((b.position - this.position).Length() < distance)
                 {
-                    distance = (i.position - this.position).Length();
-                    target = i;
+                    distance = (b.position - this.position).Length();
+                    target = b;
                 }
             }
-            foreach (Tower i in towers)
+            foreach (Player p in players)
             {
-                if ((i.position - this.position).Length() < distance)
+                if ((p.position - this.position).Length() < distance)
                 {
-                    distance = (i.position - this.position).Length();
-                    target = i;
+                    distance = (p.position - this.position).Length();
+                    target = p;
                 }
-            }
-            if ((player.position - this.position).Length() < distance)
-            {
-                distance = (player.position - this.position).Length();
-                target = player;
             }
         }
 
@@ -57,21 +52,25 @@ namespace F.U.E.L
         
         public override void Update(GameTime gameTime) {
             List<Building> buildings = new List<Building>();
-            List<Tower> towers = new List<Tower>();
-            Player player = null;
+            List<Player> players = new List<Player>();
 
-            if (target == null)
-            {//no target yet, chooseTarget
-                foreach (GameComponent p in game.Components)
+
+             foreach (GameComponent gc in game.Components)
+             {
+                if (gc is Player)
                 {
-                    if (p is Player)
-                    {
-                        Player player1 = (Player)p;
-                        chooseTarget( buildings, towers, player1);  
-                    }
-                    
+                    players.Add((Player)gc);
                 }
-            }//end choose target
+                if (gc is Map)
+                {
+                    Map m = (Map)gc;
+                    buildings = m.buildings;
+                }
+            }
+            chooseTarget(buildings, players);
+
+            lookDirection = target.position - this.position;
+
                 /*
             else//have target 
             {
@@ -91,15 +90,7 @@ namespace F.U.E.L
                     }
                 }
                 //lookDirection, lookAngle
-                lookDirection = to_target / to_target.Length();
-                if (lookDirection.X > 0)
-                {
-                    lookAngle = (float)Math.Asin(lookDirection.Y / lookDirection.Length());
-                }
-                else
-                {
-                    lookAngle = (float)Math.Asin(lookDirection.Y / lookDirection.Length()) + MathHelper.ToRadians(180);
-                }
+                
             }
             * */
 
