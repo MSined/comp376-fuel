@@ -31,10 +31,9 @@ namespace F.U.E.L
             position += Vector3.Multiply(direction, speed);
             world = Matrix.CreateTranslation(position);
             distanceTraveled += direction.Length();
-            /*
             if (distanceTraveled > range)
-                this.Dispose();
-             * */
+                game.Components.Remove(this);
+
         }
 
         public override void Draw(Camera camera)
