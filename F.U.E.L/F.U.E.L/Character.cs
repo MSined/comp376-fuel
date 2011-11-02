@@ -62,7 +62,7 @@ namespace F.U.E.L
             base.Update(gameTime);
         }
 
-        public void Draw(Camera camera)
+        public override void Draw(Camera camera)
         {
             Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
             modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
