@@ -71,19 +71,29 @@ namespace F.U.E.L
             Model[] p = new Model[1];
             p[0] = playerModel;
             Weapon[] w = new Weapon[1];
-            w[0] = new Mine(this, p, new Vector3(1, 0, 0));
-            player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 0.08f, new SpawnPoint(), w);
+            w[0] = new AssaultRifle(this, p, new Vector3(0, 0, 0));
+            player = new Player(this, p, new Vector3(5, 0, 5), 10, 10, 0.08f, new SpawnPoint(), w);
             Components.Add(player);
-
 
             enemyModel = Content.Load<Model>(@"Models\enemyModel");
             Model[] em = new Model[1];
             em[0] = enemyModel;
-            
-            enemy[0] = new Enemy(this, em, new Vector3(-4f, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[1] = new Enemy(this, em, new Vector3(-3, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[2] = new Enemy(this, em, new Vector3(-4, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[3] = new Enemy(this, em, new Vector3(-3.5f, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
+
+            w = new Weapon[1];
+            w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
+            enemy[0] = new Enemy(this, em, new Vector3(-4, 0, -4), 10, 10, 0.05f, new SpawnPoint(), w);
+
+            w = new Weapon[1];
+            w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
+            enemy[1] = new Enemy(this, em, new Vector3(-4, 0, 4), 10, 10, 0.05f, new SpawnPoint(), w);
+
+            w = new Weapon[1];
+            w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
+            enemy[2] = new Enemy(this, em, new Vector3(4, 0, -4), 10, 10, 0.05f, new SpawnPoint(), w);
+
+            w = new Weapon[1];
+            w[0] = new AssaultRifle(this, p, new Vector3(0, 0, 0));
+            enemy[3] = new Enemy(this, em, new Vector3(4, 0, 4), 10, 10, 0.05f, new SpawnPoint(), w);
 
             foreach (Enemy e in enemy)
             {

@@ -11,15 +11,15 @@ namespace F.U.E.L
 {
     abstract class Weapon : Object
     {
-        public int range { get; protected set; }
-        public int damage { get; protected set; }
+        public float range { get; protected set; }
+        public float damage { get; protected set; }
         public int fireRate { get; protected set; }
         public long lastShot { get; protected set; }
 
         public Model[] bulletModelComponents;
 
         public Weapon(Game game, Model[] modelComponents, Vector3 position,
-            int range, int damage, int fireRate)
+            float range, float damage, int fireRate)
             : base(game, modelComponents, position)
         {
             this.range = range;

@@ -9,13 +9,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Pistol : Weapon
+    class PowerFist : Weapon
     {
-        private const float RANGE = 7;
-        private const float DAMAGE = 10;
+        private const float RANGE = 0.5f;
+        private const float DAMAGE = 15;
         private const int FIRERATE = 10000000;
 
-        public Pistol(Game game, Model[] modelComponents, Vector3 position/*,
+        public PowerFist(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {

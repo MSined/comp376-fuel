@@ -25,8 +25,8 @@ namespace F.U.E.L
             m2[0] = modelComponents[2];
 
             buildings = new List<Building>();
-            this.buildings.Add(new Building(game, m1, new Vector3(2, 0, -4), 0f));
-            this.buildings.Add(new Generator(game, m2, new Vector3(3, 0, -4), 0f));
+            this.buildings.Add(new Building(game, m1, new Vector3(0, 0, 0), 0f));
+            this.buildings.Add(new Generator(game, m2, new Vector3(1, 0, 0), 0f));
         }
 
         public void Update() { }

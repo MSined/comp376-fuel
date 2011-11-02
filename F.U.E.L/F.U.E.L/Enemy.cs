@@ -10,7 +10,7 @@ namespace F.U.E.L
 {
     class Enemy : Character
     {
-        private Object target = null;
+        private Object target;
         
         public Enemy(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
@@ -54,9 +54,8 @@ namespace F.U.E.L
             List<Building> buildings = new List<Building>();
             List<Player> players = new List<Player>();
 
-
-             foreach (GameComponent gc in game.Components)
-             {
+            foreach (GameComponent gc in game.Components)
+            {
                 if (gc is Player)
                 {
                     players.Add((Player)gc);
@@ -71,31 +70,16 @@ namespace F.U.E.L
 
             lookDirection = target.position - this.position;
 
-                /*
-            else//have target 
+            float targetDist = (target.position - this.position).Length();
+            if (targetDist < weapons[selectedWeapon].range)
             {
-                Vector2 to_target = new Vector2(target.getPosition().X - this.position.X, target.getPosition().Y - this.position.Y);
-                //velocity, position, atkRange, atkTimer, atk
-                if (to_target.Length() > atkRange)//target out of atkRange, move
-                {
-                    move(to_target);
-                }
-                else//target in atkRange, atk
-                {
-                    atkTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (atkTimer > atkInterval)
-                    {
-                        target.setHp(target.getHp() - atk);
-                        atkTimer = 0;
-                    }
-                }
-                //lookDirection, lookAngle
-                
+                velocity = new Vector3(0, 0, 0);
+                weapons[selectedWeapon].shoot(this.position, lookDirection);
             }
-            * */
-
-
-            velocity = target.position - this.position;
+            else
+            {
+                velocity = target.position - this.position;
+            }
 
             base.Update(gameTime);
         }

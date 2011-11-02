@@ -11,8 +11,8 @@ namespace F.U.E.L
 {
     class Mine : Weapon
     {
-        private const int RANGE = 10;
-        private const int DAMAGE = 100;
+        private const float RANGE = 10;
+        private const float DAMAGE = 100;
         private const int FIRERATE = 10000000;
 
         public Mine(Game game, Model[] modelComponents, Vector3 position/*,

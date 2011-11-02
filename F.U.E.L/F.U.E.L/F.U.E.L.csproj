@@ -126,6 +126,7 @@
     <Compile Include="Waypoint.cs" />
     <Compile Include="Weapon.cs" />
     <Compile Include="Weapons\AssaultRifle.cs" />
+    <Compile Include="Weapons\PowerFist.cs" />
     <Compile Include="Weapons\Mines.cs" />
     <Compile Include="Weapons\Pistol.cs" />
   </ItemGroup>
