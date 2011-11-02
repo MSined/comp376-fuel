@@ -45,17 +45,21 @@ namespace F.U.E.L
                 target = player;
             }
         }
+
+        /*
         private void move(Vector2 distanceToTarget) 
         {
             Vector2 a = distanceToTarget / distanceToTarget.Length() * speed;
             velocity = new Vector3(a.X, 0, a.Y);
             position += velocity;
         }
+         * */
         
         public override void Update(GameTime gameTime) {
             List<Building> buildings = new List<Building>();
             List<Tower> towers = new List<Tower>();
             Player player = null;
+
             if (target == null)
             {//no target yet, chooseTarget
                 foreach (GameComponent p in game.Components)

@@ -3,7 +3,7 @@
   <Asset Type="Graphics:NodeContent">
     <Name>cone1</Name>
     <Identity>
-      <SourceFilename>G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.LContent\Models\towerModel.x</SourceFilename>
+      <SourceFilename>C:\Users\Paul\Desktop\Classes\COMP376\FUEL\F.U.E.L\F.U.E.LContent\Models\towerModel.x</SourceFilename>
       <SourceTool>XImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -31,7 +31,7 @@
   <Resources>
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Identity>
-        <SourceFilename>G:\COMP376\FUEL\comp376-fuel\F.U.E.L\F.U.E.LContent\Models\towerModel.x</SourceFilename>
+        <SourceFilename>C:\Users\Paul\Desktop\Classes\COMP376\FUEL\F.U.E.L\F.U.E.LContent\Models\towerModel.x</SourceFilename>
         <SourceTool>XImporter</SourceTool>
       </Identity>
       <OpaqueData>

@@ -59,8 +59,14 @@ namespace F.U.E.L
                     velocity += new Vector3(1, 0, 0);
             }
 
-            //velocity = new Vector3(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X, 0, -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
+            //Gamepad Support
+            /*
+            GamePadState gp = GamePad.GetState(PlayerIndex.One);
+            lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
 
+            velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+            */
+             
             base.Update(gameTime);
         }
 
