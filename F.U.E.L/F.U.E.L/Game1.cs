@@ -81,11 +81,11 @@ namespace F.U.E.L
 
             w = new Weapon[1];
             w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
-            enemy[0] = new Enemy(this, em, new Vector3(-4, 0, -4), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[0] = new HunterEnemy(this, em, new Vector3(-4, 0, -4), 10, 10, 0.05f, new SpawnPoint(), w);
 
             w = new Weapon[1];
             w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
-            enemy[1] = new Enemy(this, em, new Vector3(-4, 0, 4), 10, 10, 0.05f, new SpawnPoint(), w);
+            enemy[1] = new HunterEnemy(this, em, new Vector3(-4, 0, 4), 10, 10, 0.05f, new SpawnPoint(), w);
 
             w = new Weapon[1];
             w[0] = new Pistol(this, p, new Vector3(0, 0, 0));

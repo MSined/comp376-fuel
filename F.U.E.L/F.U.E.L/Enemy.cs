@@ -10,7 +10,7 @@ namespace F.U.E.L
 {
     class Enemy : Character
     {
-        private Object target;
+        public Object target { get; protected set; }
         
         public Enemy(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
@@ -20,7 +20,7 @@ namespace F.U.E.L
 
         }
 
-        private void chooseTarget(List<Building> buildings, List<Player> players) 
+        protected virtual void chooseTarget(List<Building> buildings, List<Player> players) 
         {
             float distance = float.PositiveInfinity;
             foreach (Building b in buildings)

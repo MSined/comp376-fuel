@@ -112,6 +112,7 @@
     <Compile Include="Bullets\AOEBullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="Enemies\HunterEnemy.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Game1.cs" />
