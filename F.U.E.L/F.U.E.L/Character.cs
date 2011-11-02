@@ -39,6 +39,9 @@ namespace F.U.E.L
 
             this.spawnPoint = spawnPoint;
 
+            this.weapons = weapons;
+            this.selectedWeapon = 0;
+
         }
 
         public override void Update(GameTime gameTime)

@@ -25,11 +25,7 @@ namespace F.U.E.L
         Map map;
         Player player;
         Enemy[] enemy = new Enemy[4];
-
-        private Map getMap(){
-            return map;
-        }
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -83,7 +79,7 @@ namespace F.U.E.L
             Model[] p = new Model[1];
             p[0] = playerModel;
 
-            player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 0.2f, new SpawnPoint(), w);
+            player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 0.08f, new SpawnPoint(), w);
             Components.Add(player);
             
         }
@@ -108,10 +104,9 @@ namespace F.U.E.L
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            player.Update(gameTime);
-            foreach (Enemy e in enemy)
+            foreach (GameComponent gc in Components)
             {
-                e.Update(gameTime);
+                gc.Update(gameTime);
             }
 
             base.Update(gameTime);
