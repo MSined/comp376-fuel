@@ -33,7 +33,6 @@ namespace F.U.E.L
             distanceTraveled += direction.Length();
             if (distanceTraveled > range)
                 game.Components.Remove(this);
-
         }
 
         public override void Draw(Camera camera)

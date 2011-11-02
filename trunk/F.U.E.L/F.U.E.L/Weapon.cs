@@ -9,10 +9,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Weapon : Object
+    abstract class Weapon : Object
     {
-        private int range, damage, fireRate;
-        private long lastShot;
+        public int range { get; protected set; }
+        public int damage { get; protected set; }
+        public int fireRate { get; protected set; }
+        public long lastShot { get; protected set; }
 
         public Model[] bulletModelComponents;
 
@@ -29,20 +31,15 @@ namespace F.U.E.L
             this.bulletModelComponents[0] = modelComponents[0];
         }
 
-        public void shoot(Vector3 position, Vector3 direction)
+        public virtual void shoot(Vector3 position, Vector3 direction)
         {
-            long nowTick  = DateTime.Now.Ticks;
+            long nowTick = DateTime.Now.Ticks;
 
             if (lastShot + fireRate < nowTick)
             {
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage));
                 lastShot = nowTick;
             }
-        }
-
-        public override void Draw(Camera camera)
-        {
-            
         }
 
         /*
