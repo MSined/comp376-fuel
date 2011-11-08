@@ -9,16 +9,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Shotgun : Weapon
+    class MiniGun : Weapon
     {
-        private const float RANGE = 4;
+        private const float RANGE = 7;
         private const float DAMAGE = 5;
-        private const int FIRERATE = 10000000;
+        private const int FIRERATE = 500000;
 
-        private const int angleDiff = 5;
-        private const int numBullets = 5;
+        private Random random = new Random();
+        private const int maxSpread = 10;
 
-        public Shotgun(Game game, Model[] modelComponents, Vector3 position/*,
+        public MiniGun(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
@@ -37,14 +37,9 @@ namespace F.U.E.L
                     shotAngle = MathHelper.ToRadians(180) - shotAngle;
                 }
 
-                float stratingNum = (numBullets-1)/2f;
-                for (float i = -stratingNum; i <= stratingNum; ++i)
-                {
-                    float a = MathHelper.ToRadians(angleDiff) * i;
-                    Matrix m = Matrix.CreateRotationY(a);
-                    game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage));
-                }
-                
+                float a = -MathHelper.ToRadians(maxSpread)/2 + MathHelper.ToRadians(maxSpread) * (float) random.NextDouble();
+                Matrix m = Matrix.CreateRotationY(a);
+                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage));
                 lastShot = nowTick;
             }
         }

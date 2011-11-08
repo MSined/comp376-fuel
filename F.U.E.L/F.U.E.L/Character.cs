@@ -18,7 +18,7 @@ namespace F.U.E.L
 
         protected SpawnPoint spawnPoint { get; private set; }
         protected Weapon[] weapons { get; private set; }
-        protected int selectedWeapon { get; private set; }
+        public int selectedWeapon { get; protected set; }
         protected int[] attributes { get; private set; }
 
         protected Vector3 lookDirection = new Vector3(1, 0, 0);

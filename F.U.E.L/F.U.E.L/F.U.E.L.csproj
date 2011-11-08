@@ -110,6 +110,10 @@
     <Compile Include="Building.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Bullets\AOEBullet.cs" />
+    <Compile Include="Bullets\BounceBullet.cs" />
+    <Compile Include="Bullets\LobBullet.cs" />
+    <Compile Include="Bullets\DOTBullet.cs" />
+    <Compile Include="Bullets\PushBackBullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Enemies\HunterEnemy.cs" />
@@ -127,6 +131,8 @@
     <Compile Include="Waypoint.cs" />
     <Compile Include="Weapon.cs" />
     <Compile Include="Weapons\AssaultRifle.cs" />
+    <Compile Include="Weapons\FlameThrower.cs" />
+    <Compile Include="Weapons\MiniGun.cs" />
     <Compile Include="Weapons\Shotgun.cs" />
     <Compile Include="Weapons\PowerFist.cs" />
     <Compile Include="Weapons\Mines.cs" />

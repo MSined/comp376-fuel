@@ -70,8 +70,11 @@ namespace F.U.E.L
             playerModel = Content.Load<Model>(@"Models\playerModel");
             Model[] p = new Model[1];
             p[0] = playerModel;
-            Weapon[] w = new Weapon[1];
-            w[0] = new Shotgun(this, p, new Vector3(0, 0, 0));
+            Weapon[] w = new Weapon[4];
+            w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
+            w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
+            w[2] = new MiniGun(this, p, new Vector3(0, 0, 0));
+            w[3] = new Shotgun(this, p, new Vector3(0, 0, 0));
             player = new Player(this, p, new Vector3(5, 0, 5), 10, 10, 0.08f, new SpawnPoint(), w);
             Components.Add(player);
 
