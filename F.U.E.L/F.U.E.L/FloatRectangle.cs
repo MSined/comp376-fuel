@@ -44,14 +44,6 @@ namespace F.U.E.L
                this.Bottom <= other.Top)
                 return true;
             return false;
-            
-            //     the actual collision         specifies side                    v   entire grazing edge    v
-            //if (this.Right >= other.Left && this.Left < other.Left && (this.Top <= other.Bottom || this.Bottom >= other.Top) ||
-            //    this.Left <= other.Right && this.Right > other.Right && (this.Top <= other.Bottom || this.Bottom >= other.Top) ||
-            //    this.Top <= other.Bottom && this.Bottom < other.Bottom && (this.Right >= other.Left || this.Left <= other.Right) ||
-            //    this.Bottom >= other.Top && this.Top > other.Top && (this.Right >= other.Left || this.Left <= other.Right))
-            //    return true;
-            //return false;
         }
 
         public bool FloatIntersectsExtended(FloatRectangle other)

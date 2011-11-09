@@ -78,9 +78,6 @@ namespace F.U.E.L
         {
             foreach (Object o in colliders)
             {
-                if (o is Bullet) 
-                { 
-                }
                 if (bounds.FloatIntersects(o.bounds))
                 {
                     if (o is Bullet)
