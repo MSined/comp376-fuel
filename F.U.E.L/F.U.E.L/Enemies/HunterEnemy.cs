@@ -10,11 +10,14 @@ namespace F.U.E.L
 {
     class HunterEnemy : Enemy
     {
+        private const float SPEED = 0.05f;
+        private const int TOPHP = 50;
+        private const int TOPSP = 50;
        
         public HunterEnemy(Game game, Model[] modelComponents, Vector3 position,
-            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
+            /*int topHP, int topSP, float speed,*/ SpawnPoint spawnPoint, Weapon[] weapons
             )
-            : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons)
+            : base(game, modelComponents, position, TOPHP, TOPSP, SPEED, spawnPoint, weapons)
         {
 
         }

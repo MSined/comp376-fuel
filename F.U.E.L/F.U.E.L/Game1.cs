@@ -23,7 +23,7 @@ namespace F.U.E.L
 
         Camera camera;
         Map map;
-        List<Player> players = new List<Player>();
+        Player player;
         Enemy[] enemy = new Enemy[12];
         SpatialHashGrid grid;
         Model[] em = new Model[1];
@@ -63,22 +63,11 @@ namespace F.U.E.L
             towerModel = Content.Load<Model>(@"Models\towerModel");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
 
-            playerModel = Content.Load<Model>(@"Models\playerModel");
-            Model[] p = new Model[1];
-            p[0] = playerModel;
-            Weapon[] w = new Weapon[4];
-            w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
-            w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
-            w[2] = new MiniGun(this, p, new Vector3(0, 0, 0));
-            w[3] = new Shotgun(this, p, new Vector3(0, 0, 0));
-            players.Add(new Player(this, p, new Vector3(5, 0, 5), 10, 10, 0.08f, new SpawnPoint(), w));
-            foreach (Player ply in players) { Components.Add(ply); }
-            
             Model[] a = new Model[3];
             a[0] = planeModel;
             a[1] = towerModel;
             a[2] = generatorModel;
-            map = new Map(this, a, -10, 10, players);
+            map = new Map(this, a, -10, 10);
 			Components.Add(map);
 
             // Create the grid with necessary information
@@ -86,42 +75,41 @@ namespace F.U.E.L
             for(int i = 0; i < map.buildings.Count; ++i)
                 grid.insertStaticObject(map.buildings[i]);
 
-            
+            playerModel = Content.Load<Model>(@"Models\playerModel");
+            Model[] p = new Model[1];
+            p[0] = playerModel;
+            Weapon[] w = new Weapon[4];
+            w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
+            w[1] = new Shotgun(this, p, new Vector3(0, 0, 0));
+            w[2] = new Mines(this, p, new Vector3(0, 0, 0));
+            w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
+            player = new Player(this, p, new Vector3(5, 0, 5), 500, 100, 0.08f, new SpawnPoint(), w);
+            Components.Add(player);
 
             enemyModel = Content.Load<Model>(@"Models\enemyModel");
             Model[] em = new Model[1];
             em[0] = enemyModel;
-			
-			w = new Weapon[1];
-			w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
-            enemy[0] = new Enemy(this, em, new Vector3(-8, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w); 
-            
-			w = new Weapon[1];
-			w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
-			enemy[1] = new Enemy(this, em, new Vector3(-7, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[2] = new Enemy(this, em, new Vector3(-6, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[3] = new Enemy(this, em, new Vector3(-5, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[4] = new Enemy(this, em, new Vector3(-4, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[5] = new Enemy(this, em, new Vector3(-3, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[6] = new Enemy(this, em, new Vector3(-2, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[7] = new Enemy(this, em, new Vector3(-1.5f, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[8] = new Enemy(this, em, new Vector3(0, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[9] = new Enemy(this, em, new Vector3(1, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[10] = new Enemy(this, em, new Vector3(2, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
-            enemy[11] = new Enemy(this, em, new Vector3(3, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
+
+            for (int i = 0; i < enemy.Length; ++i)
+            {
+                w = new Weapon[1];
+                w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
+                enemy[i] = new HunterEnemy(this, em, new Vector3(i, 0, 0), new SpawnPoint(), w);
+            }
 
             foreach (Enemy e in enemy)
             {
-                //if (e == null) continue;
                 Components.Add(e);
             }
 
             // Remove whatever is in the removeList, from the grid and the components list
+            /*
             foreach (Object o in removeList)
             {
                 grid.removeDynamicObject(o);
                 Components.Remove(o);
             }
+             * */
         }
 
         /// <summary>
@@ -163,34 +151,13 @@ namespace F.U.E.L
                         o.Update(gameTime, colliders);
                         colliders.Clear();
                     }
-                    // If not, remove it from all lists
                     else
                     {
-                        // Remove enemy from the enemy array
-                        for (int i = 0; i < enemy.Length; ++i)
-                        {
-                            // Check if entry is not null and the objectID is the same as the one we are looking for
-                            if (enemy[i] != null && enemy.ElementAt<Enemy>(i).objectID == o.objectID)
-                                enemy[i] = null;
-                        }
-                        // Remove from components list
-                        removeList.Add(o);
-                        // Remove from dynamic objects list
+                        Components.Remove(o);
                         grid.removeDynamicObject(o);
                     }
                 }
             }
-
-            camera.Update(gameTime);
-            map.Update(gameTime);
-
-            // Remove dead objects from the necessary lists
-            foreach (Object o in removeList)
-            {
-                Components.Remove(o);
-                //grid.removeDynamicObject(o);
-            }
-            removeList.Clear();
 
             base.Update(gameTime);
         }
@@ -210,14 +177,12 @@ namespace F.U.E.L
                     Object o = (Object)gc;
                     o.Draw(camera);
                 }
+                if (gc is Map)
+                {
+                    Map m = (Map)gc;
+                    m.Draw(camera);
+                }
             }
-
-            foreach (Player ply in players) { ply.Draw(camera); } 
-            foreach (Enemy e in enemy){
-                if (e == null) continue;
-                e.Draw(camera);
-            }
-            map.Draw(camera);
 
             base.Draw(gameTime);
         }

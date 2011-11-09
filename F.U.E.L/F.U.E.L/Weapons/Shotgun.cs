@@ -12,7 +12,7 @@ namespace F.U.E.L
     class Shotgun : Weapon
     {
         private const float RANGE = 4;
-        private const float DAMAGE = 5;
+        private const int DAMAGE = 5;
         private const int FIRERATE = 10000000;
 
         private const int angleDiff = 5;
@@ -25,7 +25,7 @@ namespace F.U.E.L
             
         }
 
-        public override void shoot(Vector3 position, Vector3 direction)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)
         {
             long nowTick = DateTime.Now.Ticks;
 
@@ -42,7 +42,7 @@ namespace F.U.E.L
                 {
                     float a = MathHelper.ToRadians(angleDiff) * i;
                     Matrix m = Matrix.CreateRotationY(a);
-                    game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage));
+                    game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
                 }
                 
                 lastShot = nowTick;

@@ -12,14 +12,14 @@ namespace F.U.E.L
     abstract class Weapon : Object
     {
         public float range { get; protected set; }
-        public float damage { get; protected set; }
+        public int damage { get; protected set; }
         public int fireRate { get; protected set; }
         public long lastShot { get; protected set; }
 
         public Model[] bulletModelComponents;
 
         public Weapon(Game game, Model[] modelComponents, Vector3 position,
-                      float range, float damage, int fireRate)
+                      float range, int damage, int fireRate)
                : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 0,0), true)
         {
             this.range = range;
@@ -31,13 +31,13 @@ namespace F.U.E.L
             this.bulletModelComponents[0] = modelComponents[0];
         }
 
-        public virtual void shoot(Vector3 position, Vector3 direction)
+        public virtual void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)
         {
             long nowTick = DateTime.Now.Ticks;
 
             if (lastShot + fireRate < nowTick)
             {
-                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage));
+                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
                 lastShot = nowTick;
             }
         }

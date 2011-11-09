@@ -11,7 +11,7 @@ namespace F.U.E.L
     class Building : Object
     {
         public Model model { get; protected set; }
-
+        
         public Building(Game game, Model[] modelComponents, Vector3 position,
             float angle)
             : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 0.5f, 0.5f), true)

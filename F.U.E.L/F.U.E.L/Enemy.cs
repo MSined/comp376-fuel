@@ -69,7 +69,7 @@ namespace F.U.E.L
             if (targetDist < weapons[selectedWeapon].range)
             {
                 velocity = new Vector3(0, 0, 0);
-                weapons[selectedWeapon].shoot(this.position, lookDirection);
+                weapons[selectedWeapon].shoot(this.position, lookDirection, true);
             }
 			else
 			{
@@ -91,13 +91,17 @@ namespace F.U.E.L
                 {
                     if (o is Bullet)
                     {
-                        o.isAlive = false;
-                        this.isAlive = false;
-                        continue;
+                        Bullet b = (Bullet)o;
+                        if (!b.shotByEnemy)
+                        {
+                            o.isAlive = false;
+                            this.hp = hp - b.damage;
+                            continue;
+                        }
                     }
                     Vector3 moveBack = position - o.position;
                     moveBack.Normalize();
-                    velocity += moveBack;
+                    position += moveBack * speed;
                 }
             }
         }

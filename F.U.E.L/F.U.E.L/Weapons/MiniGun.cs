@@ -12,7 +12,7 @@ namespace F.U.E.L
     class MiniGun : Weapon
     {
         private const float RANGE = 7;
-        private const float DAMAGE = 5;
+        private const int DAMAGE = 5;
         private const int FIRERATE = 500000;
 
         private Random random = new Random();
@@ -25,7 +25,7 @@ namespace F.U.E.L
             
         }
 
-        public override void shoot(Vector3 position, Vector3 direction)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)
         {
             long nowTick = DateTime.Now.Ticks;
 
@@ -39,7 +39,7 @@ namespace F.U.E.L
 
                 float a = -MathHelper.ToRadians(maxSpread)/2 + MathHelper.ToRadians(maxSpread) * (float) random.NextDouble();
                 Matrix m = Matrix.CreateRotationY(a);
-                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage));
+                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
                 lastShot = nowTick;
             }
         }
