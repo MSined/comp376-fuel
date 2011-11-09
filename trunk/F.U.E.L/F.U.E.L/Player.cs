@@ -15,6 +15,9 @@ namespace F.U.E.L
         const float width = .5f;
         const float depth = .5f;
 
+        public bool repairing;
+        public int repairSpeed;
+
         public Player(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
             )
@@ -25,7 +28,7 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
-            /*
+            
             #region Keyboard Controls
             //Hack to get it working on a computer
             KeyboardState k = Keyboard.GetState();
@@ -35,13 +38,13 @@ namespace F.U.E.L
                 if (k.IsKeyDown(Keys.Up))
                     lookDirection += new Vector3(0, 0, -1);
 
-                if (k.IsKeyDown(Keys.Down))
+                else if (k.IsKeyDown(Keys.Down))
                     lookDirection += new Vector3(0, 0, 1);
 
                 if (k.IsKeyDown(Keys.Left))
                     lookDirection += new Vector3(-1, 0, 0);
 
-                if (k.IsKeyDown(Keys.Right))
+                else if (k.IsKeyDown(Keys.Right))
                     lookDirection += new Vector3(1, 0, 0);
             }
 
@@ -52,13 +55,13 @@ namespace F.U.E.L
                 if (k.IsKeyDown(Keys.W))
                     velocity += new Vector3(0, 0, -1);
 
-                if (k.IsKeyDown(Keys.S))
+                else if (k.IsKeyDown(Keys.S))
                     velocity += new Vector3(0, 0, 1);
 
                 if (k.IsKeyDown(Keys.A))
                     velocity += new Vector3(-1, 0, 0);
 
-                if (k.IsKeyDown(Keys.D))
+                else if (k.IsKeyDown(Keys.D))
                     velocity += new Vector3(1, 0, 0);
             }
 
@@ -76,8 +79,8 @@ namespace F.U.E.L
 
             if (k.IsKeyDown(Keys.D4))
                 selectedWeapon = 3;
-            */
-            
+            #endregion
+
             //Gamepad Support
             GamePadState gp = GamePad.GetState(PlayerIndex.One);
             if (!(gp.ThumbSticks.Right.X == 0 && gp.ThumbSticks.Right.Y == 0)) lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
@@ -98,7 +101,7 @@ namespace F.U.E.L
             if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection);
 
             
-            velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+            //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             
             CheckCollisions(colliders);
 
