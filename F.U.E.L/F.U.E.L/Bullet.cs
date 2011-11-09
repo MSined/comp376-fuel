@@ -34,7 +34,7 @@ namespace F.U.E.L
             distanceTraveled += Vector3.Multiply(direction, speed).Length();
             if (distanceTraveled > range)
             {
-                this.isAlive = false;
+                game.Components.Remove(this);
             }
             this.bounds = new FloatRectangle(this.position.X, this.position.Z, width, height);
         }
