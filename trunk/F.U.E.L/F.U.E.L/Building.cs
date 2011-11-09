@@ -21,7 +21,9 @@ namespace F.U.E.L
             this.position = position;
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders) {}
+        public override void Update(GameTime gameTime, List<Object> colliders) {
+		
+		}
 
         public override void Draw(Camera camera)
         {

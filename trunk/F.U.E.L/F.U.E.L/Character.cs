@@ -57,6 +57,8 @@ namespace F.U.E.L
             if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0)) velocity.Normalize();
 
             position += speed * velocity;
+
+            base.Update(gameTime, colliders);
         }
 
         public override void Draw(Camera camera)

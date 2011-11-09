@@ -65,13 +65,22 @@ namespace F.U.E.L
 
             lookDirection = target.position - this.position;
 
-            velocity = target.position - this.position;
+            float targetDist = (target.position - this.position).Length();
+            if (targetDist < weapons[selectedWeapon].range)
+            {
+                velocity = new Vector3(0, 0, 0);
+                weapons[selectedWeapon].shoot(this.position, lookDirection);
+            }
+			else
+			{
+				velocity = target.position - this.position;
+			}
 
             CheckCollisions(colliders);
 
             this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
 
-            base.Update(gameTime, null);
+            base.Update(gameTime, colliders);
         }
 
         public void CheckCollisions(List<Object> colliders)

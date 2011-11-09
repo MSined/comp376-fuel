@@ -46,7 +46,7 @@ namespace F.U.E.L
         {
             // Create camera and add to components list
             camera = new Camera(this, new Vector3(0, 10, 10), Vector3.Zero, -Vector3.UnitZ);
-            //Components.Add(camera);
+            Components.Add(camera);
 
             base.Initialize();
         }
@@ -68,6 +68,7 @@ namespace F.U.E.L
             a[1] = towerModel;
             a[2] = generatorModel;
             map = new Map(this, a, -10, 10);
+			Components.Add(map);
 
             // Create the grid with necessary information
             grid = new SpatialHashGrid(20, 20, 2, map.leftXPos/2, map.bottomYPos/2);
@@ -77,16 +78,25 @@ namespace F.U.E.L
             playerModel = Content.Load<Model>(@"Models\playerModel");
             Model[] p = new Model[1];
             p[0] = playerModel;
-            Weapon[] w = new Weapon[1];
-            w[0] = new FlameThrower(this, p, new Vector3(1, 0, 0));
-            player = new Player(this, p, new Vector3(1, 0, 0), 10, 10, 0.08f, new SpawnPoint(), w);
+            Weapon[] w = new Weapon[4];
+            w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
+            w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
+            w[2] = new MiniGun(this, p, new Vector3(0, 0, 0));
+            w[3] = new Shotgun(this, p, new Vector3(0, 0, 0));
+            player = new Player(this, p, new Vector3(5, 0, 5), 10, 10, 0.08f, new SpawnPoint(), w);
             Components.Add(player);
 
             enemyModel = Content.Load<Model>(@"Models\enemyModel");
+            Model[] em = new Model[1];
             em[0] = enemyModel;
-
+			
+			w = new Weapon[1];
+			w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
             enemy[0] = new Enemy(this, em, new Vector3(-8, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w); 
-            enemy[1] = new Enemy(this, em, new Vector3(-7, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
+            
+			w = new Weapon[1];
+			w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
+			enemy[1] = new Enemy(this, em, new Vector3(-7, 0, -2.5f), 10, 10, 0.05f, new SpawnPoint(), w);
             enemy[2] = new Enemy(this, em, new Vector3(-6, 0, -3), 10, 10, 0.05f, new SpawnPoint(), w);
             enemy[3] = new Enemy(this, em, new Vector3(-5, 0, -3.2f), 10, 10, 0.05f, new SpawnPoint(), w);
             enemy[4] = new Enemy(this, em, new Vector3(-4, 0, -2), 10, 10, 0.05f, new SpawnPoint(), w);
@@ -100,7 +110,7 @@ namespace F.U.E.L
 
             foreach (Enemy e in enemy)
             {
-                if (e == null) continue;
+                //if (e == null) continue;
                 Components.Add(e);
             }
 
@@ -137,32 +147,35 @@ namespace F.U.E.L
             Components.CopyTo(gcc,0);
             foreach (GameComponent gc in gcc)
             {
-                if(!(gc is Object))
-                    gc.Update(gameTime);
-            }
-            foreach (Object o in gcc)
-            {
-                // Only update if the object is alive
-                if (o.isAlive)
+                if (!(gc is Object))
                 {
-                    colliders = grid.getPotentialColliders(o);
-                    o.Update(gameTime, colliders);
-                    colliders.Clear();
+                    gc.Update(gameTime);
                 }
-                // If not, remove it from all lists
                 else
                 {
-                    // Remove enemy from the enemy array
-                    for(int i = 0; i < enemy.Length; ++i)
+                    Object o = (Object)gc;
+                    // Only update if the object is alive
+                    if (o.isAlive)
                     {
-                        // Check if entry is not null and the objectID is the same as the one we are looking for
-                        if (enemy[i] != null && enemy.ElementAt<Enemy>(i).objectID == o.objectID)
-                            enemy[i] = null;
+                        colliders = grid.getPotentialColliders(o);
+                        o.Update(gameTime, colliders);
+                        colliders.Clear();
                     }
-                    // Remove from components list
-                    removeList.Add(o);
-                    // Remove from dynamic objects list
-                    grid.removeDynamicObject(o);
+                    // If not, remove it from all lists
+                    else
+                    {
+                        // Remove enemy from the enemy array
+                        for (int i = 0; i < enemy.Length; ++i)
+                        {
+                            // Check if entry is not null and the objectID is the same as the one we are looking for
+                            if (enemy[i] != null && enemy.ElementAt<Enemy>(i).objectID == o.objectID)
+                                enemy[i] = null;
+                        }
+                        // Remove from components list
+                        removeList.Add(o);
+                        // Remove from dynamic objects list
+                        grid.removeDynamicObject(o);
+                    }
                 }
             }
 
