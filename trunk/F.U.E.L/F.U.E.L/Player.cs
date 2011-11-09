@@ -97,8 +97,8 @@ namespace F.U.E.L
             if (gp.IsButtonDown(Buttons.RightShoulder)) { }
                 //Recover HP
 
-            if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection);
-            if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection);
+            if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
+            if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection, false);
 
             
             //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
@@ -114,13 +114,25 @@ namespace F.U.E.L
         {
             foreach (Object o in colliders)
             {
-                if (o is Bullet)
-                    continue;
                 if (bounds.FloatIntersects(o.bounds))
                 {
-                    Vector3 moveBack = position - o.position;
-                    moveBack.Normalize();
-                    velocity += moveBack;
+                    if (o is Bullet)
+                    {
+                        Bullet b = (Bullet)o;
+                        if (b.shotByEnemy)
+                        {
+                            o.isAlive = false;
+                            this.hp = hp - b.damage;
+                            continue;
+                        }
+                    }
+                    if (o is Building)
+                    {
+                        Vector3 moveBack = position - o.position;
+                        moveBack.Normalize();
+                        position += moveBack * speed;
+                    }
+                    
                 }
             }
         }

@@ -133,6 +133,7 @@
     <Compile Include="Waypoint.cs" />
     <Compile Include="Weapon.cs" />
     <Compile Include="Weapons\AssaultRifle.cs" />
+    <Compile Include="Weapons\Grenade.cs" />
     <Compile Include="Weapons\FlameThrower.cs" />
     <Compile Include="Weapons\MiniGun.cs" />
     <Compile Include="Weapons\Shotgun.cs" />

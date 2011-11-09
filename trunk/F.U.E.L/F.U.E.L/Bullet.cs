@@ -10,20 +10,23 @@ namespace F.U.E.L
 {
     class Bullet : Object
     {
-        float range, damage;
-        float distanceTraveled;
-        Vector3 direction;
-        static float width = 0.5f, height = 0.5f;
+        public float range { get; protected set; }
+        public int damage { get; protected set; }
+        public float distanceTraveled { get; protected set; }
+        public Vector3 direction { get; protected set; }
+        public const float width = 0.5f, height = 0.5f;
+        public Boolean shotByEnemy { get; protected set; }
 
-        private const float speed = 0.1f;
+        public const float speed = 0.1f;
 
         public Bullet(Game game, Model[] modelComponents, Vector3 position,
-            Vector3 direction, float range, float damage)
+            Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, new FloatRectangle(position.X, position.Y, width, height), true)
         {
             this.range = range;
             this.damage = damage;
             this.direction = direction;
+            this.shotByEnemy = shotByEnemy;
             direction.Normalize();
         }
 
@@ -34,8 +37,10 @@ namespace F.U.E.L
             distanceTraveled += Vector3.Multiply(direction, speed).Length();
             if (distanceTraveled > range)
             {
-                game.Components.Remove(this);
+                this.isAlive = false;
             }
+
+            CheckCollisions(colliders);
             this.bounds = new FloatRectangle(this.position.X, this.position.Z, width, height);
         }
 
@@ -55,6 +60,17 @@ namespace F.U.E.L
                 }
 
                 mesh.Draw();
+            }
+        }
+
+        public virtual void CheckCollisions(List<Object> colliders)
+        {
+            foreach (Object o in colliders)
+            {
+                if (o is Building && bounds.FloatIntersects(o.bounds))
+                {
+                    this.isAlive = false;
+                }
             }
         }
     }

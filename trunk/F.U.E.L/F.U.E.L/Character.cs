@@ -12,9 +12,9 @@ namespace F.U.E.L
     class Character : Object
     {
         protected int topHP;
-        protected int hp { get; private set; }
+        public int hp { get; protected set; }
         protected int topSP;
-        protected int sp { get; private set; }
+        public int sp { get; protected set; }
 
         protected SpawnPoint spawnPoint { get; private set; }
         protected Weapon[] weapons { get; private set; }
@@ -57,6 +57,8 @@ namespace F.U.E.L
             if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0)) velocity.Normalize();
 
             position += speed * velocity;
+
+            if (hp <= 0) isAlive = false;
 
             base.Update(gameTime, colliders);
         }
