@@ -10,12 +10,15 @@ namespace F.U.E.L
 {
     class Enemy : Character
     {
-        public Object target { get; protected set; }
+        protected Object target = null;
+        const float height = .5f;
+        const float width = .5f;
+        const float depth = .5f;
         
         public Enemy(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
             )
-            : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons)
+            : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
 
         }
@@ -41,21 +44,13 @@ namespace F.U.E.L
             }
         }
 
-        /*
-        private void move(Vector2 distanceToTarget) 
+        public override void Update(GameTime gameTime, List<Object> colliders)
         {
-            Vector2 a = distanceToTarget / distanceToTarget.Length() * speed;
-            velocity = new Vector3(a.X, 0, a.Y);
-            position += velocity;
-        }
-         * */
-        
-        public override void Update(GameTime gameTime) {
             List<Building> buildings = new List<Building>();
             List<Player> players = new List<Player>();
 
-            foreach (GameComponent gc in game.Components)
-            {
+             foreach (GameComponent gc in game.Components)
+             {
                 if (gc is Player)
                 {
                     players.Add((Player)gc);
@@ -70,18 +65,35 @@ namespace F.U.E.L
 
             lookDirection = target.position - this.position;
 
-            float targetDist = (target.position - this.position).Length();
-            if (targetDist < weapons[selectedWeapon].range)
-            {
-                velocity = new Vector3(0, 0, 0);
-                weapons[selectedWeapon].shoot(this.position, lookDirection);
-            }
-            else
-            {
-                velocity = target.position - this.position;
-            }
+            velocity = target.position - this.position;
 
-            base.Update(gameTime);
+            CheckCollisions(colliders);
+
+            this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
+
+            base.Update(gameTime, null);
+        }
+
+        public void CheckCollisions(List<Object> colliders)
+        {
+            foreach (Object o in colliders)
+            {
+                if (o is Bullet) 
+                { 
+                }
+                if (bounds.FloatIntersects(o.bounds))
+                {
+                    if (o is Bullet)
+                    {
+                        o.isAlive = false;
+                        this.isAlive = false;
+                        continue;
+                    }
+                    Vector3 moveBack = position - o.position;
+                    moveBack.Normalize();
+                    velocity += moveBack;
+                }
+            }
         }
     }
 }

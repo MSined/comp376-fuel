@@ -11,21 +11,22 @@ namespace F.U.E.L
 {
     class Player : Character
     {
-        
-        //protected float lookAngle;
-        
+        const float height = .5f;
+        const float width = .5f;
+        const float depth = .5f;
+
         public Player(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
             )
-            : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons)
+            : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
-            selectedWeapon = 1;
+
         }
 
-        public override void Update(GameTime gameTime) 
+        public override void Update(GameTime gameTime, List<Object> colliders)
         {
+            #region Keyboard Controls
             //Hack to get it working on a computer
-            ///*
             KeyboardState k = Keyboard.GetState();
             if (k.IsKeyDown(Keys.Up) || k.IsKeyDown(Keys.Down) || k.IsKeyDown(Keys.Left) || k.IsKeyDown(Keys.Right))
             {
@@ -62,45 +63,38 @@ namespace F.U.E.L
 
             if (k.IsKeyDown(Keys.Space))
                 weapons[selectedWeapon].shoot(position, lookDirection);
+            #endregion
 
-            if (k.IsKeyDown(Keys.D1))
-                selectedWeapon = 0;
-
-            if (k.IsKeyDown(Keys.D2))
-                selectedWeapon = 1;
-
-            if (k.IsKeyDown(Keys.D3))
-                selectedWeapon = 2;
-
-            if (k.IsKeyDown(Keys.D4))
-                selectedWeapon = 3;
-            //*/
-            
             //Gamepad Support
             /*
             GamePadState gp = GamePad.GetState(PlayerIndex.One);
-            if (!(gp.ThumbSticks.Right.X == 0 && gp.ThumbSticks.Right.Y == 0)) lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
+            lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
 
-            if (gp.IsButtonDown(Buttons.X))
-                selectedWeapon = 1;
-            if (gp.IsButtonDown(Buttons.Y))
-                selectedWeapon = 2;
-            if (gp.IsButtonDown(Buttons.B))
-                selectedWeapon = 3;
-
-            if (gp.IsButtonDown(Buttons.LeftShoulder)) { }
-                //Recover EP
-            if (gp.IsButtonDown(Buttons.RightShoulder)) { }
-                //Recover HP
-
-            if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection);
-            if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection);
+            if (gp.Triggers.Right > 0) weapons[selectedWeapon].shoot(lookDirection);
 
             velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             */
 
-            base.Update(gameTime);
+            CheckCollisions(colliders);
+
+            this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
+
+            base.Update(gameTime, null);
         }
 
+        public void CheckCollisions(List<Object> colliders)
+        {
+            foreach (Object o in colliders)
+            {
+                if (o is Bullet)
+                    continue;
+                if (bounds.FloatIntersects(o.bounds))
+                {
+                    Vector3 moveBack = position - o.position;
+                    moveBack.Normalize();
+                    velocity += moveBack;
+                }
+            }
+        }
     }
 }

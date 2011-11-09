@@ -119,6 +119,7 @@
     <Compile Include="Enemies\HunterEnemy.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="FloatRectangle.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Map.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpatialHashGrid.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="Tower.cs" />
     <Compile Include="Waypoint.cs" />
@@ -144,8 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\F.U.E.LContent\F.U.E.LContent.contentproj">
-      <Name>F.U.E.LContent</Name>
+      <Name>F.U.E.LContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{ED508A72-E7BC-401E-97DC-899C29BBE7A4}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +178,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram2.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
