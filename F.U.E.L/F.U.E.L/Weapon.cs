@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,7 +22,13 @@ namespace F.U.E.L
                       float range, float damage, int fireRate)
                : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 0,0), true)
         {
+            this.range = range;
+            this.damage = damage;
+            this.fireRate = fireRate;
+            this.lastShot = 0;
 
+            this.bulletModelComponents = new Model[1];
+            this.bulletModelComponents[0] = modelComponents[0];
         }
 
         public virtual void shoot(Vector3 position, Vector3 direction)
@@ -34,3 +41,5 @@ namespace F.U.E.L
                 lastShot = nowTick;
             }
         }
+    }
+}
