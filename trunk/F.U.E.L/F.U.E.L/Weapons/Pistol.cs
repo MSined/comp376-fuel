@@ -26,5 +26,9 @@ namespace F.U.E.L
         {
 
         }
+        public override void Update(GameTime gameTime, List<Object> colliders)
+        {
+
+        }
     }
 }

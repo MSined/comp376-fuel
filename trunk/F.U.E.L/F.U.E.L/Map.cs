@@ -13,8 +13,10 @@ namespace F.U.E.L
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
         public List<Building> buildings { get; protected set; }
+        public float leftXPos { get; protected set; }
+        public float bottomYPos { get; protected set; }
         
-        public Map(Game game, Model[] modelComponents)
+        public Map(Game game, Model[] modelComponents, float leftX, float bottomY)
             : base(game)
         {
             model = modelComponents[0];
@@ -24,9 +26,16 @@ namespace F.U.E.L
             Model[] m2 = new Model[1];
             m2[0] = modelComponents[2];
 
+            // When adding buildings, specify the width and height of the bounding box (last two constructor parameters
+            // If you want to refer to the model size to determine the bounding box:
+            // BB Width = Model Width, BB Height = Model Depth
+            // Because remember the BB is on the XZ-plane
             buildings = new List<Building>();
-            this.buildings.Add(new Building(game, m1, new Vector3(0, 0, 0), 0f));
-            this.buildings.Add(new Generator(game, m2, new Vector3(1, 0, 0), 0f));
+            this.buildings.Add(new Building(game, m1, new Vector3(2, 0, -4), 0f));
+            this.buildings.Add(new Generator(game, m2, new Vector3(6, 0, -4), 0f));
+
+            leftXPos = leftX;
+            bottomYPos = bottomY;
         }
 
         public void Update() { }

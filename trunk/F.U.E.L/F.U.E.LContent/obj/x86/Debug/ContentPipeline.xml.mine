@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline" xmlns:Framework="Microsoft.Xna.Framework" xmlns:Processors="Microsoft.Xna.Framework.Content.Pipeline.Processors">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Models\enemyModel.x</Source>
+      <Name>Models\enemyModel</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\enemyModel.xnb</Output>
+      <Time>2011-10-31T16:48:36.9285102-04:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\enemyModel_0.xml</Key>
+        <Value>2011-10-31T20:57:33.7119712-04:00</Value>
+      </Dependency>
+      <Request>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\enemyTexture_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Models\generatorModel.x</Source>
+      <Name>Models\generatorModel</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\generatorModel.xnb</Output>
+      <Time>2011-10-31T16:48:36.9441102-04:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\generatorModel_0.xml</Key>
+        <Value>2011-10-31T20:57:34.8819733-04:00</Value>
+      </Dependency>
+      <Request>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\generatorTexture_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Models\planeModel.x</Source>
+      <Name>Models\planeModel</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\planeModel.xnb</Output>
+      <Time>2011-10-31T16:48:36.9441102-04:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\planeModel_0.xml</Key>
+        <Value>2011-10-31T20:57:35.4591743-04:00</Value>
+      </Dependency>
+      <Request>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\planeTexture_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Models\playerModel.x</Source>
+      <Name>Models\playerModel</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\playerModel.xnb</Output>
+      <Time>2011-10-31T16:48:36.9285102-04:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\playerModel_0.xml</Key>
+        <Value>2011-10-31T20:57:36.0363753-04:00</Value>
+      </Dependency>
+      <Request>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\playerTexture_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Models\towerModel.x</Source>
+      <Name>Models\towerModel</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Models\towerModel.xnb</Output>
+      <Time>2011-10-31T16:48:36.9441102-04:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\towerModel_0.xml</Key>
+        <Value>2011-10-31T20:57:36.6135763-04:00</Value>
+      </Dependency>
+      <Request>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\towerTexture_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Textures\enemyTexture.png</Source>
+      <Name>Textures\enemyTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\enemyTexture.xnb</Output>
+      <Time>2011-10-31T16:48:37.0689104-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\generatorTexture.png</Source>
+      <Name>Textures\generatorTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\generatorTexture.xnb</Output>
+      <Time>2011-10-31T16:48:37.0845105-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\planeTexture.png</Source>
+      <Name>Textures\planeTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\planeTexture.xnb</Output>
+      <Time>2011-10-31T16:48:37.0689104-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\playerTexture.png</Source>
+      <Name>Textures\playerTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\playerTexture.xnb</Output>
+      <Time>2011-10-31T20:56:29.1928672-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\towerTexture.png</Source>
+      <Name>Textures\towerTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\towerTexture.xnb</Output>
+      <Time>2011-10-31T16:48:37.0689104-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\enemyModel.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\enemyModel_0.xml</Output>
+      <Time>2011-10-31T16:48:36.9285102-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\enemyTexture.png</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\enemyTexture_0.xnb</Output>
+      <Time>2011-10-31T16:48:37.0689104-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\generatorModel.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\generatorModel_0.xml</Output>
+      <Time>2011-10-31T16:48:36.9441102-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\generatorTexture.png</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\generatorTexture_0.xnb</Output>
+      <Time>2011-10-31T16:48:37.0845105-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\planeModel.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\planeModel_0.xml</Output>
+      <Time>2011-10-31T16:48:36.9441102-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\planeTexture.png</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\planeTexture_0.xnb</Output>
+      <Time>2011-10-31T16:48:37.0689104-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\playerModel.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\playerModel_0.xml</Output>
+      <Time>2011-10-31T16:48:36.9285102-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\playerTexture.png</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\playerTexture_0.xnb</Output>
+      <Time>2011-10-31T20:56:29.1928672-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\towerModel.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\towerModel_0.xml</Output>
+      <Time>2011-10-31T16:48:36.9441102-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\towerTexture.png</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\Textures\towerTexture_0.xnb</Output>
+      <Time>2011-10-31T16:48:37.0689104-04:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.LContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.LContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Nicholas\Desktop\School Stuff\School\Concordia\Fall '11\COMP 376\Team Project\F.U.E.L\F.U.E.L\F.U.E.L\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2010-11-24T10:14:46.2946128-05:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

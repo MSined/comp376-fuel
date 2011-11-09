@@ -14,14 +14,14 @@ namespace F.U.E.L
 
         public Building(Game game, Model[] modelComponents, Vector3 position,
             float angle)
-            : base(game, modelComponents, position)
+            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 0.5f, 0.5f), true)
         {
             model = modelComponents[0];
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);
             this.position = position;
         }
 
-        //public void Update() {}
+        public override void Update(GameTime gameTime, List<Object> colliders) {}
 
         public override void Draw(Camera camera)
         {

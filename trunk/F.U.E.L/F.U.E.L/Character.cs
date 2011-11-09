@@ -26,8 +26,8 @@ namespace F.U.E.L
         protected float speed;
 
         public Character(Game game, Model[] modelComponents, Vector3 position,
-            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons)
-            : base(game, modelComponents, position)
+            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons, FloatRectangle bounds, bool isAlive)
+            : base(game, modelComponents, position, bounds, isAlive)
         {
             this.topHP = topHP;
             this.hp = topHP;
@@ -38,13 +38,11 @@ namespace F.U.E.L
             this.speed = speed;
 
             this.spawnPoint = spawnPoint;
-
             this.weapons = weapons;
             this.selectedWeapon = 0;
-
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, List<Object> colliders)
         {
             lookDirection.Normalize();
 
@@ -57,9 +55,8 @@ namespace F.U.E.L
             world = Matrix.CreateRotationY(-angle) * Matrix.CreateTranslation(position);
 
             if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0)) velocity.Normalize();
-            position += speed * velocity;
 
-            base.Update(gameTime);
+            position += speed * velocity;
         }
 
         public override void Draw(Camera camera)

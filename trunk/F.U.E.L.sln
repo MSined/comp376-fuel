@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F.U.E.L", "F.U.E.L.\F.U.E.L\F.U.E.L.csproj", "{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F.U.E.L", "F.U.E.L\F.U.E.L\F.U.E.L.csproj", "{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "F.U.E.LContent", "F.U.E.L.\F.U.E.LContent\F.U.E.LContent.contentproj", "{ED508A72-E7BC-401E-97DC-899C29BBE7A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F.U.E.LContent", "F.U.E.L\F.U.E.LContent\F.U.E.LContent.contentproj", "{ED508A72-E7BC-401E-97DC-899C29BBE7A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{718FBC4A-8310-4578-A2DC-EBE82D92A8F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,12 +13,13 @@ namespace F.U.E.L
         float range, damage;
         float distanceTraveled;
         Vector3 direction;
+        static float width = 0.5f, height = 0.5f;
 
         private const float speed = 0.1f;
 
         public Bullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, float damage)
-            : base(game, modelComponents, position)
+            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Y, width, height), true)
         {
             this.range = range;
             this.damage = damage;
@@ -26,13 +27,16 @@ namespace F.U.E.L
             direction.Normalize();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, List<Object> colliders)
         {
             position += Vector3.Multiply(direction, speed);
             world = Matrix.CreateTranslation(position);
             distanceTraveled += Vector3.Multiply(direction, speed).Length();
             if (distanceTraveled > range)
-                game.Components.Remove(this);
+            {
+                this.isAlive = false;
+            }
+            this.bounds = new FloatRectangle(this.position.X, this.position.Z, width, height);
         }
 
         public override void Draw(Camera camera)
