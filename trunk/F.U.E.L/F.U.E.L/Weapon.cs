@@ -18,8 +18,8 @@ namespace F.U.E.L
         public Model[] bulletModelComponents;
 
         public Weapon(Game game, Model[] modelComponents, Vector3 position,
-            float range, float damage, int fireRate)
-            : base(game, modelComponents, position, new Rectangle(0,0,0,0))
+                      float range, float damage, int fireRate)
+               : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 0,0), true)
         {
 
         }
@@ -32,5 +32,5 @@ namespace F.U.E.L
             {
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage));
                 lastShot = nowTick;
-    }
-}
+            }
+        }
