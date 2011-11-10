@@ -30,6 +30,12 @@ namespace F.U.E.L
             {
                 if ((b.position - this.position).Length() < distance)
                 {
+                    if (b is Generator)
+                    {
+                        Generator g = (Generator)b;
+                        if (g.hp == 0) continue;
+                    }
+
                     distance = (b.position - this.position).Length();
                     target = b;
                 }

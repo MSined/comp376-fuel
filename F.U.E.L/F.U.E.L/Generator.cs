@@ -10,43 +10,66 @@ namespace F.U.E.L
 {
     class Generator : Building
     {
-        private int topHP;
-        private int hp;
+        private const int topHP = 500;
+        private const int repairSpeed = 20;
+        private const int repairRate = 10000000;
+        private long lastRepair;
+
+        public int hp { get; protected set; }
         private bool functional;
-        public float repairRange;
-        public List<Player> players;
  
         public Generator(Game game, Model[] modelComponents, Vector3 position,
-            float angle,
-            int topHP, int hp, bool functional, float repairRange, List<Player> players)
+            float angle
+            )
             : base(game, modelComponents, position, angle)
         {
-            this.topHP = topHP;
-            this.hp = hp;
-            this.functional = functional;
-            this.repairRange = repairRange;
-            this.players = players;
+            this.hp = 0;
+            this.functional = false;
         }
 
-        private void repair(List<Player> players)
+        public override void use()
         {
-            foreach (Player p in players) {
-                if ((p.position - this.position).Length() <= repairRange && p.repairing) {
-                    hp += p.repairSpeed;
-                    if (hp >= topHP) {
-                        hp = topHP;
-                        functional = true;
-                    }
-                }
+            long nowTick = DateTime.Now.Ticks;
+
+            if (lastRepair + repairRate < nowTick)
+            {
+                hp += repairSpeed;
             }
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
-            repair(players);
+            CheckCollisions(colliders);
+
+            if (hp >= topHP)
+            {
+                hp = topHP;
+                functional = true;
+            }
+
             if (hp <= 0) {
                 hp = 0;
                 functional = false;
+            }
+        }
+
+        public void CheckCollisions(List<Object> colliders)
+        {
+            foreach (Object o in colliders)
+            {
+                if (bounds.FloatIntersects(o.bounds))
+                {
+                    if (o is Bullet)
+                    {
+                        Bullet b = (Bullet)o;
+                        if (b.shotByEnemy)
+                        {
+                            o.isAlive = false;
+                            this.hp = hp - b.damage;
+                            continue;
+                        }
+                    }
+                }
             }
         }
     }
