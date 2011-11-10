@@ -19,6 +19,8 @@ namespace F.U.E.L
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D healthTexture;
+
         Model planeModel, towerModel, generatorModel, enemyModel, playerModel;
 
         Camera camera;
@@ -58,12 +60,23 @@ namespace F.U.E.L
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Services.AddService(typeof(SpriteBatch), spriteBatch);
+
+            //NEED TO MAKE BLANK 1x1 TEXTURE
+            healthTexture = Content.Load<Texture2D>(@"Textures\enemyTexture");
 
             planeModel = Content.Load<Model>(@"Models\planeModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
-
             playerModel = Content.Load<Model>(@"Models\playerModel");
+
+            Model[] a = new Model[3];
+            a[0] = planeModel;
+            a[1] = towerModel;
+            a[2] = generatorModel;
+            map = new Map(this, a, -10, 10);
+			Components.Add(map);
+
             Model[] p = new Model[1];
             p[0] = playerModel;
             Weapon[] w = new Weapon[4];
@@ -71,15 +84,8 @@ namespace F.U.E.L
             w[1] = new Shotgun(this, p, new Vector3(0, 0, 0));
             w[2] = new Mines(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
-            players.Add(new Player(this, p, new Vector3(5, 0, 5), 10, 10, 0.08f, new SpawnPoint(), w));
+            players.Add(new Player(this, p, new Vector3(5, 0, 5), 500, 100, 0.08f, new SpawnPoint(), w));
             foreach (Player ply in players) { Components.Add(ply); }
-            
-            Model[] a = new Model[3];
-            a[0] = planeModel;
-            a[1] = towerModel;
-            a[2] = generatorModel;
-            map = new Map(this, a, -10, 10);
-			Components.Add(map);
 
             // Create the grid with necessary information
             grid = new SpatialHashGrid(20, 20, 2, map.leftXPos/2, map.bottomYPos/2);
@@ -170,6 +176,7 @@ namespace F.U.E.L
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
             foreach (GameComponent gc in Components)
             {
                 if (gc is Object)
@@ -183,8 +190,19 @@ namespace F.U.E.L
                     m.Draw(camera);
                 }
             }
-
             base.Draw(gameTime);
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            foreach (GameComponent gc in Components)
+            {
+                if (gc is Character)
+                {
+                    Character c = (Character)gc;
+                    c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                }
+            }
+            spriteBatch.End();            
         }
     }
 }

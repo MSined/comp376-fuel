@@ -42,11 +42,6 @@ namespace F.U.E.L
 
         public void Draw(Camera camera)
         {
-            foreach (Building b in buildings)
-            {
-                b.Draw(camera);
-            }
-
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -62,6 +57,11 @@ namespace F.U.E.L
                 }
 
                 mesh.Draw();
+            }
+
+            foreach (Building b in buildings)
+            {
+                b.Draw(camera);
             }
         }
     }

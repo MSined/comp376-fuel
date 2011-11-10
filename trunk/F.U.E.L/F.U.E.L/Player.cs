@@ -26,7 +26,7 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
-            
+
             #region Keyboard Controls
             //Hack to get it working on a computer
             KeyboardState k = Keyboard.GetState();
@@ -49,7 +49,6 @@ namespace F.U.E.L
             velocity = new Vector3(0, 0, 0);
             if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.D))
             {
-                
                 if (k.IsKeyDown(Keys.W))
                     velocity += new Vector3(0, 0, -1);
 
@@ -104,7 +103,7 @@ namespace F.U.E.L
             if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
             if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection, false);
 
-            //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+            velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             
             CheckCollisions(colliders);
 
