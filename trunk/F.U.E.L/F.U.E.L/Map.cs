@@ -38,7 +38,10 @@ namespace F.U.E.L
             bottomYPos = bottomY;
         }
 
-        public void Update() { }
+        public void Update(GameTime gameTime, List<Object> colliders)
+        {
+            
+        }
 
         public void Draw(Camera camera)
         {

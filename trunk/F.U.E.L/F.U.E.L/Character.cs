@@ -94,9 +94,13 @@ namespace F.U.E.L
             destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, healthBarWidth, healthBarHeight);
             spriteBatch.Draw(healthTexture, destRect, srcRect, Color.LightGray);
 
+            float healthPercentage = (float)hp / (float)topHP;
+
+            Color healthColor = new Color(new Vector3(1 - healthPercentage, healthPercentage, 0));
+
             srcRect = new Rectangle(0, 0, 1, 1);
-            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)((float)hp / topHP * healthBarWidth), healthBarHeight);
-            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Red);
+            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)(healthPercentage * healthBarWidth), healthBarHeight);
+            spriteBatch.Draw(healthTexture, destRect, srcRect, healthColor);
         }
     }
 }
