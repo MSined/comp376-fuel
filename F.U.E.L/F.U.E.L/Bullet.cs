@@ -41,6 +41,7 @@ namespace F.U.E.L
             }
 
             CheckCollisions(colliders);
+
             this.bounds = new FloatRectangle(this.position.X, this.position.Z, width, height);
         }
 

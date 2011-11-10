@@ -21,7 +21,7 @@ namespace F.U.E.L
         public int selectedWeapon { get; protected set; }
         protected int[] attributes { get; private set; }
 
-        protected Vector3 lookDirection = new Vector3(1, 0, 0);
+        public Vector3 lookDirection = new Vector3(1, 0, 0);
         protected Vector3 velocity = new Vector3(0,0,0);
         protected float speed;
 

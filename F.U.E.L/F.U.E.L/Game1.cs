@@ -21,7 +21,7 @@ namespace F.U.E.L
 
         Texture2D healthTexture;
 
-        Model planeModel, towerModel, generatorModel, enemyModel, playerModel;
+        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel;
 
         Camera camera;
         Map map;
@@ -47,8 +47,7 @@ namespace F.U.E.L
         protected override void Initialize()
         {
             // Create camera and add to components list
-            camera = new Camera(this, new Vector3(0, 10, 10), Vector3.Zero, -Vector3.UnitZ);
-            Components.Add(camera);
+            camera = new Camera(this, new Vector3(0, 20, 0), Vector3.Zero, -Vector3.UnitZ);
 
             base.Initialize();
         }
@@ -67,13 +66,14 @@ namespace F.U.E.L
 
             planeModel = Content.Load<Model>(@"Models\planeModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
-            generatorModel = Content.Load<Model>(@"Models\generatorModel");
+            generatorModel = Content.Load<Model>(@"Models\generatorModel");            buildingModel = Content.Load<Model>(@"Models\TestBuilding");
             playerModel = Content.Load<Model>(@"Models\playerModel");
 
-            Model[] a = new Model[3];
+            Model[] a = new Model[4];
             a[0] = planeModel;
             a[1] = towerModel;
             a[2] = generatorModel;
+            a[3] = buildingModel;
             map = new Map(this, a, -10, 10);
 			Components.Add(map);
 
@@ -103,11 +103,11 @@ namespace F.U.E.L
 
             for (int i = 0; i < enemy.Length; ++i)
             {
-                w = new Weapon[1];
-                w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
+			w = new Weapon[1];
+			w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
                 enemy[i] = new HunterEnemy(this, em, new Vector3(i, 0, 0), new SpawnPoint(), w);
             }
-
+            
             foreach (Enemy e in enemy)
             {
                 Components.Add(e);
@@ -148,27 +148,38 @@ namespace F.U.E.L
             Components.CopyTo(gcc,0);
             foreach (GameComponent gc in gcc)
             {
-                if (!(gc is Object))
+                if(!(gc is Object))
                 {
                     gc.Update(gameTime);
+            }
+                else
+            {
+                    Object o = (Object)gc;
+                // Only update if the object is alive
+                if (o.isAlive)
+                {
+                    colliders = grid.getPotentialColliders(o);
+                    o.Update(gameTime, colliders);
+                    colliders.Clear();
                 }
                 else
                 {
-                    Object o = (Object)gc;
-                    // Only update if the object is alive
-                    if (o.isAlive)
-                    {
-                        colliders = grid.getPotentialColliders(o);
-                        o.Update(gameTime, colliders);
-                        colliders.Clear();
-                    }
-                    else
-                    {
                         Components.Remove(o);
-                        grid.removeDynamicObject(o);
-                    }
+                    grid.removeDynamicObject(o);
                 }
             }
+            }
+
+            camera.Update(gameTime);
+            map.Update(gameTime);
+
+            // Remove dead objects from the necessary lists
+            foreach (Object o in removeList)
+            {
+                Components.Remove(o);
+                grid.removeDynamicObject(o);
+            }
+            removeList.Clear();
 
             base.Update(gameTime);
         }
@@ -193,7 +204,7 @@ namespace F.U.E.L
                 {
                     Map m = (Map)gc;
                     m.Draw(camera);
-                }
+            }
             }
             base.Draw(gameTime);
             spriteBatch.End();
@@ -205,7 +216,7 @@ namespace F.U.E.L
                 {
                     Character c = (Character)gc;
                     c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
-                }
+            }
             }
 
             List<Building> buildings = map.buildings;
@@ -215,10 +226,10 @@ namespace F.U.E.L
                 {
                     Generator g = (Generator)gc;
                     g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
-                }
-            }
+        }
+    }
 
             spriteBatch.End();            
-        }
+}
     }
 }

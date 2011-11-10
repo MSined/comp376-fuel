@@ -15,9 +15,9 @@ namespace F.U.E.L
         private const int TOPSP = 50;
        
         public HunterEnemy(Game game, Model[] modelComponents, Vector3 position,
-            /*int topHP, int topSP, float speed,*/ SpawnPoint spawnPoint, Weapon[] weapons
+            SpawnPoint spawnPoint, Weapon[] weapons
             )
-            : base(game, modelComponents, position, TOPHP, TOPSP, SPEED, spawnPoint, weapons)
+            : base(game, modelComponents, position, spawnPoint, weapons, TOPHP, TOPSP, SPEED)
         {
 
         }

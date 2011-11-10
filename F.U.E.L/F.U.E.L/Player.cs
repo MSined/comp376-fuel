@@ -26,7 +26,6 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
-
             #region Keyboard Controls
             //Hack to get it working on a computer
             KeyboardState k = Keyboard.GetState();
@@ -63,7 +62,7 @@ namespace F.U.E.L
             }
 
             if (k.IsKeyDown(Keys.Space))
-                weapons[selectedWeapon].shoot(position, lookDirection, true);
+                weapons[selectedWeapon].shoot(position, lookDirection, false);
 
             if (k.IsKeyDown(Keys.D1))
                 selectedWeapon = 0;
@@ -147,7 +146,7 @@ namespace F.U.E.L
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
-                    if (o is Bullet)
+                if (o is Bullet)
                     {
                         Bullet b = (Bullet)o;
                         if (b.shotByEnemy && b.isAlive)
@@ -158,14 +157,14 @@ namespace F.U.E.L
                         }
                     }
                     if (o is Building)
-                    {
-                        Vector3 moveBack = position - o.position;
-                        moveBack.Normalize();
+                {
+                    Vector3 moveBack = position - o.position;
+                    moveBack.Normalize();
                         position += moveBack * speed;
-                    }
-                    
                 }
+                    
             }
         }
     }
+}
 }
