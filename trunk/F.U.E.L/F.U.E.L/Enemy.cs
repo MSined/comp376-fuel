@@ -16,7 +16,7 @@ namespace F.U.E.L
         const float depth = .5f;
         
         public Enemy(Game game, Model[] modelComponents, Vector3 position,
-            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
+            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 20, int topSP = 20, float speed = 0.04f
             )
             : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
@@ -33,11 +33,11 @@ namespace F.U.E.L
                     if (b is Generator)
                     {
                         Generator g = (Generator)b;
-                        if (g.hp == 0) continue;
+                        if (g.hp == 0) 
+                            continue;
+                        distance = (b.position - this.position).Length();
+                        target = b;
                     }
-
-                    distance = (b.position - this.position).Length();
-                    target = b;
                 }
             }
             foreach (Player p in players)
@@ -107,7 +107,8 @@ namespace F.U.E.L
                     }
                     Vector3 moveBack = position - o.position;
                     moveBack.Normalize();
-                    position += moveBack * speed;
+                    moveBack *= 0.08f;
+                    position += moveBack;
                 }
             }
         }
