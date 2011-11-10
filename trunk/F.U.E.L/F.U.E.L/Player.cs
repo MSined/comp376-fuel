@@ -14,9 +14,7 @@ namespace F.U.E.L
         const float height = .5f;
         const float width = .5f;
         const float depth = .5f;
-
-        public bool repairing;
-        public int repairSpeed;
+        const float useRange = 1f;
 
         public Player(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
@@ -66,7 +64,7 @@ namespace F.U.E.L
             }
 
             if (k.IsKeyDown(Keys.Space))
-                weapons[selectedWeapon].shoot(position, lookDirection);
+                weapons[selectedWeapon].shoot(position, lookDirection, true);
 
             if (k.IsKeyDown(Keys.D1))
                 selectedWeapon = 0;
@@ -92,6 +90,12 @@ namespace F.U.E.L
             if (gp.IsButtonDown(Buttons.B))
                 selectedWeapon = 3;
 
+            if (gp.IsButtonDown(Buttons.A))
+            {
+                Building b = getUsableBuilding();
+                if (b != null) b.use();
+            }
+            
             if (gp.IsButtonDown(Buttons.LeftShoulder)) { }
                 //Recover EP
             if (gp.IsButtonDown(Buttons.RightShoulder)) { }
@@ -100,7 +104,6 @@ namespace F.U.E.L
             if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
             if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection, false);
 
-            
             //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             
             CheckCollisions(colliders);
@@ -108,6 +111,35 @@ namespace F.U.E.L
             this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
 
             base.Update(gameTime, colliders);
+        }
+
+        protected Building getUsableBuilding()
+        {
+            List<Building> buildings = new List<Building>();
+            Building target = null;
+
+            foreach (GameComponent gc in game.Components)
+            {
+                if (gc is Map)
+                {
+                    Map m = (Map)gc;
+                    buildings = m.buildings;
+                }
+            }
+
+            float distance = float.PositiveInfinity;
+            foreach (Building b in buildings)
+            {
+                if ((b.position - this.position).Length() < distance)
+                {
+                    distance = (b.position - this.position).Length();
+                    target = b;
+                }
+            }
+
+            if (distance > useRange) target = null;
+
+            return target;
         }
 
         public void CheckCollisions(List<Object> colliders)

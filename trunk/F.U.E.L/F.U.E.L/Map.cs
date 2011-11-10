@@ -15,9 +15,8 @@ namespace F.U.E.L
         public List<Building> buildings { get; protected set; }
         public float leftXPos { get; protected set; }
         public float bottomYPos { get; protected set; }
-        public List<Player> players;
         
-        public Map(Game game, Model[] modelComponents, float leftX, float bottomY, List<Player> players)
+        public Map(Game game, Model[] modelComponents, float leftX, float bottomY)
             : base(game)
         {
             model = modelComponents[0];
@@ -32,13 +31,11 @@ namespace F.U.E.L
             // BB Width = Model Width, BB Height = Model Depth
             // Because remember the BB is on the XZ-plane
             buildings = new List<Building>();
-            this.buildings.Add(new Building(game, m1, new Vector3(2, 0, -4), 0f));
-            this.buildings.Add(new Generator(game, m2, new Vector3(6, 0, -4), 0f, 100, 100, true, 5, players));
+            this.buildings.Add(new Factory(game, m1, new Vector3(2, 0, -4), 0f));
+            this.buildings.Add(new Generator(game, m2, new Vector3(6, 0, -4), 0f));
 
             leftXPos = leftX;
             bottomYPos = bottomY;
-
-            this.players = players;
         }
 
         public void Update() { }

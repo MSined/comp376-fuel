@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Building : Object
+    abstract class Building : Object
     {
         public Model model { get; protected set; }
         
@@ -42,6 +42,11 @@ namespace F.U.E.L
 
                 mesh.Draw();
             }
+        }
+
+        public virtual void use()
+        {
+
         }
     }
 }
