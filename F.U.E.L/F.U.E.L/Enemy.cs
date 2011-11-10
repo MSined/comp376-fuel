@@ -98,7 +98,7 @@ namespace F.U.E.L
                     if (o is Bullet)
                     {
                         Bullet b = (Bullet)o;
-                        if (!b.shotByEnemy)
+                        if (!b.shotByEnemy && b.isAlive)
                         {
                             o.isAlive = false;
                             this.hp = hp - b.damage;

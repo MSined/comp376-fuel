@@ -25,6 +25,7 @@ namespace F.U.E.L
         {
             this.hp = 0;
             this.functional = false;
+            this.lastRepair = 0;
         }
 
         public override void use()
@@ -34,6 +35,7 @@ namespace F.U.E.L
             if (lastRepair + repairRate < nowTick)
             {
                 hp += repairSpeed;
+                lastRepair = nowTick;
             }
         }
 
@@ -62,7 +64,7 @@ namespace F.U.E.L
                     if (o is Bullet)
                     {
                         Bullet b = (Bullet)o;
-                        if (b.shotByEnemy)
+                        if (b.shotByEnemy && b.isAlive)
                         {
                             o.isAlive = false;
                             this.hp = hp - b.damage;
@@ -71,6 +73,25 @@ namespace F.U.E.L
                     }
                 }
             }
+        }
+
+        public void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
+        {
+            int healthBarWidth = 40;
+            int healthBarHeight = 5;
+            Rectangle srcRect, destRect;
+
+            Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 1.5f, 0), camera.projection, camera.view, Matrix.Identity);
+
+            srcRect = new Rectangle(0, 0, 1, 1);
+            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, healthBarWidth, healthBarHeight);
+            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.LightGray);
+
+            float healthPercentage = (float)hp / (float)topHP;
+
+            srcRect = new Rectangle(0, 0, 1, 1);
+            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)(healthPercentage * healthBarWidth), healthBarHeight);
+            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Blue);
         }
     }
 }

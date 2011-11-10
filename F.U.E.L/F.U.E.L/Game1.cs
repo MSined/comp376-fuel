@@ -77,6 +77,11 @@ namespace F.U.E.L
             map = new Map(this, a, -10, 10);
 			Components.Add(map);
 
+            foreach (Building b in map.buildings)
+            {
+                Components.Add(b);
+            }
+
             Model[] p = new Model[1];
             p[0] = playerModel;
             Weapon[] w = new Weapon[4];
@@ -202,6 +207,17 @@ namespace F.U.E.L
                     c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }
             }
+
+            List<Building> buildings = map.buildings;
+            foreach (Building gc in buildings)
+            {
+                if (gc is Generator)
+                {
+                    Generator g = (Generator)gc;
+                    g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                }
+            }
+
             spriteBatch.End();            
         }
     }
