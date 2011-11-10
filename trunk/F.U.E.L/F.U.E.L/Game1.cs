@@ -66,7 +66,8 @@ namespace F.U.E.L
 
             planeModel = Content.Load<Model>(@"Models\planeModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
-            generatorModel = Content.Load<Model>(@"Models\generatorModel");            buildingModel = Content.Load<Model>(@"Models\TestBuilding");
+            generatorModel = Content.Load<Model>(@"Models\generatorModel");            
+            buildingModel = Content.Load<Model>(@"Models\TestBuilding");
             playerModel = Content.Load<Model>(@"Models\playerModel");
 
             Model[] a = new Model[4];
@@ -86,7 +87,7 @@ namespace F.U.E.L
             p[0] = playerModel;
             Weapon[] w = new Weapon[4];
             w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
-            w[1] = new Shotgun(this, p, new Vector3(0, 0, 0));
+            w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
             w[2] = new Mines(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
             players.Add(new Player(this, p, new Vector3(5, 0, 5), 500, 100, 0.08f, new SpawnPoint(), w));
