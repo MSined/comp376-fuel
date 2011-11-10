@@ -81,5 +81,22 @@ namespace F.U.E.L
                 mesh.Draw();
             }
         }
+
+        public void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
+        {
+            int healthBarWidth = 20;
+            int healthBarHeight = 5;
+            Rectangle srcRect, destRect;
+
+            Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 0.8f, 0), camera.projection, camera.view, Matrix.Identity);
+
+            srcRect = new Rectangle(0, 0, 1, 1);
+            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, healthBarWidth, healthBarHeight);
+            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.LightGray);
+
+            srcRect = new Rectangle(0, 0, 1, 1);
+            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)((float)hp / topHP * healthBarWidth), healthBarHeight);
+            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Red);
+        }
     }
 }
