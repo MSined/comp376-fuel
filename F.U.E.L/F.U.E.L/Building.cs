@@ -13,8 +13,8 @@ namespace F.U.E.L
         public Model model { get; protected set; }
         
         public Building(Game game, Model[] modelComponents, Vector3 position,
-            float angle)
-            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 2f, 2f), true)
+            float width, float depth, float angle)
+            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
             model = modelComponents[0];
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);

@@ -103,6 +103,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Textures\alienTexture.png">
+      <Name>alienTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Textures\testBuildingTex.png">
       <Name>testBuildingTex</Name>
       <Importer>TextureImporter</Importer>

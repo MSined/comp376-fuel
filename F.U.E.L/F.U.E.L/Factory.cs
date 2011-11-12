@@ -12,7 +12,7 @@ namespace F.U.E.L
     {
         public Factory(Game game, Model[] modelComponents, Vector3 position,
             float angle)
-            : base(game, modelComponents, position, angle)
+            : base(game, modelComponents, position, 0.5f, 0.5f, angle)
         {
 
         }

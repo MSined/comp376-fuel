@@ -146,7 +146,7 @@ namespace F.U.E.L
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
-                if (o is Bullet)
+                    if (o is Bullet)
                     {
                         Bullet b = (Bullet)o;
                         if (b.shotByEnemy && b.isAlive)
@@ -157,14 +157,14 @@ namespace F.U.E.L
                         }
                     }
                     if (o is Building)
-                {
-                    Vector3 moveBack = position - o.position;
-                    moveBack.Normalize();
+                    {
+                        Vector3 moveBack = position - o.position;
+                        moveBack.Normalize();
                         position += moveBack * speed;
-                }
+                    }
                     
+                }
             }
         }
     }
-}
 }
