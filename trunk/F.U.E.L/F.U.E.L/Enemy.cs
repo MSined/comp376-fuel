@@ -107,8 +107,7 @@ namespace F.U.E.L
                     }
                     Vector3 moveBack = position - o.position;
                     moveBack.Normalize();
-                    moveBack *= 0.08f;
-                    position += moveBack;
+                    position += moveBack * speed;
                 }
             }
         }

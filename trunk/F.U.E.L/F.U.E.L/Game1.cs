@@ -47,7 +47,8 @@ namespace F.U.E.L
         protected override void Initialize()
         {
             // Create camera and add to components list
-            camera = new Camera(this, new Vector3(0, 20, 0), Vector3.Zero, -Vector3.UnitZ);
+            camera = new Camera(this, new Vector3(0, 10, 10), Vector3.Zero, -Vector3.UnitZ);
+            Components.Add(camera);
 
             base.Initialize();
         }
@@ -66,7 +67,7 @@ namespace F.U.E.L
 
             planeModel = Content.Load<Model>(@"Models\planeModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
-            generatorModel = Content.Load<Model>(@"Models\generatorModel");            
+            generatorModel = Content.Load<Model>(@"Models\generatorModel");
             buildingModel = Content.Load<Model>(@"Models\TestBuilding");
             playerModel = Content.Load<Model>(@"Models\playerModel");
 
@@ -76,7 +77,7 @@ namespace F.U.E.L
             a[2] = generatorModel;
             a[3] = buildingModel;
             map = new Map(this, a, -10, 10);
-			Components.Add(map);
+            Components.Add(map);
 
             foreach (Building b in map.buildings)
             {
@@ -87,15 +88,15 @@ namespace F.U.E.L
             p[0] = playerModel;
             Weapon[] w = new Weapon[4];
             w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
-            w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
+            w[1] = new Shotgun(this, p, new Vector3(0, 0, 0));
             w[2] = new Mines(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
             players.Add(new Player(this, p, new Vector3(5, 0, 5), 500, 100, 0.08f, new SpawnPoint(), w));
             foreach (Player ply in players) { Components.Add(ply); }
 
             // Create the grid with necessary information
-            grid = new SpatialHashGrid(20, 20, 2, map.leftXPos/2, map.bottomYPos/2);
-            for(int i = 0; i < map.buildings.Count; ++i)
+            grid = new SpatialHashGrid(20, 20, 2, map.leftXPos / 2, map.bottomYPos / 2);
+            for (int i = 0; i < map.buildings.Count; ++i)
                 grid.insertStaticObject(map.buildings[i]);
 
             enemyModel = Content.Load<Model>(@"Models\enemyModel");
@@ -104,11 +105,11 @@ namespace F.U.E.L
 
             for (int i = 0; i < enemy.Length; ++i)
             {
-			w = new Weapon[1];
-			w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
+                w = new Weapon[1];
+                w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
                 enemy[i] = new HunterEnemy(this, em, new Vector3(i, 0, 0), new SpawnPoint(), w);
             }
-            
+
             foreach (Enemy e in enemy)
             {
                 Components.Add(e);
@@ -146,41 +147,30 @@ namespace F.U.E.L
 
             List<Object> colliders = new List<Object>();
             GameComponent[] gcc = new GameComponent[Components.Count];
-            Components.CopyTo(gcc,0);
+            Components.CopyTo(gcc, 0);
             foreach (GameComponent gc in gcc)
             {
-                if(!(gc is Object))
+                if (!(gc is Object))
                 {
                     gc.Update(gameTime);
-            }
+                }
                 else
-            {
+                {
                     Object o = (Object)gc;
-                // Only update if the object is alive
-                if (o.isAlive)
-                {
-                    colliders = grid.getPotentialColliders(o);
-                    o.Update(gameTime, colliders);
-                    colliders.Clear();
-                }
-                else
-                {
+                    // Only update if the object is alive
+                    if (o.isAlive)
+                    {
+                        colliders = grid.getPotentialColliders(o);
+                        o.Update(gameTime, colliders);
+                        colliders.Clear();
+                    }
+                    else
+                    {
                         Components.Remove(o);
-                    grid.removeDynamicObject(o);
+                        grid.removeDynamicObject(o);
+                    }
                 }
             }
-            }
-
-            camera.Update(gameTime);
-            map.Update(gameTime);
-
-            // Remove dead objects from the necessary lists
-            foreach (Object o in removeList)
-            {
-                Components.Remove(o);
-                grid.removeDynamicObject(o);
-            }
-            removeList.Clear();
 
             base.Update(gameTime);
         }
@@ -192,8 +182,8 @@ namespace F.U.E.L
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
             foreach (GameComponent gc in Components)
             {
                 if (gc is Object)
@@ -205,10 +195,9 @@ namespace F.U.E.L
                 {
                     Map m = (Map)gc;
                     m.Draw(camera);
-            }
+                }
             }
             base.Draw(gameTime);
-            spriteBatch.End();
 
             spriteBatch.Begin();
             foreach (GameComponent gc in Components)
@@ -217,7 +206,7 @@ namespace F.U.E.L
                 {
                     Character c = (Character)gc;
                     c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
-            }
+                }
             }
 
             List<Building> buildings = map.buildings;
@@ -227,10 +216,10 @@ namespace F.U.E.L
                 {
                     Generator g = (Generator)gc;
                     g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
-        }
-    }
+                }
+            }
 
-            spriteBatch.End();            
-}
+            spriteBatch.End();
+        }
     }
 }
