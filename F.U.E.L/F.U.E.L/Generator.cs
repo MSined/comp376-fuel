@@ -41,6 +41,7 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
+            //all collisions are handled by characters
             CheckCollisions(colliders);
 
             if (hp >= topHP)
