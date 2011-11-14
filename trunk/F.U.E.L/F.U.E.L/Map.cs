@@ -97,7 +97,7 @@ namespace F.U.E.L
             for (int i = 0; i < coordinate.GetLongLength(0); i++) {
                 for (int j = 0; coordinate[i, j] != -1; j++)
                 {
-                    this.buildings.Add(new Building(game, model, new Vector3((i * 2)-36, 0, (2 * (coordinate[i, j]))-36), 2.1f, 2.1f, 0f));
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2)-36, 0, (2 * (coordinate[i, j]))-36), 2.3f, 2.3f, 0f));
                 }
             }
         }
@@ -140,14 +140,17 @@ namespace F.U.E.L
                 {
                     //this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 0.5f, 0.5f, 0f));
                     // Changed hit box area for trees, they were too small for debugging, tree texture was building texture
-                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2.1f, 2.1f, 0f));
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2.3f, 2.3f, 0f));
                 }
             }
         }
 
         public void Update(GameTime gameTime, List<Object> colliders)
         {
-            
+            foreach (Generator g in buildings)
+            {
+                g.Update(gameTime, colliders);
+            }
         }
 
         public void Draw(Camera camera)
@@ -169,10 +172,13 @@ namespace F.U.E.L
                 mesh.Draw();
             }
 
-            /*foreach (Building b in buildings)
+            foreach (Building b in buildings)
             {
-                b.Draw(camera);
-            }*/
+                if (camera.onScreen((Object)b))
+                {
+                    b.Draw(camera);
+                }
+            }
         }
     }
 }
