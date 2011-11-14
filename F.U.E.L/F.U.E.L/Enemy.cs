@@ -12,8 +12,8 @@ namespace F.U.E.L
     {
         protected Object target = null;
         const float height = .5f;
-        const float width = .5f;
-        const float depth = .5f;
+        const float width = 1.5f;
+        const float depth = 1.5f;
         
         public Enemy(Game game, Model[] modelComponents, Vector3 position,
             SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 20, int topSP = 20, float speed = 0.04f

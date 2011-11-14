@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -21,12 +22,12 @@ namespace F.U.E.L
 
         Texture2D healthTexture;
 
-        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel;
+        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel;
 
         Camera camera;
         Map map;
         List<Player> players = new List<Player>();
-        Enemy[] enemy = new Enemy[12];
+        Enemy[] enemy = new Enemy[3];
         SpatialHashGrid grid;
         Model[] em = new Model[1];
 
@@ -34,8 +35,16 @@ namespace F.U.E.L
 
         public Game1()
         {
+            Components.Add(new FrameRateCounter(this));
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            //graphics.IsFullScreen = true;
+            // The following code removes the XNA fixed timestep (framerate limiter)
+            IsFixedTimeStep = false;
+            // Because the above is an artificial but necessary step, this one sets the timestep to 1ms
+            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            // This removes the synchronization with the screen to allow a faster framerate
+            graphics.SynchronizeWithVerticalRetrace = false;
         }
 
         /// <summary>
@@ -70,13 +79,15 @@ namespace F.U.E.L
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
             buildingModel = Content.Load<Model>(@"Models\TestBuilding");
             playerModel = Content.Load<Model>(@"Models\playerModel");
+            treeModel = Content.Load<Model>(@"Models\treeModel");
 
-            Model[] a = new Model[4];
+            Model[] a = new Model[5];
             a[0] = planeModel;
             a[1] = towerModel;
             a[2] = generatorModel;
             a[3] = buildingModel;
-            map = new Map(this, a, -10, 10);
+            a[4] = treeModel;
+            map = new Map(this, a, -36, 36);
             Components.Add(map);
 
             foreach (Building b in map.buildings)
@@ -88,18 +99,18 @@ namespace F.U.E.L
             p[0] = playerModel;
             Weapon[] w = new Weapon[4];
             w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
-            w[1] = new Shotgun(this, p, new Vector3(0, 0, 0));
+            w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
             w[2] = new Mines(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
             players.Add(new Player(this, p, new Vector3(5, 0, 5), 500, 100, 0.08f, new SpawnPoint(), w));
             foreach (Player ply in players) { Components.Add(ply); }
 
             // Create the grid with necessary information
-            grid = new SpatialHashGrid(20, 20, 2, map.leftXPos / 2, map.bottomYPos / 2);
+            grid = new SpatialHashGrid(72, 72, 2, map.leftXPos / 2, map.bottomYPos / 2);
             for (int i = 0; i < map.buildings.Count; ++i)
                 grid.insertStaticObject(map.buildings[i]);
 
-            enemyModel = Content.Load<Model>(@"Models\enemyModel");
+            enemyModel = Content.Load<Model>(@"Models\alien788");
             Model[] em = new Model[1];
             em[0] = enemyModel;
 
@@ -114,15 +125,6 @@ namespace F.U.E.L
             {
                 Components.Add(e);
             }
-
-            // Remove whatever is in the removeList, from the grid and the components list
-            /*
-            foreach (Object o in removeList)
-            {
-                grid.removeDynamicObject(o);
-                Components.Remove(o);
-            }
-             * */
         }
 
         /// <summary>
@@ -171,7 +173,6 @@ namespace F.U.E.L
                     }
                 }
             }
-
             base.Update(gameTime);
         }
 
@@ -218,7 +219,6 @@ namespace F.U.E.L
                     g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }
             }
-
             spriteBatch.End();
         }
     }

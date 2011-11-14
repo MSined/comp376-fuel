@@ -37,70 +37,21 @@ namespace F.U.E.L
             // Load object into array
             m3[0] = modelComponents[3];
 
+            // Each object takes an array, need to create a new array
+            Model[] m4 = new Model[1];
+            // Load object into array
+            m4[0] = modelComponents[4];
+
             // When adding buildings, specify the width and height of the bounding box (last two constructor parameters
             // If you want to refer to the model size to determine the bounding box:
             // BB Width = Model Width, BB Height = Model Depth
             // Because remember the BB is on the XZ-plane
             buildings = new List<Building>();
-            this.buildings.Add(new Factory(game, m1, new Vector3(2, 0, -4), 0f));
-            this.buildings.Add(new Generator(game, m2, new Vector3(6, 0, -4), 0f));
+            //this.buildings.Add(new Factory(game, m1, new Vector3(2, 0, -4), 0f));
+            //this.buildings.Add(new Generator(game, m2, new Vector3(6, 0, -4), 0f));
             
-            // Top row of buildings
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-8, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-6, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-4, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-2, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(0, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(2, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(4, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(6, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(8, 0, 10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, 10), 2f, 2f, 0f));
-            // Bottom row of buildings
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-8, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-6, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-4, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-2, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(0, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(2, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(4, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(6, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(8, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, -10), 2f, 2f, 0f));
-            // Left Column of buildings
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, -8), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, -6), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, -4), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, -2), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, 0), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, 2), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, 4), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, 6), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, 8), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-10, 0, 10), 2f, 2f, 0f));
-            // Right Column of buildings
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, -10), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, -8), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, -6), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, -4), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, -2), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, 0), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, 2), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, 4), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, 6), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, 8), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(10, 0, 10), 2f, 2f, 0f));
-            // Lower left hiding spot
-            this.buildings.Add(new Building(game, m3, new Vector3(-8, 0, 4), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-6, 0, 4), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-4, 0, 4), 2f, 2f, 0f));
-            this.buildings.Add(new Building(game, m3, new Vector3(-4, 0, 6), 2f, 2f, 0f));
-            
-            //addTrees(game, m3, buildings);
-            //addBuildings(game, m3, buildings);
+            addTrees(game, m4, buildings);
+            addBuildings(game, m3, buildings);
             leftXPos = leftX;
             bottomYPos = bottomY;
         }
@@ -143,10 +94,10 @@ namespace F.U.E.L
                                   { 0, 6,14,15,20,21,22,23,26,35,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                                   { 0, 6,12,17,35,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                                   { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,-1}};
-            for (int i = 0; i < 36; i++) {
+            for (int i = 0; i < coordinate.GetLongLength(0); i++) {
                 for (int j = 0; coordinate[i, j] != -1; j++)
                 {
-                    this.buildings.Add(new Building(game, model, new Vector3(i * 2, 0, 2 * (coordinate[i, j])), 2f, 2f, 0f));
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2)-36, 0, (2 * (coordinate[i, j]))-36), 2.1f, 2.1f, 0f));
                 }
             }
         }
@@ -183,11 +134,13 @@ namespace F.U.E.L
                                   {15,16,17,18,19,25,28,31,34,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                                   {15,18,19,22,23,26,28,29,31,34,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                                   {22,23,28,29,31,32,34,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
-            for (int i = 0; i < 28; i++)
+            for (int i = 0; i < coordinate.GetLongLength(0); i++)
             {
                 for (int j = 0; coordinate[i, j] != -1; j++)
                 {
-                    this.buildings.Add(new Building(game, model, new Vector3(i * 2, 0, 2 * (coordinate[i, j])), 0.5f, 0.5f, 0f));
+                    //this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 0.5f, 0.5f, 0f));
+                    // Changed hit box area for trees, they were too small for debugging, tree texture was building texture
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2.1f, 2.1f, 0f));
                 }
             }
         }
