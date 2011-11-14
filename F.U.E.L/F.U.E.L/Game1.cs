@@ -90,10 +90,10 @@ namespace F.U.E.L
             map = new Map(this, a, -36, 36);
             Components.Add(map);
 
-            foreach (Building b in map.buildings)
+            /*foreach (Building b in map.buildings)
             {
                 Components.Add(b);
-            }
+            }*/
 
             Model[] p = new Model[1];
             p[0] = playerModel;
