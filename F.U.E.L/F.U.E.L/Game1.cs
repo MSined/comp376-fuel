@@ -187,7 +187,7 @@ namespace F.U.E.L
 
             foreach (GameComponent gc in Components)
             {
-                if (gc is Object)
+                if (gc is Object && camera.onScreen((Object)gc))
                 {
                     Object o = (Object)gc;
                     o.Draw(camera);
