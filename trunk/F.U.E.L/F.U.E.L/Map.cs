@@ -169,10 +169,10 @@ namespace F.U.E.L
                 mesh.Draw();
             }
 
-            foreach (Building b in buildings)
+            /*foreach (Building b in buildings)
             {
                 b.Draw(camera);
-            }
+            }*/
         }
     }
 }

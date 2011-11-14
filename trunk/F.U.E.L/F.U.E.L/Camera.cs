@@ -98,5 +98,11 @@ namespace F.U.E.L
         {
             view = Matrix.CreateLookAt(cameraPosition, cameraPosition + cameraDirection, cameraUp);
         }
+
+        public bool onScreen(Object o) 
+        {
+            if (Math.Abs((o.position - (player.position)).Length()) < 20) { return true; }
+            else { return false; }
+        }
     }
 }
