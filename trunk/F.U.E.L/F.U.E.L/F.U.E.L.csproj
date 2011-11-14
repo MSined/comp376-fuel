@@ -120,6 +120,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="FloatRectangle.cs" />
+    <Compile Include="FrameRateCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Map.cs" />
