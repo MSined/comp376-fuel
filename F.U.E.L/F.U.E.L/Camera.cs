@@ -101,7 +101,7 @@ namespace F.U.E.L
 
         public bool onScreen(Object o) 
         {
-            if (Math.Abs((o.position - (player.position)).Length()) < 20) { return true; }
+            if (Math.Abs((o.position - (player.position)).Length()) < 22) { return true; }
             else { return false; }
         }
     }
