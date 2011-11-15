@@ -13,11 +13,13 @@ namespace F.U.E.L
         private const float SPEED = 0.05f;
         private const int TOPHP = 50;
         private const int TOPSP = 50;
-       
-        public HunterEnemy(Game game, Model[] modelComponents, Vector3 position,
+
+        // Removed position from this constructor as it will be taken from the spawnpoint when the enemy passes it to
+        // the character constructor
+        public HunterEnemy(Game game, Model[] modelComponents,
             SpawnPoint spawnPoint, Weapon[] weapons
             )
-            : base(game, modelComponents, position, spawnPoint, weapons, TOPHP, TOPSP, SPEED)
+            : base(game, modelComponents, spawnPoint, weapons, TOPHP, TOPSP, SPEED)
         {
 
         }

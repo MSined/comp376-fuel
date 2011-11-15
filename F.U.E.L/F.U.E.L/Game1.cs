@@ -22,7 +22,7 @@ namespace F.U.E.L
 
         Texture2D healthTexture;
 
-        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel;
+        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel;
 
         Camera camera;
         Map map;
@@ -80,20 +80,18 @@ namespace F.U.E.L
             buildingModel = Content.Load<Model>(@"Models\TestBuilding");
             playerModel = Content.Load<Model>(@"Models\playerModel");
             treeModel = Content.Load<Model>(@"Models\treeModel");
+            telePadModel = Content.Load<Model>(@"Models\telePadModel");
 
-            Model[] a = new Model[5];
+            Model[] a = new Model[6];
             a[0] = planeModel;
             a[1] = towerModel;
             a[2] = generatorModel;
             a[3] = buildingModel;
             a[4] = treeModel;
+            a[5] = telePadModel;
             map = new Map(this, a, -36, 36);
             Components.Add(map);
 
-            /*foreach (Building b in map.buildings)
-            {
-                Components.Add(b);
-            }*/
 
             Model[] p = new Model[1];
             p[0] = playerModel;
@@ -102,7 +100,7 @@ namespace F.U.E.L
             w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
             w[2] = new Mines(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
-            players.Add(new Player(this, p, new Vector3(5, 0, 5), 500, 100, 0.08f, new SpawnPoint(), w));
+            players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[0], w));
             foreach (Player ply in players) { Components.Add(ply); }
 
             // Create the grid with necessary information
@@ -118,7 +116,7 @@ namespace F.U.E.L
             {
                 w = new Weapon[1];
                 w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
-                enemy[i] = new HunterEnemy(this, em, new Vector3(2*i, 0, 0), new SpawnPoint(), w);
+                enemy[i] = new HunterEnemy(this, em, map.spawnPoints[1], w);
             }
 
             foreach (Enemy e in enemy)
@@ -215,7 +213,7 @@ namespace F.U.E.L
             foreach (Building gc in buildings)
             {*/
                 if (gc is Generator && camera.onScreen((Object)gc))
-                {
+            {
                     Generator g = (Generator)gc;
                     g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }

@@ -16,10 +16,10 @@ namespace F.U.E.L
         const float depth = .5f;
         const float useRange = 1f;
 
-        public Player(Game game, Model[] modelComponents, Vector3 position,
+        public Player(Game game, Model[] modelComponents,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
             )
-            : base(game, modelComponents, position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
+            : base(game, modelComponents, spawnPoint.position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
             selectedWeapon = 1;
         }

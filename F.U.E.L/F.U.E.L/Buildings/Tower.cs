@@ -8,13 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Waypoint
+    class Tower : Building
     {
-        public Vector3 position;
-
-        public Waypoint(Vector3 pos)
+        public Tower(Game game, Model[] modelComponents, Vector3 position,
+            float angle)
+            : base(game, modelComponents, position, 0.5f, 0.5f, angle)
         {
-            position = pos;
+
         }
     }
 }

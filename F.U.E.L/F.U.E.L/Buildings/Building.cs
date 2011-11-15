@@ -8,20 +8,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class SpawnPoint : Waypoint
+    class Building : Object
     {
-        Model model;
-        Matrix world = Matrix.Identity;
-        float angle = 0;
-
-        public SpawnPoint(Model model, Vector3 position)
-            : base(position)
+        public Model model { get; protected set; }
+        
+        public Building(Game game, Model[] modelComponents, Vector3 position,
+            float width, float depth, float angle)
+            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
-            this.model = model;
+            model = modelComponents[0];
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);
+            this.position = position;
         }
 
-        public void Draw(Camera camera)
+        public override void Update(GameTime gameTime, List<Object> colliders) 
+        {
+		
+		}
+
+        public override void Draw(Camera camera)
         {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
@@ -31,13 +36,17 @@ namespace F.U.E.L
                 foreach (BasicEffect be in mesh.Effects)
                 {
                     be.EnableDefaultLighting();
-                    be.SpecularPower = 10f;
                     be.Projection = camera.projection;
                     be.View = camera.view;
                     be.World = world * mesh.ParentBone.Transform;
                 }
                 mesh.Draw();
             }
+        }
+
+        public virtual void use()
+        {
+
         }
     }
 }
