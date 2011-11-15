@@ -16,7 +16,7 @@ namespace F.U.E.L
         protected int topSP;
         public int sp { get; protected set; }
 
-        protected SpawnPoint spawnPoint { get; private set; }
+        public SpawnPoint spawnPoint { get; private set; }
         protected Weapon[] weapons { get; private set; }
         public int selectedWeapon { get; protected set; }
         protected int[] attributes { get; private set; }
@@ -25,6 +25,7 @@ namespace F.U.E.L
         protected Vector3 velocity = new Vector3(0,0,0);
         protected float speed;
 
+        // Characters initial position is defined by the spawnpoint ther are associated with
         public Character(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons, FloatRectangle bounds, bool isAlive)
             : base(game, modelComponents, position, bounds, isAlive)
@@ -61,7 +62,19 @@ namespace F.U.E.L
             //check collisions after moved
             CheckCollisions(colliders);
 
-            if (hp <= 0) isAlive = false;
+            if (hp <= 0)
+            {
+                // If current character is the player and it died
+                // Return it to the spawnpoint
+                if (this is Player)
+                {
+                    this.hp = this.topHP;
+                    position = this.spawnPoint.position;
+                }
+                // Otherwise kill it!
+                else
+                    isAlive = false;
+            }
 
             base.Update(gameTime, colliders);
         }

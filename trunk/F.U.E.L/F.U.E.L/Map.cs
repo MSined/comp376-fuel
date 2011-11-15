@@ -15,6 +15,8 @@ namespace F.U.E.L
         public List<Building> buildings { get; protected set; }
         public float leftXPos { get; protected set; }
         public float bottomYPos { get; protected set; }
+        // Map has list of spawnpoints first in the list is the player spawnpoint
+        public List<SpawnPoint> spawnPoints { get; protected set; }
         
         public Map(Game game, Model[] modelComponents, float leftX, float bottomY)
             : base(game)
@@ -23,35 +25,34 @@ namespace F.U.E.L
             model = modelComponents[0];
 
             // Each object takes an array, need to create a new array
-            Model[] m1 = new Model[1];
+            Model[] tower = new Model[1];
             // Load object into array
-            m1[0] = modelComponents[1];
+            tower[0] = modelComponents[1];
 
-            // Each object takes an array, need to create a new array
-            Model[] m2 = new Model[1];
-            // Load object into array
-            m2[0] = modelComponents[2];
+            Model[] generator = new Model[1];
+            generator[0] = modelComponents[2];
 
-            // Each object takes an array, need to create a new array
-            Model[] m3 = new Model[1];
-            // Load object into array
-            m3[0] = modelComponents[3];
+            Model[] building = new Model[1];
+            building[0] = modelComponents[3];
 
-            // Each object takes an array, need to create a new array
-            Model[] m4 = new Model[1];
-            // Load object into array
-            m4[0] = modelComponents[4];
+            Model[] trees = new Model[1];
+            trees[0] = modelComponents[4];
+
+            Model[] telePad = new Model[1];
+            telePad[0] = modelComponents[5];
 
             // When adding buildings, specify the width and height of the bounding box (last two constructor parameters
             // If you want to refer to the model size to determine the bounding box:
             // BB Width = Model Width, BB Height = Model Depth
             // Because remember the BB is on the XZ-plane
             buildings = new List<Building>();
-            //this.buildings.Add(new Factory(game, m1, new Vector3(2, 0, -4), 0f));
-            //this.buildings.Add(new Generator(game, m2, new Vector3(6, 0, -4), 0f));
+            spawnPoints = new List<SpawnPoint>();
+
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 30)));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(30, 0, -30)));
             
-            addTrees(game, m4, buildings);
-            addBuildings(game, m3, buildings);
+            addTrees(game, trees, buildings);
+            addBuildings(game, building, buildings);
             leftXPos = leftX;
             bottomYPos = bottomY;
         }
@@ -177,6 +178,14 @@ namespace F.U.E.L
                 {
                     b.Draw(camera);
                 }
+            }
+
+            foreach (SpawnPoint s in spawnPoints)
+            {
+                //if (camera.onScreen((Object)s))
+                //{
+                    s.Draw(camera);
+                //}
             }
         }
     }
