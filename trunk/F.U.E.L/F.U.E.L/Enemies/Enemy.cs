@@ -53,6 +53,12 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
+            if (this.hp <= 0)
+            {
+                this.isAlive = false;
+                return;
+            }
+
             List<Building> buildings = new List<Building>();
             List<Player> players = new List<Player>();
 

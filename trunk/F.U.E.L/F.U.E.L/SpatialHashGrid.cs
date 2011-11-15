@@ -60,11 +60,12 @@ namespace F.U.E.L
         }
 
         public void removeDynamicObject(Object obj)
-        {
-            int[] cellIDs = getCellIDs(obj);
+         {
+             if (obj is Enemy)
+                 obj.isAlive = false;
             int i = 0;
             int cellID = -1;
-            while (i <= 3 && (cellID = cellIDs[i]) != -1)
+            while (i <= 3 && (cellID = obj.cellIDs[i]) != -1)
             {
                 dynamicCells[cellID].Remove(obj);
                 ++i;
@@ -93,12 +94,13 @@ namespace F.U.E.L
 
         public List<Object> getPotentialColliders(Object obj)
         {
+            #region Reset the objects cellIDs
             foundObjects.Clear();
             int[] cellIDs = getCellIDs(obj);
             // Check to see if the object has changed any cell location
             for (int k = 0; k < 4; ++k)
             {
-                // If a cell location has changed
+                // If this objects cell location has changed
                 if (cellIDs[k] != obj.cellIDs[k])
                 {
                     // If the new location is -1 (old location should not be -1)
@@ -127,6 +129,7 @@ namespace F.U.E.L
                 // Set the old cellIDs to the new ones
                 obj.cellIDs[k] = cellIDs[k];
             }
+            #endregion
 
             int i = 0;
             int cellID = -1;
