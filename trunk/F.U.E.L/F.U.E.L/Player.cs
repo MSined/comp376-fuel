@@ -75,6 +75,14 @@ namespace F.U.E.L
 
             if (k.IsKeyDown(Keys.D4))
                 selectedWeapon = 3;
+
+            if (k.IsKeyDown(Keys.T))//missing cooldown/ will be moved to Skill
+            {
+                Weapon[] w = new Weapon[1];
+                w[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                game.Components.Add(new Tower(game, modelComponents, 10, 0, position + lookDirection, spawnPoint, w));
+            }
+
             #endregion
 
             //Gamepad Support
@@ -103,10 +111,6 @@ namespace F.U.E.L
             if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection, false);
 
             //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
-            
-            //moved to Character
-            /*CheckCollisions(colliders);
-            this.bounds = new FloatRectangle(position.X, position.Z, width, depth);*/
 
             base.Update(gameTime, colliders);
         }
@@ -140,33 +144,5 @@ namespace F.U.E.L
             return target;
         }
 
-        //moved to Character
-        /*public void CheckCollisions(List<Object> colliders)
-        {
-            foreach (Object o in colliders)
-            {
-                if (bounds.FloatIntersects(o.bounds))
-                {
-                    //all bullet collisions are moved to Bullet 
-                    if (o is Bullet)
-                    {
-                        Bullet b = (Bullet)o;
-                        if (b.shotByEnemy && b.isAlive)
-                        {
-                            o.isAlive = false;
-                            this.hp = hp - b.damage;
-                            continue;
-                        }
-                    }
-                    if (o is Building)
-                    {
-                        Vector3 moveBack = position - o.position;
-                        moveBack.Normalize();
-                        position += moveBack * speed;
-                    }
-                    
-                }
-            }
-        }*/
     }
 }

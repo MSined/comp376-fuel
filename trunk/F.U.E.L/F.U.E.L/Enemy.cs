@@ -23,7 +23,7 @@ namespace F.U.E.L
 
         }
 
-        protected virtual void chooseTarget(List<Building> buildings, List<Player> players) 
+        protected virtual void chooseTarget(List<Building> buildings, List<Player> players, List<Tower> towers) 
         {
             float distance = float.PositiveInfinity;
             foreach (Building b in buildings)
@@ -48,69 +48,59 @@ namespace F.U.E.L
                     target = p;
                 }
             }
+            foreach (Tower t in towers)
+            {
+                if ((p.position - this.position).Length() < distance)
+                {
+                    distance = (t.position - this.position).Length();
+                    target = t;
+                }
+            }
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
-            List<Building> buildings = new List<Building>();
-            List<Player> players = new List<Player>();
-
-             foreach (GameComponent gc in game.Components)
-             {
-                if (gc is Player)
-                {
-                    players.Add((Player)gc);
-                }
-                if (gc is Map)
-                {
-                    Map m = (Map)gc;
-                    buildings = m.buildings;
-                }
-            }
-            chooseTarget(buildings, players);
-
-            lookDirection = target.position - this.position;
-
-            float targetDist = (target.position - this.position).Length();
-            if (targetDist < weapons[selectedWeapon].range)
+            if (target = null || !target.isAlive)//choose target if it doesn't have one or the last one is dead
             {
-                velocity = new Vector3(0, 0, 0);
-                weapons[selectedWeapon].shoot(this.position, lookDirection, true);
-            }
-			else
-			{
-				velocity = target.position - this.position;
-			}
+                List<Building> buildings = new List<Building>();
+                List<Player> players = new List<Player>();
+                List<Tower> towers = new List<Tower>();
 
-            //moved to Character
-            /*CheckCollisions(colliders);
-            this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
-            */
+                foreach (GameComponent gc in game.Components)
+                {
+                    if (gc is Player)
+                    {
+                        players.Add((Player)gc);
+                    }
+                    if (gc is Map)
+                    {
+                        Map m = (Map)gc;
+                        buildings = m.buildings;
+                    }
+                    if (gc is Tower)
+                    {
+                        towera.Add((Tower)gc);
+                    }
+                }
+                chooseTarget(buildings, players, towers);
+            }
+            else
+            {
+                lookDirection = target.position - this.position;
+
+                float targetDist = (target.position - this.position).Length();
+                if (targetDist < weapons[selectedWeapon].range)
+                {
+                    velocity = new Vector3(0, 0, 0);
+                    weapons[selectedWeapon].shoot(this.position, lookDirection, true);
+                }
+                else
+                {
+                    velocity = target.position - this.position;
+                }
+            }
             base.Update(gameTime, colliders);
         }
 
-        /*public void CheckCollisions(List<Object> colliders)
-        {
-            foreach (Object o in colliders)
-            {
-                if (bounds.FloatIntersects(o.bounds))
-                {
-                    //all bullet collisions are moved to Bullet 
-                    if (o is Bullet)
-                    {
-                        Bullet b = (Bullet)o;
-                        if (!b.shotByEnemy && b.isAlive)
-                        {
-                            o.isAlive = false;
-                            this.hp = hp - b.damage;
-                            continue;
-                        }
-                    }
-                    Vector3 moveBack = position - o.position;
-                    moveBack.Normalize();
-                    position += moveBack * speed;
-                }
-            }
-        }*/
     }
 }

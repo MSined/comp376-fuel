@@ -208,12 +208,8 @@ namespace F.U.E.L
                     Character c = (Character)gc;
                     c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }
-            //one foreach for both/ moved "List<Building> buildings = map.buildings;" before foreach
-            /*}
-            foreach (Building gc in buildings)
-            {*/
                 if (gc is Generator && camera.onScreen((Object)gc))
-            {
+                {
                     Generator g = (Generator)gc;
                     g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }
