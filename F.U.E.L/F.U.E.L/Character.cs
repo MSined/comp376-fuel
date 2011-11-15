@@ -152,7 +152,7 @@ namespace F.U.E.L
                         moveBack.Normalize();
                         position += moveBack * speed;*/
                     }
-                    if (o is Enemy)
+                    if (o is Enemy || o is Tower)
                     {
                         //position -= speed * velocity;
                         Vector3 moveBack = position - o.position;
