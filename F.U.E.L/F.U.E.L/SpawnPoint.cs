@@ -13,12 +13,34 @@ namespace F.U.E.L
         Model model;
         Matrix world = Matrix.Identity;
         float angle = 0;
+        public float spawnTimer = 0, spawnTimeDelay = 1000;
+        bool playerSpawnPoint = false;
 
-        public SpawnPoint(Model model, Vector3 position)
+        public SpawnPoint(Model model, Vector3 position, bool isPlayersSpawn)
             : base(position)
         {
             this.model = model;
+            playerSpawnPoint = isPlayersSpawn;
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            spawnTimer += gameTime.ElapsedGameTime.Milliseconds;
+        }
+
+        public bool readyToSpawn()
+        {
+            if (!playerSpawnPoint)
+            {
+                if (spawnTimer >= spawnTimeDelay)
+                {
+                    spawnTimer = 0;
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
 
         public void Draw(Camera camera)

@@ -27,7 +27,7 @@ namespace F.U.E.L
         Camera camera;
         Map map;
         List<Player> players = new List<Player>();
-        Enemy[] enemy = new Enemy[3];
+        Enemy[] enemy = new Enemy[10];
         SpatialHashGrid grid;
         Model[] em = new Model[1];
 
@@ -47,12 +47,6 @@ namespace F.U.E.L
             graphics.SynchronizeWithVerticalRetrace = false;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             // Create camera and add to components list
@@ -62,10 +56,6 @@ namespace F.U.E.L
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -92,7 +82,6 @@ namespace F.U.E.L
             map = new Map(this, a, -36, 36);
             Components.Add(map);
 
-
             Model[] p = new Model[1];
             p[0] = playerModel;
             Weapon[] w = new Weapon[4];
@@ -111,40 +100,32 @@ namespace F.U.E.L
             enemyModel = Content.Load<Model>(@"Models\alien788");
             Model[] em = new Model[1];
             em[0] = enemyModel;
-
+            /*
             for (int i = 0; i < enemy.Length; ++i)
             {
                 w = new Weapon[1];
                 w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
                 enemy[i] = new HunterEnemy(this, em, map.spawnPoints[1], w);
             }
-
+            *//*
             foreach (Enemy e in enemy)
             {
                 Components.Add(e);
-            }
+            }*/
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            #region Update Game Components
             List<Object> colliders = new List<Object>();
             GameComponent[] gcc = new GameComponent[Components.Count];
             Components.CopyTo(gcc, 0);
@@ -166,18 +147,58 @@ namespace F.U.E.L
                     }
                     else
                     {
+                        if (o is Enemy)
+                        {
+                            int i = 0;
+                            while (enemy[i] != null && enemy[i].objectID != o.objectID)
+                            {
+                                ++i;
+                            }
+                            enemy[i] = null;
+                        }
                         Components.Remove(o);
                         grid.removeDynamicObject(o);
-                    }
+                     }
                 }
             }
+            #endregion
+
+            #region Update The SpawnPoints
+            // Spawn enemies when the spawnPoints respawn rate is reached
+            foreach (SpawnPoint s in map.spawnPoints)
+            {
+                s.Update(gameTime);
+                if (s.readyToSpawn())
+                {
+                    bool skip = false;
+                    int i = 0;
+                    while (enemy[i] != null)
+                    {
+                        ++i;
+                        if (i >= enemy.Length)
+                        {
+                            skip = true;
+                            break;
+                        }
+                    }
+                    if (skip)
+                        continue;
+                    Weapon[] w = new Weapon[1];
+                    Model[] shotModel = new Model[1];
+                    shotModel[0] = playerModel;
+                    w[0] = new PowerFist(this, shotModel, Vector3.Zero);
+                    Model[] em = new Model[1];
+                    em[0] = enemyModel;
+
+                    enemy[i] = new Enemy(this, em, s, w);
+                    Components.Add(enemy[i]);
+                }
+            }
+            #endregion
+
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
