@@ -11,7 +11,8 @@ namespace F.U.E.L
 {
     class PowerFist : Weapon
     {
-        private const float RANGE = 0.5f;
+        //range = 1.75/ enemy size is 1.5
+        private const float RANGE = 1.75f;
         private const int DAMAGE = 15;
         private const int FIRERATE = 10000000;
 

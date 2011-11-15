@@ -97,14 +97,14 @@ namespace F.U.E.L
             for (int i = 0; i < coordinate.GetLongLength(0); i++) {
                 for (int j = 0; coordinate[i, j] != -1; j++)
                 {
-                    this.buildings.Add(new Building(game, model, new Vector3((i * 2)-36, 0, (2 * (coordinate[i, j]))-36), 2.3f, 2.3f, 0f));
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2f, 2f, 0f));
                 }
             }
         }
 
         private void addTrees(Game game, Model[] model, List<Building> buildings)
         {
-            int[,] coordinate = { //[28][27]
+            int[,] coordinate = { //[29][27]
                                   {10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,-1},
                                   { 7, 8, 9,10,24,25,35,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                                   {35,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -138,9 +138,8 @@ namespace F.U.E.L
             {
                 for (int j = 0; coordinate[i, j] != -1; j++)
                 {
-                    //this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 0.5f, 0.5f, 0f));
                     // Changed hit box area for trees, they were too small for debugging, tree texture was building texture
-                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2.3f, 2.3f, 0f));
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2f, 2f, 0f));
                 }
             }
         }

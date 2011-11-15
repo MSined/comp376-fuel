@@ -68,9 +68,27 @@ namespace F.U.E.L
         {
             foreach (Object o in colliders)
             {
-                if (o is Building && bounds.FloatIntersects(o.bounds))
+                if (bounds.FloatIntersects(o.bounds))
                 {
-                    this.isAlive = false;
+                    if (o is Player && this.shotByEnemy)
+                    {
+                        this.isAlive = false;
+                        Player p = (Player)o;
+                        p.hp = p.hp - this.damage;
+                        continue;
+                    }
+                    if (o is Enemy && !this.shotByEnemy)
+                    {
+                        this.isAlive = false;
+                        Enemy e = (Enemy)o;
+                        e.hp = e.hp - this.damage;
+                        continue;
+                    }
+
+                    if (o is Building)// && bounds.FloatIntersects(o.bounds))
+                    {
+                        this.isAlive = false;
+                    }
                 }
             }
         }
