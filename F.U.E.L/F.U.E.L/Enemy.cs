@@ -82,19 +82,20 @@ namespace F.U.E.L
 				velocity = target.position - this.position;
 			}
 
-            CheckCollisions(colliders);
-
+            //moved to Character
+            /*CheckCollisions(colliders);
             this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
-
+            */
             base.Update(gameTime, colliders);
         }
 
-        public void CheckCollisions(List<Object> colliders)
+        /*public void CheckCollisions(List<Object> colliders)
         {
             foreach (Object o in colliders)
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
+                    //all bullet collisions are moved to Bullet 
                     if (o is Bullet)
                     {
                         Bullet b = (Bullet)o;
@@ -110,6 +111,6 @@ namespace F.U.E.L
                     position += moveBack * speed;
                 }
             }
-        }
+        }*/
     }
 }

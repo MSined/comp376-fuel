@@ -104,9 +104,9 @@ namespace F.U.E.L
 
             //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             
-            CheckCollisions(colliders);
-
-            this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
+            //moved to Character
+            /*CheckCollisions(colliders);
+            this.bounds = new FloatRectangle(position.X, position.Z, width, depth);*/
 
             base.Update(gameTime, colliders);
         }
@@ -140,12 +140,14 @@ namespace F.U.E.L
             return target;
         }
 
-        public void CheckCollisions(List<Object> colliders)
+        //moved to Character
+        /*public void CheckCollisions(List<Object> colliders)
         {
             foreach (Object o in colliders)
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
+                    //all bullet collisions are moved to Bullet 
                     if (o is Bullet)
                     {
                         Bullet b = (Bullet)o;
@@ -165,6 +167,6 @@ namespace F.U.E.L
                     
                 }
             }
-        }
+        }*/
     }
 }

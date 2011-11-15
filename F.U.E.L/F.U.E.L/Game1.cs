@@ -118,7 +118,7 @@ namespace F.U.E.L
             {
                 w = new Weapon[1];
                 w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
-                enemy[i] = new HunterEnemy(this, em, new Vector3(i, 0, 0), new SpawnPoint(), w);
+                enemy[i] = new HunterEnemy(this, em, new Vector3(2*i, 0, 0), new SpawnPoint(), w);
             }
 
             foreach (Enemy e in enemy)
@@ -201,19 +201,20 @@ namespace F.U.E.L
             base.Draw(gameTime);
 
             spriteBatch.Begin();
+            
+            List<Building> buildings = map.buildings;
             foreach (GameComponent gc in Components)
             {
-                if (gc is Character)
+                if (gc is Character && camera.onScreen((Object)gc))
                 {
                     Character c = (Character)gc;
                     c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }
-            }
-
-            List<Building> buildings = map.buildings;
+            //one foreach for both/ moved "List<Building> buildings = map.buildings;" before foreach
+            /*}
             foreach (Building gc in buildings)
-            {
-                if (gc is Generator)
+            {*/
+                if (gc is Generator && camera.onScreen((Object)gc))
                 {
                     Generator g = (Generator)gc;
                     g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);

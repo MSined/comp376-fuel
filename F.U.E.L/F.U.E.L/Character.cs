@@ -12,7 +12,7 @@ namespace F.U.E.L
     class Character : Object
     {
         protected int topHP;
-        public int hp { get; protected set; }
+        public int hp;// { get; protected set; }
         protected int topSP;
         public int sp { get; protected set; }
 
@@ -57,6 +57,9 @@ namespace F.U.E.L
             if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0)) velocity.Normalize();
 
             position += speed * velocity;
+            this.bounds = new FloatRectangle(position.X, position.Z, this.bounds.Width, this.bounds.Height);
+            //check collisions after moved
+            CheckCollisions(colliders);
 
             if (hp <= 0) isAlive = false;
 
@@ -102,6 +105,31 @@ namespace F.U.E.L
             srcRect = new Rectangle(0, 0, 1, 1);
             destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)(healthPercentage * healthBarWidth), healthBarHeight);
             spriteBatch.Draw(healthTexture, destRect, srcRect, healthColor);
+        }
+
+        //collision vs buildings/ all bullet collisions are in Bullet
+        public void CheckCollisions(List<Object> colliders)
+        {
+            foreach (Object o in colliders)
+            {
+                if (bounds.FloatIntersects(o.bounds))
+                {
+                    if (o is Building)
+                    {
+                        position -= speed * velocity;
+                        /*Vector3 moveBack = position - o.position;
+                        moveBack.Normalize();
+                        position += moveBack * speed;*/
+                    }
+                    if (o is Enemy)
+                    {
+                        //position -= speed * velocity;
+                        Vector3 moveBack = position - o.position;
+                        moveBack.Normalize();
+                        position += moveBack * speed;
+                    }
+                }
+            }
         }
     }
 }
