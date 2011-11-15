@@ -116,7 +116,25 @@ namespace F.U.E.L
                 {
                     if (o is Building)
                     {
-                        position -= speed * velocity;
+                        //neutralize the Z movement if going in a collision by moving up/down
+                        if (bounds.CenterX > o.bounds.Left && bounds.CenterX < o.bounds.Right)
+                        {
+                            position -= speed * new Vector3 (0,0,velocity.Z);
+                        }
+                        //neutralize the X movement if going in a collision by moving left/right
+                        if (bounds.CenterY < o.bounds.Top && bounds.CenterY > o.bounds.Bottom)
+                        {
+                            position -= speed * new Vector3(velocity.X, 0, 0);
+                        }
+                        
+                        //update bounds again to make sure Character does not get stuck
+                        this.bounds = new FloatRectangle(position.X, position.Z, this.bounds.Width, this.bounds.Height);
+                        if (bounds.FloatIntersects(o.bounds)) {//push against the building
+                            Vector3 moveBack = position - o.position;
+                            moveBack.Normalize();
+                            position += moveBack * speed;
+                        }
+
                         /*Vector3 moveBack = position - o.position;
                         moveBack.Normalize();
                         position += moveBack * speed;*/
