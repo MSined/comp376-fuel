@@ -77,7 +77,7 @@ namespace F.U.E.L
             if (k.IsKeyDown(Keys.D4))
                 selectedWeapon = 3;
 
-            //if (k.IsKeyDown(Keys.T))//missing cooldown/ will be moved to Skill
+            //Doesn't need cooldown, fixed the tower spamming to a single button press
             if(k.IsKeyDown(Keys.T))
             {
                 if (!placedTower)
