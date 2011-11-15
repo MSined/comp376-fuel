@@ -48,8 +48,8 @@ namespace F.U.E.L
             buildings = new List<Building>();
             spawnPoints = new List<SpawnPoint>();
 
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 30)));
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(30, 0, -30)));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 30), true));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(30, 0, -30), false));
             
             addTrees(game, trees, buildings);
             addBuildings(game, building, buildings);
@@ -150,6 +150,11 @@ namespace F.U.E.L
             foreach (Generator g in buildings)
             {
                 g.Update(gameTime, colliders);
+            }
+
+            foreach (SpawnPoint s in spawnPoints)
+            {
+                s.Update(gameTime);
             }
         }
 

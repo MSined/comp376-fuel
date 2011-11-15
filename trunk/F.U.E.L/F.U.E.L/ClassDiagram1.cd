@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="F.U.E.L.Building" Collapsed="true">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAABAAAAAAIAAA=</HashCode>
+      <FileName>Buildings\Building.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Factory" Collapsed="true">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\Factory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Generator" Collapsed="true">
+    <Position X="5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQABAAAAAAAAAAAoAAAAAAgAAAACAJABAAAAAAAA=</HashCode>
+      <FileName>Buildings\Generator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Tower" Collapsed="true">
+    <Position X="7.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buildings\Tower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Bullet" Collapsed="true">
+    <Position X="12.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAIAAAAogQAQAAAAAAAAAAAAQCABAAAAAAAAAA=</HashCode>
+      <FileName>Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.AOEBullet" Collapsed="true">
+    <Position X="14.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bullets\AOEBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.BounceBullet" Collapsed="true">
+    <Position X="10" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bullets\BounceBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.DOTBullet" Collapsed="true">
+    <Position X="10" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bullets\DOTBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.LobBullet" Collapsed="true">
+    <Position X="12.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Bullets\LobBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.PushBackBullet" Collapsed="true">
+    <Position X="14.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bullets\PushBackBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Camera" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAgAAAIAAAQAAAAAAAAAEABAAAAAJAQAAAQAAAIA=</HashCode>
+      <FileName>Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Character" Collapsed="true">
+    <Position X="12" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQQAAAAAAQAgAAAAAAAAAQAAAAEQCAIARAkAAAAAA=</HashCode>
+      <FileName>Character.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Enemy" Collapsed="true">
+    <Position X="10.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAQAYAAAAAAAAAAAAACAEAAAIAAAAAA=</HashCode>
+      <FileName>Enemies\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.HunterEnemy" Collapsed="true">
+    <Position X="10.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAABEAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Enemies\HunterEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.FloatRectangle" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAEAAABAAAAAAAGAAQAEAAAAAIAAAACACAAAAAAAA=</HashCode>
+      <FileName>FloatRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.FrameRateCounter" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCEEAAAQAAAgAAACAAAAAAAAACIAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>FrameRateCounter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Game1" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAEEAAAgIAAwABAAASAgABAAgAAAgAKIAAABAIAAY=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Map" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAEAAAAAAAAgAABAIAAAAAAAACAAAAAAAAAAAIoAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Object" Collapsed="true">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAEAAAAAAAAgAAQAAAIAABAAAAAAAIAAACAAEgAAA=</HashCode>
+      <FileName>Objects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Player" Collapsed="true">
+    <Position X="13" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAAAAoAQAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Program" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.SpatialHashGrid" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAEAAAAgAIAAQAAAQMAAQBAAEAQgACAAAAEAAggAAAA=</HashCode>
+      <FileName>SpatialHashGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.SpawnPoint" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAABIAAA=</HashCode>
+      <FileName>SpawnPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Waypoint" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Waypoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.AssaultRifle" Collapsed="true">
+    <Position X="2.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgACAAgAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Weapons\AssaultRifle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.FlameThrower" Collapsed="true">
+    <Position X="2.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAgACAAgAAAAAAAAAAAAAAAQAAAAAAgA=</HashCode>
+      <FileName>Weapons\FlameThrower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Grenade" Collapsed="true">
+    <Position X="7.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAgACAAgAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Weapons\Grenade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Mines" Collapsed="true">
+    <Position X="5.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAgACAAgAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Weapons\Mines.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.MiniGun" Collapsed="true">
+    <Position X="5.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAgACAAgAAAAAAAAAAAAAAAQAAAAAAgA=</HashCode>
+      <FileName>Weapons\MiniGun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Pistol" Collapsed="true">
+    <Position X="7.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAgACAAgAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Weapons\Pistol.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.PowerFist" Collapsed="true">
+    <Position X="2.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgACAAgAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Weapons\PowerFist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Shotgun" Collapsed="true">
+    <Position X="5.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAgACAAwAAAAAAAAAAIAAAAAAAAAAAgA=</HashCode>
+      <FileName>Weapons\Shotgun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F.U.E.L.Weapon" Collapsed="true">
+    <Position X="5.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAMAAIAgAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Weapons\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

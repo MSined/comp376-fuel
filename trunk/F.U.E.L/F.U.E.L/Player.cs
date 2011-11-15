@@ -15,6 +15,7 @@ namespace F.U.E.L
         const float width = .5f;
         const float depth = .5f;
         const float useRange = 1f;
+        bool placedTower = false;
 
         public Player(Game game, Model[] modelComponents,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
@@ -76,12 +77,19 @@ namespace F.U.E.L
             if (k.IsKeyDown(Keys.D4))
                 selectedWeapon = 3;
 
-            if (k.IsKeyDown(Keys.T))//missing cooldown/ will be moved to Skill
+            //if (k.IsKeyDown(Keys.T))//missing cooldown/ will be moved to Skill
+            if(k.IsKeyDown(Keys.T))
             {
-                Weapon[] w = new Weapon[1];
-                w[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                game.Components.Add(new Tower(game, modelComponents, 10, 0, position + lookDirection, spawnPoint, w));
+                if (!placedTower)
+                {
+                    placedTower = true;
+                    Weapon[] w = new Weapon[1];
+                    w[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    game.Components.Add(new Tower(game, modelComponents, 10, 0, position + lookDirection, spawnPoint, w));
+                }
             }
+            if (k.IsKeyUp(Keys.T))
+                placedTower = false;
 
             #endregion
 

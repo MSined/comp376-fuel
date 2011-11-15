@@ -94,7 +94,6 @@ namespace F.U.E.L
                     be.View = camera.view;
                     be.World = world * mesh.ParentBone.Transform;
                 }
-
                 mesh.Draw();
             }
         }
