@@ -17,14 +17,14 @@ namespace F.U.E.L
         
         // Removed position from this constructor as it will be taken from the spawnpoint
         public Enemy(Game game, Model[] modelComponents,
-            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 20, int topSP = 20, float speed = 0.04f
+            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.04f
             )
             : base(game, modelComponents, spawnPoint.position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
 
         }
 
-        protected virtual void chooseTarget(List<Building> buildings, List<Player> players) 
+        protected virtual void chooseTarget(List<Building> buildings, List<Player> players, List<Tower> towers) 
         {
             float distance = float.PositiveInfinity;
             foreach (Building b in buildings)
@@ -49,6 +49,14 @@ namespace F.U.E.L
                     target = p;
                 }
             }
+            foreach (Tower t in towers)
+            {
+                if ((t.position - this.position).Length() < distance)
+                {
+                    distance = (t.position - this.position).Length();
+                    target = t;
+                }
+            }
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
@@ -58,65 +66,52 @@ namespace F.U.E.L
                 this.isAlive = false;
                 return;
             }
-
-            List<Building> buildings = new List<Building>();
-            List<Player> players = new List<Player>();
-
-             foreach (GameComponent gc in game.Components)
-             {
-                if (gc is Player)
-                {
-                    players.Add((Player)gc);
-                }
-                if (gc is Map)
-                {
-                    Map m = (Map)gc;
-                    buildings = m.buildings;
-                }
-            }
-            chooseTarget(buildings, players);
-
-            lookDirection = target.position - this.position;
-
-            float targetDist = (target.position - this.position).Length();
-            if (targetDist < weapons[selectedWeapon].range)
+            if (target == null)
             {
-                velocity = new Vector3(0, 0, 0);
-                weapons[selectedWeapon].shoot(this.position, lookDirection, true);
+                List<Building> buildings = new List<Building>();
+                List<Player> players = new List<Player>();
+                List<Tower> towers = new List<Tower>();
+
+                foreach (GameComponent gc in game.Components)
+                {
+                    if (gc is Player)
+                    {
+                        players.Add((Player)gc);
+                    }
+                    if (gc is Map)
+                    {
+                        Map m = (Map)gc;
+                        buildings = m.buildings;
+                    }
+                    if (gc is Tower)
+                    {
+                        towers.Add((Tower)gc);
+                    }
+                }
+
+                chooseTarget(buildings, players, towers);
             }
-			else
-			{
-				velocity = target.position - this.position;
-			}
+            else//if no target in sight
+            {
+                lookDirection = target.position - this.position;
 
-            CheckCollisions(colliders);
-
-            this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
+                float targetDist = (target.position - this.position).Length();
+                if (targetDist < weapons[selectedWeapon].range)
+                {
+                    velocity = new Vector3(0, 0, 0);
+                    weapons[selectedWeapon].shoot(this.position, lookDirection, true);
+                }
+                else
+                {
+                    velocity = target.position - this.position;
+                }
+            }
+            //bounds are updated in Character
+            //this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
 
             base.Update(gameTime, colliders);
         }
 
-        public void CheckCollisions(List<Object> colliders)
-        {
-            foreach (Object o in colliders)
-            {
-                if (bounds.FloatIntersects(o.bounds))
-                {
-                    if (o is Bullet)
-                    {
-                        Bullet b = (Bullet)o;
-                        if (!b.shotByEnemy && b.isAlive)
-                        {
-                            o.isAlive = false;
-                            this.hp = hp - b.damage;
-                            continue;
-                        }
-                    }
-                    Vector3 moveBack = position - o.position;
-                    moveBack.Normalize();
-                    position += moveBack * speed;
-                }
-            }
-        }
+        //collisions in Character and Bullet
     }
 }

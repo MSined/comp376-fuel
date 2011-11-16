@@ -24,7 +24,7 @@ namespace F.U.E.L
 
         }
 
-        protected override void chooseTarget(List<Building> buildings, List<Player> players) 
+        protected override void chooseTarget(List<Building> buildings, List<Player> players, List<Tower> towers) 
         {
             float distance = float.PositiveInfinity;
             foreach (Player p in players)
