@@ -17,7 +17,7 @@ namespace F.U.E.L
 
         public Tower(Game game, Model[] modelComponents,
             int topHP, int topSP, Vector3 position, SpawnPoint anySpawnPoint, Weapon[] weapons)
-            : base(game, modelComponents, position, topHP, topSP, 0, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
+            : base(game, modelComponents, position, topHP, topSP, 0.1f, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
 
         }

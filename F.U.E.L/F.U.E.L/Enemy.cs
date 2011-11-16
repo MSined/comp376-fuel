@@ -50,7 +50,7 @@ namespace F.U.E.L
             }
             foreach (Tower t in towers)
             {
-                if ((p.position - this.position).Length() < distance)
+                if ((t.position - this.position).Length() < distance)
                 {
                     distance = (t.position - this.position).Length();
                     target = t;
@@ -79,7 +79,7 @@ namespace F.U.E.L
                     }
                     if (gc is Tower)
                     {
-                        towera.Add((Tower)gc);
+                        towers.Add((Tower)gc);
                     }
                 }
                 chooseTarget(buildings, players, towers);

@@ -55,10 +55,12 @@ namespace F.U.E.L
 
             world = Matrix.CreateRotationY(-angle) * Matrix.CreateTranslation(position);
 
-            if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0)) velocity.Normalize();
-
-            position += speed * velocity;
-            this.bounds = new FloatRectangle(position.X, position.Z, this.bounds.Width, this.bounds.Height);
+            if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0))
+            {
+                velocity.Normalize();
+                position += speed * velocity;
+                this.bounds = new FloatRectangle(position.X, position.Z, this.bounds.Width, this.bounds.Height);
+            }
             //check collisions after moved
             CheckCollisions(colliders);
 
@@ -126,7 +128,7 @@ namespace F.U.E.L
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
-                    if (o is Building)
+                    if (o is Building || o is Tower || o is Enemy)
                     {
                         //neutralize the Z movement if going in a collision by moving up/down
                         if (bounds.CenterX > o.bounds.Left && bounds.CenterX < o.bounds.Right)
@@ -146,17 +148,6 @@ namespace F.U.E.L
                             moveBack.Normalize();
                             position += moveBack * speed;
                         }
-
-                        /*Vector3 moveBack = position - o.position;
-                        moveBack.Normalize();
-                        position += moveBack * speed;*/
-                    }
-                    if (o is Enemy || o is Tower)
-                    {
-                        //position -= speed * velocity;
-                        Vector3 moveBack = position - o.position;
-                        moveBack.Normalize();
-                        position += moveBack * speed;
                     }
                 }
             }

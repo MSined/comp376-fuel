@@ -84,11 +84,18 @@ namespace F.U.E.L
                         e.hp = e.hp - this.damage;
                         continue;
                     }
-
+                    if (o is Tower && this.shotByEnemy)//same as player, but tower
+                    {
+                        this.isAlive = false;
+                        Tower t = (Tower)o;
+                        t.hp = t.hp - this.damage;
+                        continue;
+                    }
                     if (o is Building)// && bounds.FloatIntersects(o.bounds))
                     {
                         this.isAlive = false;
                     }
+                    
                 }
             }
         }
