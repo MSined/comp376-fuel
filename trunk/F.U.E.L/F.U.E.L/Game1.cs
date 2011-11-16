@@ -12,9 +12,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace F.U.E.L
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -42,15 +39,15 @@ namespace F.U.E.L
             // The following code removes the XNA fixed timestep (framerate limiter)
             IsFixedTimeStep = false;
             // Because the above is an artificial but necessary step, this one sets the timestep to 1ms
-            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            //TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             // This removes the synchronization with the screen to allow a faster framerate
-            graphics.SynchronizeWithVerticalRetrace = false;
+            //graphics.SynchronizeWithVerticalRetrace = false;
         }
 
         protected override void Initialize()
         {
             // Create camera and add to components list
-            camera = new Camera(this, new Vector3(0, 10, 10), Vector3.Zero, -Vector3.UnitZ);
+            camera = new Camera(this, new Vector3(0, 40, 40), Vector3.Zero, -Vector3.UnitZ);
             Components.Add(camera);
 
             base.Initialize();
@@ -97,7 +94,7 @@ namespace F.U.E.L
             for (int i = 0; i < map.buildings.Count; ++i)
                 grid.insertStaticObject(map.buildings[i]);
 
-            enemyModel = Content.Load<Model>(@"Models\alien788");
+            enemyModel = Content.Load<Model>(@"Models\alien788_60");
             Model[] em = new Model[1];
             em[0] = enemyModel;
             /*
@@ -181,8 +178,10 @@ namespace F.U.E.L
                             break;
                         }
                     }
+
                     if (skip)
                         continue;
+
                     Weapon[] w = new Weapon[1];
                     Model[] shotModel = new Model[1];
                     shotModel[0] = playerModel;

@@ -14,10 +14,16 @@ namespace F.U.E.L
         const float height = .5f;
         const float width = .5f;
         const float depth = .5f;
+        // Used for offsetting the initial position of the tower so that we can rarely (never?)
+        // Have two towers that overlap exactly, causing the game to act unexpectedly
+        static Random rand = new Random();
 
         public Tower(Game game, Model[] modelComponents,
             int topHP, int topSP, Vector3 position, SpawnPoint anySpawnPoint, Weapon[] weapons)
-            : base(game, modelComponents, position, topHP, topSP, 0.1f, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
+            : base(game, modelComponents, new Vector3(position.X + (float)(rand.NextDouble() - rand.NextDouble()),
+                                                      position.Y,
+                                                      position.Z + (float)(rand.NextDouble() - rand.NextDouble())), 
+                   topHP, topSP, 0.1f, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
 
         }
