@@ -148,6 +148,9 @@ namespace F.U.E.L
                             moveBack.Normalize();
                             position += moveBack * speed;
                         }
+                        else if (this is Tower) {//tower do not move after moved to empty space
+                            this.speed = 0;
+                        }
                     }
                 }
             }
