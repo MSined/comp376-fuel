@@ -6,6 +6,7 @@ using System.Timers;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -14,6 +15,8 @@ namespace F.U.E.L
         private const float RANGE = 5;
         private const int DAMAGE = 1;
         private const int FIRERATE = 50000;
+
+        private SoundEffect soundEffect;
 
         private Random random = new Random();
         private const int maxSpread = 50;
