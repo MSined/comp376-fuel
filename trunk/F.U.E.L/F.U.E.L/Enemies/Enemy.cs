@@ -26,9 +26,9 @@ namespace F.U.E.L
         public Enemy(Game game, Model[] modelComponents,
             SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.1f
             )
-            : base(game, modelComponents, new Vector3(spawnPoint.position.X + (float)rand.NextDouble(), 
+            : base(game, modelComponents, new Vector3(spawnPoint.position.X +(float)rand.NextDouble()/2, 
                                                       spawnPoint.position.Y, 
-                                                      spawnPoint.position.Z + (float)rand.NextDouble()), 
+                                                      spawnPoint.position.Z + (float)rand.NextDouble()/2), 
                    topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, miniWidth, miniDepth), true)
         {
 
