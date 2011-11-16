@@ -15,7 +15,9 @@ namespace F.U.E.L
         const float width = .5f;
         const float depth = .5f;
         const float useRange = 1f;
+
         bool placedTower = false;
+        FloatRectangle checkBox;
 
         public Player(Game game, Model[] modelComponents,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
@@ -83,13 +85,25 @@ namespace F.U.E.L
                 if (!placedTower)
                 {
                     placedTower = true;
-                    Weapon[] w = new Weapon[1];
-                    w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
-                    game.Components.Add(new Tower(game, modelComponents, 100, 0, position + lookDirection, spawnPoint, w));
+                    checkBox = new FloatRectangle((position + lookDirection).X, (position + lookDirection).Z, 1, 1);//width and height of Tower is .5, 1 to make sure there are place 0.5 place from other objects
+                    foreach (Object o in colliders)
+                    {
+                        if (checkBox.FloatIntersects(o.bounds))
+                        {
+                            placedTower = false;
+                            break;
+                        }
+                    } 
                 }
             }
-            if (k.IsKeyUp(Keys.T))
+            if (k.IsKeyUp(Keys.T) && placedTower)
+            {
+                Weapon[] w = new Weapon[1];
+                w[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                game.Components.Add(new Tower(game, modelComponents, 100, 0, position + lookDirection, spawnPoint, w));
                 placedTower = false;
+                checkBox=null;
+            }
 
             #endregion
 
