@@ -45,6 +45,7 @@ namespace F.U.E.L
                 Matrix m = Matrix.CreateRotationY(a);
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
                 lastShot = nowTick;
+                soundEffect.Play();
             }
         }
 
