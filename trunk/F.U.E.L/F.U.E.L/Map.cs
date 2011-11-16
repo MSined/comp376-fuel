@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace F.U.E.L
 {
-    class Map : GameComponent
+    class Map : Microsoft.Xna.Framework.GameComponent
     {
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
@@ -50,7 +50,16 @@ namespace F.U.E.L
 
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 30), true));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(30, 0, -30), false));
-            
+
+            Model[] m = new Model[1];
+            m[0] = modelComponents[2];
+
+            buildings.Add(new Generator(game, m, new Vector3(-30, 0, 28), 0f));
+            buildings.Add(new Generator(game, m, new Vector3(30, 0, 28), 0f));
+            buildings.Add(new Generator(game, m, new Vector3(-2, 0, 2), 0f));
+            buildings.Add(new Generator(game, m, new Vector3(-28, 0, -30), 0f));
+            buildings.Add(new Generator(game, m, new Vector3(28, 0, -30), 0f));
+
             addTrees(game, trees, buildings);
             addBuildings(game, building, buildings);
             leftXPos = leftX;
@@ -147,15 +156,7 @@ namespace F.U.E.L
 
         public void Update(GameTime gameTime, List<Object> colliders)
         {
-            foreach (Generator g in buildings)
-            {
-                g.Update(gameTime, colliders);
-            }
-
-            foreach (SpawnPoint s in spawnPoints)
-            {
-                s.Update(gameTime);
-            }
+            //no use
         }
 
         public void Draw(Camera camera)

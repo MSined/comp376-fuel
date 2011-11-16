@@ -95,6 +95,13 @@ namespace F.U.E.L
                     {
                         this.isAlive = false;
                     }
+                    if (o is Generator && this.shotByEnemy)//same as player, but generator
+                    {
+                        this.isAlive = false;
+                        Generator g = (Generator)o;
+                        g.hp = g.hp - this.damage;
+                        continue;
+                    }
                     
                 }
             }
