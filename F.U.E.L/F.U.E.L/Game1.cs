@@ -84,7 +84,7 @@ namespace F.U.E.L
             Weapon[] w = new Weapon[4];
             w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
             w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
-            w[2] = new Mines(this, p, new Vector3(0, 0, 0));
+            w[2] = new Shotgun(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
             players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[0], w));
             foreach (Player ply in players) { Components.Add(ply); }

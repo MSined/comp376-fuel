@@ -66,6 +66,7 @@ namespace F.U.E.L
 
             if (k.IsKeyDown(Keys.Space))
                 weapons[selectedWeapon].shoot(position, lookDirection, false);
+        
 
             if (k.IsKeyDown(Keys.D1))
                 selectedWeapon = 0;

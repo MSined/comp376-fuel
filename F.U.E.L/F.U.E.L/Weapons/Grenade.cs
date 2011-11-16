@@ -6,6 +6,7 @@ using System.Timers;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -15,10 +16,13 @@ namespace F.U.E.L
         private const int DAMAGE = 50;
         private const int FIRERATE = 10000000;
 
+        private SoundEffect soundEffect;
+
         public Grenade(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/grenade");
 
         }
 
@@ -30,6 +34,8 @@ namespace F.U.E.L
             {
                 game.Components.Add(new LobBullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
                 lastShot = nowTick;
+
+                soundEffect.Play();
             }
         }
 

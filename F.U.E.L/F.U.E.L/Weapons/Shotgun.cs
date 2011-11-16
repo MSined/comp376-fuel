@@ -6,6 +6,7 @@ using System.Timers;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -15,6 +16,8 @@ namespace F.U.E.L
         private const int DAMAGE = 5;
         private const int FIRERATE = 10000000;
 
+        private SoundEffect soundEffect;
+
         private const int angleDiff = 5;
         private const int numBullets = 5;
 
@@ -22,6 +25,7 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/shotgun");
             
         }
 
@@ -46,6 +50,7 @@ namespace F.U.E.L
                 }
                 
                 lastShot = nowTick;
+                soundEffect.Play();
             }
         }
 

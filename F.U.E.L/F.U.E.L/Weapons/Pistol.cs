@@ -6,6 +6,7 @@ using System.Timers;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -15,11 +16,14 @@ namespace F.U.E.L
         private const int DAMAGE = 10;
         private const int FIRERATE = 10000000;
 
+        private SoundEffect soundEffect;
+
         public Pistol(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
-            
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/pistol");
+
         }
 
         public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)
@@ -30,7 +34,9 @@ namespace F.U.E.L
             {
                 game.Components.Add(new PushBackBullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
                 lastShot = nowTick;
+                soundEffect.Play();
             }
+
         }
 
         public override void Draw(Camera camera)
