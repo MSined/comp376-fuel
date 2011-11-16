@@ -11,15 +11,25 @@ namespace F.U.E.L
     class Enemy : Character
     {
         protected Object target = null;
-        const float height = .5f;
+        // Removed height as it was not and will not be used
         const float width = 1.5f;
         const float depth = 1.5f;
+        // Added mini BB sizes to test with smaller models
+        const float miniDepth = .7f;
+        const float miniWidth = .7f;
+        const float attackDistanceLimit = 50;
+        // Used for offsetting the spawn position of the enemy so that we can rarely (never?)
+        // Have two towers that overlap exactly, causing the game to act unexpectedly
+        static Random rand = new Random();
         
         // Removed position from this constructor as it will be taken from the spawnpoint
         public Enemy(Game game, Model[] modelComponents,
-            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.04f
+            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.1f
             )
-            : base(game, modelComponents, spawnPoint.position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
+            : base(game, modelComponents, new Vector3(spawnPoint.position.X + (float)rand.NextDouble(), 
+                                                      spawnPoint.position.Y, 
+                                                      spawnPoint.position.Z + (float)rand.NextDouble()), 
+                   topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, miniWidth, miniDepth), true)
         {
 
         }
@@ -57,6 +67,8 @@ namespace F.U.E.L
                     target = t;
                 }
             }
+            if (distance > attackDistanceLimit)
+                target = null;
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
@@ -66,7 +78,7 @@ namespace F.U.E.L
                 this.isAlive = false;
                 return;
             }
-            if (target == null)
+            if (target == null || !target.isAlive)
             {
                 List<Building> buildings = new List<Building>();
                 List<Player> players = new List<Player>();
