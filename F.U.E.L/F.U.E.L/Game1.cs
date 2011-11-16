@@ -193,6 +193,16 @@ namespace F.U.E.L
                     Components.Add(enemy[i]);
                 }
             }
+
+            foreach(Building b in map.buildings)
+            {
+                if (b is Generator)
+                {
+                    Generator g = (Generator)b;
+                    g.Update(gameTime);
+                }
+            }
+
             #endregion
 
             base.Update(gameTime);
@@ -228,10 +238,17 @@ namespace F.U.E.L
                     Character c = (Character)gc;
                     c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }
-                if (gc is Generator && camera.onScreen((Object)gc))
+                if (gc is Map)
                 {
-                    Generator g = (Generator)gc;
-                    g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                    Map m = (Map)gc;
+                    foreach (Building b in m.buildings)
+                    {
+                        if(b is Generator && camera.onScreen((Object)b))
+                        {
+                            Generator g = (Generator)b;
+                            g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                        }
+                    }
                 }
             }
             spriteBatch.End();

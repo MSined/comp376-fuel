@@ -18,6 +18,8 @@ namespace F.U.E.L
         // Have two towers that overlap exactly, causing the game to act unexpectedly
         static Random rand = new Random();
 
+        public int attackerNum = 0;
+
         public Tower(Game game, Model[] modelComponents,
             int topHP, int topSP, Vector3 position, SpawnPoint anySpawnPoint, Weapon[] weapons)
             : base(game, modelComponents, new Vector3(position.X + (float)(rand.NextDouble()/2),

@@ -15,15 +15,15 @@ namespace F.U.E.L
         private const int repairRate = 10000000;
         private long lastRepair;
 
-        public int hp { get; protected set; }
-        private bool functional;
+        public int hp;
+        public bool functional;
  
         public Generator(Game game, Model[] modelComponents, Vector3 position,
             float angle
             )
             : base(game, modelComponents, position, 0.7f, 0.7f, angle)
         {
-            this.hp = 0;
+            this.hp = 10;
             this.functional = false;
             this.lastRepair = 0;
         }
@@ -39,11 +39,8 @@ namespace F.U.E.L
             }
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime)
         {
-            //all collisions are handled by characters
-            CheckCollisions(colliders);
-
             if (hp >= topHP)
             {
                 hp = topHP;
@@ -53,26 +50,6 @@ namespace F.U.E.L
             if (hp <= 0) {
                 hp = 0;
                 functional = false;
-            }
-        }
-
-        public void CheckCollisions(List<Object> colliders)
-        {
-            foreach (Object o in colliders)
-            {
-                if (bounds.FloatIntersects(o.bounds))
-                {
-                    if (o is Bullet)
-                    {
-                        Bullet b = (Bullet)o;
-                        if (b.shotByEnemy && b.isAlive)
-                        {
-                            o.isAlive = false;
-                            this.hp = hp - b.damage;
-                            continue;
-                        }
-                    }
-                }
             }
         }
 

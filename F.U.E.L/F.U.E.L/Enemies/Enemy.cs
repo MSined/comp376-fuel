@@ -10,7 +10,8 @@ namespace F.U.E.L
 {
     class Enemy : Character
     {
-        protected Object target = null;
+        public Object target = null;
+        protected int teamSize = 3;//max number of attackers on one target
         // Removed height as it was not and will not be used
         const float width = 1.5f;
         const float depth = 1.5f;
@@ -44,7 +45,7 @@ namespace F.U.E.L
                     if (b is Generator)
                     {
                         Generator g = (Generator)b;
-                        if (g.hp == 0) 
+                        if (g.hp <= 50 && !g.functional) 
                             continue;
                         distance = (b.position - this.position).Length();
                         target = b;
@@ -53,7 +54,7 @@ namespace F.U.E.L
             }
             foreach (Player p in players)
             {
-                if ((p.position - this.position).Length() < distance)
+                if (p.attackerNum < teamSize && (p.position - this.position).Length() < distance)
                 {
                     distance = (p.position - this.position).Length();
                     target = p;
@@ -61,22 +62,36 @@ namespace F.U.E.L
             }
             foreach (Tower t in towers)
             {
-                if ((t.position - this.position).Length() < distance)
+                if (t.attackerNum < teamSize && (t.position - this.position).Length() < distance)
                 {
                     distance = (t.position - this.position).Length();
                     target = t;
                 }
             }
             if (distance > attackDistanceLimit)
+            {
                 target = null;
+            }
+            else if (target is Player) { 
+                Player p = (Player)target;
+                p.attackerNum++;
+            }
+            else if (target is Tower)
+            {
+                Tower t = (Tower)target;
+                t.attackerNum++;
+            }
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
-            if (this.hp <= 0)
+            if (target != null && target is Generator) 
             {
-                this.isAlive = false;
-                return;
+                Generator g = (Generator)target;
+                if (!g.functional) 
+                {
+                    target=null;
+                }
             }
             if (target == null || !target.isAlive)
             {

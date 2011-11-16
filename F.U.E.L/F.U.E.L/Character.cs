@@ -73,6 +73,20 @@ namespace F.U.E.L
                     this.hp = this.topHP;
                     position = this.spawnPoint.position;
                 }
+                else if (this is Enemy)//if enemy got killed, the target's attackerNum -1
+                {
+                    Enemy e = (Enemy)this;
+                    if (e.target is Player) { 
+                        Player p = (Player)e.target;
+                        p.attackerNum--;
+                    }
+                    else if (e.target is Tower)
+                    {
+                        Tower t = (Tower)e.target;
+                        t.attackerNum--;
+                    }
+                    isAlive = false;
+                }
                 // Otherwise kill it!
                 else
                     isAlive = false;
@@ -128,7 +142,7 @@ namespace F.U.E.L
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
-                    if (o is Building || o is Tower || o is Enemy)
+                    if (o is Building || o is Tower || o is Enemy || o is Generator)
                     {
                         //neutralize the Z movement if going in a collision by moving up/down
                         if (bounds.CenterX > o.bounds.Left && bounds.CenterX < o.bounds.Right)
