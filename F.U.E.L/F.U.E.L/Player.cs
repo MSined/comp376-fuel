@@ -16,10 +16,10 @@ namespace F.U.E.L
         const float depth = .5f;
         const float useRange = 1f;
 
+        public bool placingTower = false, checkBoxCollision = false;
+        public BuildBox checkBox;
         public int attackerNum=0;
 
-        bool placingTower = false;
-        FloatRectangle checkBox;
 
         public Player(Game game, Model[] modelComponents,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
@@ -68,7 +68,7 @@ namespace F.U.E.L
 
             if (k.IsKeyDown(Keys.Space))
                 weapons[selectedWeapon].shoot(position, lookDirection, false);
-        
+
 
             if (k.IsKeyDown(Keys.D1))
                 selectedWeapon = 0;
@@ -85,28 +85,28 @@ namespace F.U.E.L
             //Doesn't need cooldown, fixed the tower spamming to a single button press
             if(k.IsKeyDown(Keys.T))
             {
-                if (!placingTower)
+                placingTower = true;
+                checkBox.Update(gameTime);
+                foreach (Object o in colliders)
                 {
-                    placingTower = true;
-                    checkBox = new FloatRectangle((position + lookDirection).X, (position + lookDirection).Z, 1, 1);//width and height of Tower is .5, 1 to make sure there are place 0.5 place from other objects
-                    foreach (Object o in colliders)
+                    if (checkBox.bounds.FloatIntersects(o.bounds))
                     {
-                        if (checkBox.FloatIntersects(o.bounds))
-                        {
-                            placingTower = false;
-                            checkBox = null;
-                            break;
-                        }
-                    } 
+                        checkBoxCollision = true;
+                        break;
+                    }
+                    checkBoxCollision = false;
                 }
             }
             if (k.IsKeyUp(Keys.T) && placingTower)
             {
-                Weapon[] w = new Weapon[1];
-                w[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                game.Components.Add(new Tower(game, modelComponents, 100, 0, position + lookDirection, spawnPoint, w));
+                if (!checkBoxCollision)
+                {
+                    Weapon[] w = new Weapon[1];
+                    w[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    game.Components.Add(new Tower(game, modelComponents, 100, 0, position + lookDirection, spawnPoint, w));
+                }
                 placingTower = false;
-                checkBox=null;
+                checkBoxCollision = false;
             }
 
             #endregion
@@ -170,5 +170,14 @@ namespace F.U.E.L
             return target;
         }
 
+        public override void Draw(Camera camera)
+        {
+            if (placingTower)
+            {
+                checkBox.Draw(camera);
+            }
+
+            base.Draw(camera);
+        }
     }
 }

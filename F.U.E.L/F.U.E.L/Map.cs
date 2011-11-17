@@ -50,7 +50,7 @@ namespace F.U.E.L
 
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 30), true));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(30, 0, -30), false));
-
+            
             Model[] m = new Model[1];
             m[0] = modelComponents[2];
 
@@ -157,7 +157,7 @@ namespace F.U.E.L
         public void Update(GameTime gameTime, List<Object> colliders)
         {
             //no use
-        }
+            }
 
         public void Draw(Camera camera)
         {
