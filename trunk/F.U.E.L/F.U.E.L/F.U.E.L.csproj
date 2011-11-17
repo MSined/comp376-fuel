@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildBox.cs" />
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Buildings\Tower.cs" />
     <Compile Include="Bullet.cs" />

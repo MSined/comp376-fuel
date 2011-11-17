@@ -19,7 +19,7 @@ namespace F.U.E.L
 
         Texture2D healthTexture;
 
-        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel;
+        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel, checkBoxModel;
 
         Camera camera;
         Map map;
@@ -29,6 +29,8 @@ namespace F.U.E.L
         Model[] em = new Model[1];
 
         List<Object> removeList = new List<Object>();
+
+        public Effect redEffect, greenEffect;
 
         public Game1()
         {
@@ -47,7 +49,7 @@ namespace F.U.E.L
         protected override void Initialize()
         {
             // Create camera and add to components list
-            camera = new Camera(this, new Vector3(0, 40, 40), Vector3.Zero, -Vector3.UnitZ);
+            camera = new Camera(this, new Vector3(0, 15, 15), Vector3.Zero, -Vector3.UnitZ);
             Components.Add(camera);
 
             base.Initialize();
@@ -68,6 +70,10 @@ namespace F.U.E.L
             playerModel = Content.Load<Model>(@"Models\playerModel");
             treeModel = Content.Load<Model>(@"Models\treeModel");
             telePadModel = Content.Load<Model>(@"Models\telePadModel");
+            checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
+
+            redEffect = Content.Load<Effect>(@"Effects\Red");
+            greenEffect = Content.Load<Effect>(@"Effects\Green");
 
             Model[] a = new Model[6];
             a[0] = planeModel;
@@ -79,14 +85,21 @@ namespace F.U.E.L
             map = new Map(this, a, -36, 36);
             Components.Add(map);
 
+            // The first model will be of the player
+            // The LAST model (always last) will be the checkBox model
             Model[] p = new Model[1];
             p[0] = playerModel;
+            Model[] t = new Model[1];
+            t[0] = checkBoxModel;
             Weapon[] w = new Weapon[4];
             w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
             w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
             w[2] = new Shotgun(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
             players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[0], w));
+            players[0].checkBox = new BuildBox(this, t, players[0].position,
+                                                new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
+                                                players[0]);
             foreach (Player ply in players) { Components.Add(ply); }
 
             // Create the grid with necessary information
@@ -104,11 +117,12 @@ namespace F.U.E.L
                 w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
                 enemy[i] = new HunterEnemy(this, em, map.spawnPoints[1], w);
             }
-            *//*
-            foreach (Enemy e in enemy)
-            {
-                Components.Add(e);
-            }*/
+            */
+            /*
+          foreach (Enemy e in enemy)
+          {
+              Components.Add(e);
+          }*/
         }
 
         protected override void UnloadContent()
@@ -155,7 +169,7 @@ namespace F.U.E.L
                         }
                         Components.Remove(o);
                         grid.removeDynamicObject(o);
-                     }
+                    }
                 }
             }
             #endregion
@@ -226,10 +240,11 @@ namespace F.U.E.L
                     m.Draw(camera);
                 }
             }
+
             base.Draw(gameTime);
 
             spriteBatch.Begin();
-            
+
             List<Building> buildings = map.buildings;
             foreach (GameComponent gc in Components)
             {

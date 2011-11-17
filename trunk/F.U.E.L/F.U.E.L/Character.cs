@@ -21,9 +21,11 @@ namespace F.U.E.L
         public int selectedWeapon { get; protected set; }
         protected int[] attributes { get; private set; }
 
-        protected Vector3 lookDirection = new Vector3(1, 0, 0);
+        public Vector3 lookDirection = new Vector3(1, 0, 0);
         protected Vector3 velocity = new Vector3(0,0,0);
         protected float speed;
+
+        public Effect effect;
 
         // Characters initial position is defined by the spawnpoint ther are associated with
         public Character(Game game, Model[] modelComponents, Vector3 position,
@@ -110,6 +112,17 @@ namespace F.U.E.L
                     be.View = camera.view;
                     be.World = world * mesh.ParentBone.Transform;
                 }
+                /*
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                    part.Effect = effect;
+                    effect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
+                    effect.Parameters["View"].SetValue(camera.view);
+                    effect.Parameters["Projection"].SetValue(camera.projection);
+                    effect.Parameters["AmbientColor"].SetValue(Color.Green.ToVector4());
+                    effect.Parameters["AmbientIntensity"].SetValue(0.5f);
+                }
+                */
                 mesh.Draw();
             }
         }
