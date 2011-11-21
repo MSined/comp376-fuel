@@ -20,7 +20,12 @@ namespace F.U.E.L
         Vector3 cameraDirection;
         Vector3 cameraUp;
 
-        Vector3 onScreenAdjust = new Vector3(0, 0, -10f);
+        //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
+        public float top=-12;
+        public float bottom=7;
+        public float left=-15;
+        public float right=15;
+
         // Current scroll wheel value. It stores the cumulative scroll value since start of game
         // Also used to verify against new scroll values to determine if zoom in or out
         float scrollWheelValue = 0;
@@ -52,18 +57,6 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime)
         {
-            // Simple keyboard controls that move along the world axis
-            /*
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-                cameraPosition -= new Vector3(0, 0, 0.1f);
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-                cameraPosition += new Vector3(0, 0, 0.1f);
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-                cameraPosition -= new Vector3(0.1f, 0, 0);
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-                cameraPosition += new Vector3(0.1f, 0, 0);
-            */
-
             if (player == null)
             {
                 foreach (GameComponent p in game.Components)
@@ -103,7 +96,12 @@ namespace F.U.E.L
 
         public bool onScreen(Object o) 
         {
-            if (Math.Abs((o.position - (player.position+onScreenAdjust)).Length()) < 22) { return true; }
+            //if (Math.Abs((o.position - (player.position+onScreenAdjust)).Length()) < 17) { return true; }
+            if (o.position.Z > player.position.Z + top &&
+                o.position.Z < player.position.Z + bottom &&
+                o.position.X > player.position.X + left &&
+                o.position.X < player.position.X + right) { return true; }
+            
             else { return false; }
             //return true;
         }

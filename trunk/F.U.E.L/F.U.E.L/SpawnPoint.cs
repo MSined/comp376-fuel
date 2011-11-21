@@ -15,6 +15,8 @@ namespace F.U.E.L
         float angle = 0;
         public float spawnTimer = 0, spawnTimeDelay = 1000;
         bool playerSpawnPoint = false;
+        public int spawnLimit = 3;
+        public int spawnCounter = 0;
 
         public SpawnPoint(Model model, Vector3 position, bool isPlayersSpawn)
             : base(position)
