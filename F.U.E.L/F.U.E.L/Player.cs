@@ -16,10 +16,11 @@ namespace F.U.E.L
         const float depth = .5f;
         const float useRange = 1f;
 
+        public static int credit = 0;
+
         public bool placingTower = false, checkBoxCollision = false;
         public BuildBox checkBox;
         public int attackerNum=0;
-
 
         public Player(Game game, Model[] modelComponents,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
