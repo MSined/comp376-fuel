@@ -24,7 +24,8 @@ namespace F.U.E.L
         Camera camera;
         Map map;
         List<Player> players = new List<Player>();
-        Enemy[] enemy = new Enemy[10];
+        //Enemy[] enemy = new Enemy[10];
+        List<Enemy> enemyList = new List<Enemy>();
         SpatialHashGrid grid;
         Model[] em = new Model[1];
 
@@ -160,12 +161,15 @@ namespace F.U.E.L
                     {
                         if (o is Enemy)
                         {
-                            int i = 0;
+                            /*int i = 0;
                             while (enemy[i] != null && enemy[i].objectID != o.objectID)
                             {
                                 ++i;
                             }
-                            enemy[i] = null;
+                            enemy[i] = null;*/
+                            Enemy e = (Enemy)o;
+                            --e.spawnPoint.spawnCounter;
+                            enemyList.Remove(e);
                         }
                         Components.Remove(o);
                         grid.removeDynamicObject(o);
@@ -179,8 +183,9 @@ namespace F.U.E.L
             foreach (SpawnPoint s in map.spawnPoints)
             {
                 s.Update(gameTime);
-                if (s.readyToSpawn())
+                if (s.readyToSpawn() && s.spawnCounter < s.spawnLimit)
                 {
+                    /*
                     bool skip = false;
                     int i = 0;
                     while (enemy[i] != null)
@@ -195,6 +200,7 @@ namespace F.U.E.L
 
                     if (skip)
                         continue;
+                    */
 
                     Weapon[] w = new Weapon[1];
                     Model[] shotModel = new Model[1];
@@ -203,8 +209,9 @@ namespace F.U.E.L
                     Model[] em = new Model[1];
                     em[0] = enemyModel;
 
-                    enemy[i] = new Enemy(this, em, s, w);
-                    Components.Add(enemy[i]);
+                    enemyList.Add(new Enemy(this, em, s, w));
+                    Components.Add(enemyList[enemyList.Count-1]);// Add the newest enemy in the enemyList to Components (last indexed enemy)
+                    ++s.spawnCounter;
                 }
             }
 
@@ -224,7 +231,7 @@ namespace F.U.E.L
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             foreach (GameComponent gc in Components)

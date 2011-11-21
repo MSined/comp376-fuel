@@ -18,7 +18,7 @@ namespace F.U.E.L
         // Added mini BB sizes to test with smaller models
         const float miniDepth = .7f;
         const float miniWidth = .7f;
-        const float attackDistanceLimit = 50;
+        const float attackDistanceLimit = 25;
         // Used for offsetting the spawn position of the enemy so that we can rarely (never?)
         // Have two towers that overlap exactly, causing the game to act unexpectedly
         static Random rand = new Random();
@@ -74,12 +74,12 @@ namespace F.U.E.L
             }
             else if (target is Player) { 
                 Player p = (Player)target;
-                p.attackerNum++;
+                ++p.attackerNum;
             }
             else if (target is Tower)
             {
                 Tower t = (Tower)target;
-                t.attackerNum++;
+                ++t.attackerNum;
             }
         }
 

@@ -48,13 +48,31 @@ namespace F.U.E.L
             buildings = new List<Building>();
             spawnPoints = new List<SpawnPoint>();
 
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 30), true));
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(30, 0, -30), false));
-            
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 24), true));
+
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(24, 0, -26), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(24, 0, -34), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(32, 0, -26), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(32, 0, -34), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-26, 0, -18), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-16, 0, -22), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-8, 0, -14), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-2, 0, -18), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(4, 0, -16), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(12, 0, -12), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-22, 0, -6), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-12, 0, 2), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(12, 0, 2), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-6, 0, 18), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(8, 0, 16), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(16, 0, 16), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(16, 0, 22), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(18, 0, 28), false));
+
             Model[] m = new Model[1];
             m[0] = modelComponents[2];
 
-            buildings.Add(new Generator(game, m, new Vector3(-30, 0, 28), 0f));
+            buildings.Add(new Generator(game, m, new Vector3(-26, 0, 24), 0f));
             buildings.Add(new Generator(game, m, new Vector3(28, 0, 28), 0f));
             buildings.Add(new Generator(game, m, new Vector3(-2, 0, 2), 0f));
             buildings.Add(new Generator(game, m, new Vector3(-30, 0, -30), 0f));
