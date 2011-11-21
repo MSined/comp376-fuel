@@ -49,7 +49,7 @@ namespace F.U.E.L
         protected override void Initialize()
         {
             // Create camera and add to components list
-            camera = new Camera(this, new Vector3(0, 15, 15), Vector3.Zero, -Vector3.UnitZ);
+            camera = new Camera(this, new Vector3(0, 12, 9), Vector3.Zero, -Vector3.UnitZ);
             Components.Add(camera);
 
             base.Initialize();

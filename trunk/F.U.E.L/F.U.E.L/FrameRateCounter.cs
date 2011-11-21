@@ -60,6 +60,8 @@ namespace F.U.E.L
 
             spriteBatch.DrawString(spriteFont, fps, new Vector2(33, 33), Color.Black);
             spriteBatch.DrawString(spriteFont, fps, new Vector2(32, 32), Color.White);
+            spriteBatch.DrawString(spriteFont, Player.credit.ToString(), new Vector2(33, 53), Color.Black);
+            spriteBatch.DrawString(spriteFont, Player.credit.ToString(), new Vector2(32, 52), Color.White);
 
             spriteBatch.End();
         }
