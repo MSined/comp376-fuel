@@ -83,7 +83,7 @@ namespace F.U.E.L
                 selectedWeapon = 3;
 
             //Doesn't need cooldown, fixed the tower spamming to a single button press
-            if(k.IsKeyDown(Keys.T))
+            if (k.IsKeyDown(Keys.T))
             {
                 placingTower = true;
                 checkBox.Update(gameTime);
@@ -109,6 +109,12 @@ namespace F.U.E.L
                 checkBoxCollision = false;
             }
 
+            if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
+            {
+                Generator g = (Generator)this.getUsableBuilding();
+                g.use();
+            }
+
             #endregion
 
             //Gamepad Support
@@ -127,14 +133,14 @@ namespace F.U.E.L
                 Building b = getUsableBuilding();
                 if (b != null) b.use();
             }
-            
+
             if (gp.IsButtonDown(Buttons.LeftShoulder)) { }
-                //Recover EP
+            //Recover EP
             if (gp.IsButtonDown(Buttons.RightShoulder)) { }
-                //Recover HP
+            //Recover HP
 
             if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
-            if (gp.Triggers.Right > 0) weapons[0].shoot(position,lookDirection, false);
+            if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false);
 
             //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
 

@@ -23,7 +23,7 @@ namespace F.U.E.L
             )
             : base(game, modelComponents, position, 0.7f, 0.7f, angle)
         {
-            this.hp = 10;
+            this.hp = 50;
             this.functional = false;
             this.lastRepair = 0;
         }

@@ -41,9 +41,9 @@ namespace F.U.E.L
             // The following code removes the XNA fixed timestep (framerate limiter)
             IsFixedTimeStep = false;
             // Because the above is an artificial but necessary step, this one sets the timestep to 1ms
-            //TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             // This removes the synchronization with the screen to allow a faster framerate
-            //graphics.SynchronizeWithVerticalRetrace = false;
+            graphics.SynchronizeWithVerticalRetrace = false;
         }
 
         protected override void Initialize()
@@ -72,8 +72,8 @@ namespace F.U.E.L
             telePadModel = Content.Load<Model>(@"Models\telePadModel");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
 
-            redEffect = Content.Load<Effect>(@"Effects\Red");
-            greenEffect = Content.Load<Effect>(@"Effects\Green");
+            //redEffect = Content.Load<Effect>(@"Effects\Red");
+            //greenEffect = Content.Load<Effect>(@"Effects\Green");
 
             Model[] a = new Model[6];
             a[0] = planeModel;

@@ -55,9 +55,9 @@ namespace F.U.E.L
             m[0] = modelComponents[2];
 
             buildings.Add(new Generator(game, m, new Vector3(-30, 0, 28), 0f));
-            buildings.Add(new Generator(game, m, new Vector3(30, 0, 28), 0f));
+            buildings.Add(new Generator(game, m, new Vector3(28, 0, 28), 0f));
             buildings.Add(new Generator(game, m, new Vector3(-2, 0, 2), 0f));
-            buildings.Add(new Generator(game, m, new Vector3(-28, 0, -30), 0f));
+            buildings.Add(new Generator(game, m, new Vector3(-30, 0, -30), 0f));
             buildings.Add(new Generator(game, m, new Vector3(28, 0, -30), 0f));
 
             addTrees(game, trees, buildings);
