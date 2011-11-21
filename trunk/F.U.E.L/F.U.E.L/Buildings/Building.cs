@@ -36,6 +36,7 @@ namespace F.U.E.L
                 foreach (BasicEffect be in mesh.Effects)
                 {
                     be.EnableDefaultLighting();
+                    be.SpecularPower = 10f;
                     be.Projection = camera.projection;
                     be.View = camera.view;
                     be.World = world * mesh.ParentBone.Transform;

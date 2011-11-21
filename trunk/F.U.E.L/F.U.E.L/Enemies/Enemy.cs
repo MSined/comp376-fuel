@@ -118,7 +118,7 @@ namespace F.U.E.L
 
                 chooseTarget(buildings, players, towers);
             }
-            else//if no target in sight
+            if (target != null)//start attacking the target the Update it chooses it
             {
                 lookDirection = target.position - this.position;
 
