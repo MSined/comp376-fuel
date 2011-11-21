@@ -88,6 +88,7 @@ namespace F.U.E.L
                         t.attackerNum--;
                     }
                     isAlive = false;
+                    Player.credit += 100;//cash
                 }
                 // Otherwise kill it!
                 else
