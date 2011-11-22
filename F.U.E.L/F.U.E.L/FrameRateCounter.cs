@@ -19,7 +19,6 @@ namespace F.U.E.L
         int frameCounter = 0;
         TimeSpan elapsedTime = TimeSpan.Zero;
 
-
         public FrameRateCounter(Game game)
             : base(game)
         {
@@ -58,6 +57,7 @@ namespace F.U.E.L
 
             spriteBatch.Begin();
 
+            // Draw framerate
             spriteBatch.DrawString(spriteFont, fps, new Vector2(33, 33), Color.Black);
             spriteBatch.DrawString(spriteFont, fps, new Vector2(32, 32), Color.White);
             spriteBatch.DrawString(spriteFont, Player.credit.ToString(), new Vector2(33, 53), Color.Black);

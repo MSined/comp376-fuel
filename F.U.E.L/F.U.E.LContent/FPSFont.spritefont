@@ -30,6 +30,10 @@
         <Start>0</Start>
         <End>9</End>
       </CharacterRegion>
+      <CharacterRegion>
+        <Start>.</Start>
+        <End>.</End>
+      </CharacterRegion>
     </CharacterRegions>
   </Asset>
 </XnaContent>

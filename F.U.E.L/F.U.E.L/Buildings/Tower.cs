@@ -19,6 +19,7 @@ namespace F.U.E.L
         static Random rand = new Random();
 
         public int attackerNum = 0;
+        public static int numTowers = 0, towerCost = 100;
 
         public Tower(Game game, Model[] modelComponents,
             int topHP, int topSP, Vector3 position, SpawnPoint anySpawnPoint, Weapon[] weapons)
@@ -27,7 +28,8 @@ namespace F.U.E.L
                                                       position.Z + (float)(rand.NextDouble() / 6)),
                    topHP, topSP, 0.1f, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
-
+            towerCost = 100 + numTowers * 100;
+            ++numTowers;
         }
 
         private void chooseTarget(List<Enemy> enemies)

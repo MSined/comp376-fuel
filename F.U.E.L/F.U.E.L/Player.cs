@@ -22,6 +22,8 @@ namespace F.U.E.L
         public BuildBox checkBox;
         public int attackerNum=0;
 
+        public int respawnCost = 500;
+
         public Player(Game game, Model[] modelComponents,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
             )
@@ -35,86 +37,103 @@ namespace F.U.E.L
             #region Keyboard Controls
             //Hack to get it working on a computer
             KeyboardState k = Keyboard.GetState();
-            if (k.IsKeyDown(Keys.Up) || k.IsKeyDown(Keys.Down) || k.IsKeyDown(Keys.Left) || k.IsKeyDown(Keys.Right))
+            if (this.isAlive)
             {
-                lookDirection = new Vector3(0, 0, 0);
-                if (k.IsKeyDown(Keys.Up))
-                    lookDirection += new Vector3(0, 0, -1);
-
-                else if (k.IsKeyDown(Keys.Down))
-                    lookDirection += new Vector3(0, 0, 1);
-
-                if (k.IsKeyDown(Keys.Left))
-                    lookDirection += new Vector3(-1, 0, 0);
-
-                else if (k.IsKeyDown(Keys.Right))
-                    lookDirection += new Vector3(1, 0, 0);
-            }
-
-            velocity = new Vector3(0, 0, 0);
-            if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.D))
-            {
-                if (k.IsKeyDown(Keys.W))
-                    velocity += new Vector3(0, 0, -1);
-
-                else if (k.IsKeyDown(Keys.S))
-                    velocity += new Vector3(0, 0, 1);
-
-                if (k.IsKeyDown(Keys.A))
-                    velocity += new Vector3(-1, 0, 0);
-
-                else if (k.IsKeyDown(Keys.D))
-                    velocity += new Vector3(1, 0, 0);
-            }
-
-            if (k.IsKeyDown(Keys.Space))
-                weapons[selectedWeapon].shoot(position, lookDirection, false);
-
-
-            if (k.IsKeyDown(Keys.D1))
-                selectedWeapon = 0;
-
-            if (k.IsKeyDown(Keys.D2))
-                selectedWeapon = 1;
-
-            if (k.IsKeyDown(Keys.D3))
-                selectedWeapon = 2;
-
-            if (k.IsKeyDown(Keys.D4))
-                selectedWeapon = 3;
-
-            //Doesn't need cooldown, fixed the tower spamming to a single button press
-            if (k.IsKeyDown(Keys.T))
-            {
-                placingTower = true;
-                checkBox.Update(gameTime);
-                foreach (Object o in colliders)
+                if (k.IsKeyDown(Keys.Up) || k.IsKeyDown(Keys.Down) || k.IsKeyDown(Keys.Left) || k.IsKeyDown(Keys.Right))
                 {
-                    if (checkBox.bounds.FloatIntersects(o.bounds))
+                    lookDirection = new Vector3(0, 0, 0);
+                    if (k.IsKeyDown(Keys.Up))
+                        lookDirection += new Vector3(0, 0, -1);
+
+                    else if (k.IsKeyDown(Keys.Down))
+                        lookDirection += new Vector3(0, 0, 1);
+
+                    if (k.IsKeyDown(Keys.Left))
+                        lookDirection += new Vector3(-1, 0, 0);
+
+                    else if (k.IsKeyDown(Keys.Right))
+                        lookDirection += new Vector3(1, 0, 0);
+                }
+
+                velocity = new Vector3(0, 0, 0);
+                if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.D))
+                {
+                    if (k.IsKeyDown(Keys.W))
+                        velocity += new Vector3(0, 0, -1);
+
+                    else if (k.IsKeyDown(Keys.S))
+                        velocity += new Vector3(0, 0, 1);
+
+                    if (k.IsKeyDown(Keys.A))
+                        velocity += new Vector3(-1, 0, 0);
+
+                    else if (k.IsKeyDown(Keys.D))
+                        velocity += new Vector3(1, 0, 0);
+                }
+
+                if (k.IsKeyDown(Keys.Space))
+                    weapons[selectedWeapon].shoot(position, lookDirection, false);
+
+
+                if (k.IsKeyDown(Keys.D1))
+                    selectedWeapon = 0;
+
+                if (k.IsKeyDown(Keys.D2))
+                    selectedWeapon = 1;
+
+                if (k.IsKeyDown(Keys.D3))
+                    selectedWeapon = 2;
+
+                if (k.IsKeyDown(Keys.D4))
+                    selectedWeapon = 3;
+
+                //Doesn't need cooldown, fixed the tower spamming to a single button press
+                if (k.IsKeyDown(Keys.T))
+                {
+                    placingTower = true;
+                    checkBox.Update(gameTime);
+                    foreach (Object o in colliders)
                     {
-                        checkBoxCollision = true;
-                        break;
+                        if (checkBox.bounds.FloatIntersects(o.bounds))
+                        {
+                            checkBoxCollision = true;
+                            break;
+                        }
+                        checkBoxCollision = false;
                     }
+                }
+                if (k.IsKeyUp(Keys.T) && placingTower)
+                {
+                    if (!checkBoxCollision && credit >= Tower.towerCost)
+                    {
+                        Weapon[] w = new Weapon[1];
+                        w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
+                        credit -= Tower.towerCost;
+                        game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                    }
+                    placingTower = false;
                     checkBoxCollision = false;
                 }
-            }
-            if (k.IsKeyUp(Keys.T) && placingTower)
-            {
-                if (!checkBoxCollision)// && credit>=300)
+
+                if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
                 {
-                    Weapon[] w = new Weapon[1];
-                    w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
-                    game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
-                    //credit -= 300;
+                    Generator g = (Generator)this.getUsableBuilding();
+                    g.use();
                 }
-                placingTower = false;
-                checkBoxCollision = false;
             }
 
-            if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
+            else
             {
-                Generator g = (Generator)this.getUsableBuilding();
-                g.use();
+                if (k.IsKeyDown(Keys.Enter))
+                {
+                    credit -= respawnCost;
+                    respawnCost *= 2;
+                    this.isAlive = true;
+                    this.hp = this.topHP;
+                    this.position = this.spawnPoint.position;
+                    this.attackerNum = 0;
+                    this.velocity = Vector3.Zero;
+                }
             }
 
             #endregion

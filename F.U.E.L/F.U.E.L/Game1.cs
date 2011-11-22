@@ -33,9 +33,12 @@ namespace F.U.E.L
 
         public Effect redEffect, greenEffect;
 
+        FrameRateCounter fpsCounter;
+
         public Game1()
         {
-            Components.Add(new FrameRateCounter(this));
+            fpsCounter = new FrameRateCounter(this);
+            Components.Add(fpsCounter);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             //graphics.IsFullScreen = true;
@@ -171,8 +174,15 @@ namespace F.U.E.L
                             --e.spawnPoint.spawnCounter;
                             enemyList.Remove(e);
                         }
-                        Components.Remove(o);
-                        grid.removeDynamicObject(o);
+                        if (o is Player)
+                        {
+                            o.Update(gameTime, colliders);
+                        }
+                        else
+                        {
+                            Components.Remove(o);
+                            grid.removeDynamicObject(o);
+                        }
                     }
                 }
             }
@@ -248,8 +258,6 @@ namespace F.U.E.L
                 }
             }
 
-            base.Draw(gameTime);
-
             spriteBatch.Begin();
 
             List<Building> buildings = map.buildings;
@@ -265,7 +273,7 @@ namespace F.U.E.L
                     Map m = (Map)gc;
                     foreach (Building b in m.buildings)
                     {
-                        if(b is Generator && camera.onScreen((Object)b))
+                        if (b is Generator && camera.onScreen((Object)b))
                         {
                             Generator g = (Generator)b;
                             g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
@@ -273,7 +281,10 @@ namespace F.U.E.L
                     }
                 }
             }
+
             spriteBatch.End();
+
+            base.Draw(gameTime);
         }
     }
 }
