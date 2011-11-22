@@ -41,6 +41,10 @@ namespace F.U.E.L
                     target = e;
                 }
             }
+            if (distance > weapons[selectedWeapon].range)//out of weapon range
+            {
+                target = null;
+            }
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
@@ -64,6 +68,10 @@ namespace F.U.E.L
                 {
                     lookDirection = target.position - this.position;
                     weapons[selectedWeapon].shoot(this.position, lookDirection, false);
+                }
+                else //target went away, choose another target
+                {
+                    target = null;
                 }
             }
             base.Update(gameTime, colliders);

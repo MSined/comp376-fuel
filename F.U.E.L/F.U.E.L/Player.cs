@@ -100,12 +100,12 @@ namespace F.U.E.L
             }
             if (k.IsKeyUp(Keys.T) && placingTower)
             {
-                if (!checkBoxCollision && credit>=300)
+                if (!checkBoxCollision)// && credit>=300)
                 {
                     Weapon[] w = new Weapon[1];
-                    w[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    game.Components.Add(new Tower(game, modelComponents, 100, 0, position + lookDirection, spawnPoint, w));
-                    credit -= 300;
+                    w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
+                    game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                    //credit -= 300;
                 }
                 placingTower = false;
                 checkBoxCollision = false;

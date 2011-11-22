@@ -25,7 +25,7 @@ namespace F.U.E.L
         
         // Removed position from this constructor as it will be taken from the spawnpoint
         public Enemy(Game game, Model[] modelComponents,
-            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.1f
+            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.07f
             )
             : base(game, modelComponents, new Vector3(spawnPoint.position.X +(float)rand.NextDouble()/2, 
                                                       spawnPoint.position.Y, 
