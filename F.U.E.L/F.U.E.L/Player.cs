@@ -132,7 +132,6 @@ namespace F.U.E.L
                     this.hp = this.topHP;
                     this.position = this.spawnPoint.position;
                     this.attackerNum = 0;
-                    this.velocity = Vector3.Zero;
                 }
             }
 

@@ -74,6 +74,7 @@ namespace F.U.E.L
                 {
                     Player p = (Player)this;
                     this.isAlive = false;
+                    this.velocity = Vector3.Zero;
                 }
                 else if (this is Enemy)//if enemy got killed, the target's attackerNum -1
                 {
