@@ -72,23 +72,29 @@ namespace F.U.E.L
                 // Return it to the spawnpoint
                 if (this is Player)
                 {
-                    this.hp = this.topHP;
-                    position = this.spawnPoint.position;
+                    Player p = (Player)this;
+                    this.isAlive = false;
                 }
                 else if (this is Enemy)//if enemy got killed, the target's attackerNum -1
                 {
                     Enemy e = (Enemy)this;
                     if (e.target is Player) { 
                         Player p = (Player)e.target;
-                        p.attackerNum--;
+                        --p.attackerNum;
                     }
                     else if (e.target is Tower)
                     {
                         Tower t = (Tower)e.target;
-                        t.attackerNum--;
+                        --t.attackerNum;
                     }
                     isAlive = false;
                     Player.credit += 100;//cash
+                }
+                else if (this is Tower)
+                {
+                    isAlive = false;
+                    Tower t = (Tower)this;
+                    --Tower.numTowers;
                 }
                 // Otherwise kill it!
                 else
@@ -100,53 +106,60 @@ namespace F.U.E.L
 
         public override void Draw(Camera camera)
         {
-            Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
-            modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
-
-            foreach (ModelMesh mesh in modelComponents[0].Meshes)
+            // Required to stop drawing players that are dead and should not be drawn
+            if (this.isAlive)
             {
-                foreach (BasicEffect be in mesh.Effects)
+                Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
+                modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
+
+                foreach (ModelMesh mesh in modelComponents[0].Meshes)
                 {
-                    be.EnableDefaultLighting();
-                    be.SpecularPower = 10f;
-                    be.Projection = camera.projection;
-                    be.View = camera.view;
-                    be.World = world * mesh.ParentBone.Transform;
+                    foreach (BasicEffect be in mesh.Effects)
+                    {
+                        be.EnableDefaultLighting();
+                        be.SpecularPower = 10f;
+                        be.Projection = camera.projection;
+                        be.View = camera.view;
+                        be.World = world * mesh.ParentBone.Transform;
+                    }
+                    /*
+                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    {
+                        part.Effect = effect;
+                        effect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
+                        effect.Parameters["View"].SetValue(camera.view);
+                        effect.Parameters["Projection"].SetValue(camera.projection);
+                        effect.Parameters["AmbientColor"].SetValue(Color.Green.ToVector4());
+                        effect.Parameters["AmbientIntensity"].SetValue(0.5f);
+                    }
+                    */
+                    mesh.Draw();
                 }
-                /*
-                foreach (ModelMeshPart part in mesh.MeshParts)
-                {
-                    part.Effect = effect;
-                    effect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
-                    effect.Parameters["View"].SetValue(camera.view);
-                    effect.Parameters["Projection"].SetValue(camera.projection);
-                    effect.Parameters["AmbientColor"].SetValue(Color.Green.ToVector4());
-                    effect.Parameters["AmbientIntensity"].SetValue(0.5f);
-                }
-                */
-                mesh.Draw();
             }
         }
 
         public void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
         {
-            int healthBarWidth = 20;
-            int healthBarHeight = 5;
-            Rectangle srcRect, destRect;
+            if (this.isAlive)
+            {
+                int healthBarWidth = 20;
+                int healthBarHeight = 5;
+                Rectangle srcRect, destRect;
 
-            Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 0.8f, 0), camera.projection, camera.view, Matrix.Identity);
+                Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 0.8f, 0), camera.projection, camera.view, Matrix.Identity);
 
-            srcRect = new Rectangle(0, 0, 1, 1);
-            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, healthBarWidth, healthBarHeight);
-            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.LightGray);
+                srcRect = new Rectangle(0, 0, 1, 1);
+                destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, healthBarWidth, healthBarHeight);
+                spriteBatch.Draw(healthTexture, destRect, srcRect, Color.LightGray);
 
-            float healthPercentage = (float)hp / (float)topHP;
+                float healthPercentage = (float)hp / (float)topHP;
 
-            Color healthColor = new Color(new Vector3(1 - healthPercentage, healthPercentage, 0));
+                Color healthColor = new Color(new Vector3(1 - healthPercentage, healthPercentage, 0));
 
-            srcRect = new Rectangle(0, 0, 1, 1);
-            destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)(healthPercentage * healthBarWidth), healthBarHeight);
-            spriteBatch.Draw(healthTexture, destRect, srcRect, healthColor);
+                srcRect = new Rectangle(0, 0, 1, 1);
+                destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)(healthPercentage * healthBarWidth), healthBarHeight);
+                spriteBatch.Draw(healthTexture, destRect, srcRect, healthColor);
+            }
         }
 
         //collision vs buildings/ all bullet collisions are in Bullet
