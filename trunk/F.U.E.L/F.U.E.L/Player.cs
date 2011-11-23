@@ -196,6 +196,30 @@ namespace F.U.E.L
             return target;
         }
 
+        public override void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
+        {
+            if (this.isAlive)
+            {
+                int healthBarWidth = 117;
+                int healthBarHeight = 18;
+                Rectangle srcRect, destRect;
+
+                Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 0.8f, 0), camera.projection, camera.view, Matrix.Identity);
+
+                srcRect = new Rectangle(0, 0, 1, 1);
+                destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * graphicsDevice.Viewport.Width), 442, healthBarWidth, healthBarHeight);
+                spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Black);
+
+                float healthPercentage = (float)hp / (float)topHP;
+
+                Color healthColor = new Color(new Vector3(1 - healthPercentage, healthPercentage, 0));
+
+                srcRect = new Rectangle(0, 0, 1, 1);
+                destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * graphicsDevice.Viewport.Width), 442, (int)(healthPercentage * healthBarWidth), healthBarHeight);
+                spriteBatch.Draw(healthTexture, destRect, Rectangle.Empty, healthColor);
+            }
+        }
+
         public override void Draw(Camera camera)
         {
             if (placingTower)

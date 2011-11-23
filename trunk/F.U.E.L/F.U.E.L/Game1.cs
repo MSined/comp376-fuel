@@ -17,7 +17,7 @@ namespace F.U.E.L
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Texture2D healthTexture;
+        Texture2D healthTexture, UITexture;
 
         Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel, checkBoxModel;
 
@@ -28,6 +28,8 @@ namespace F.U.E.L
         List<Enemy> enemyList = new List<Enemy>();
         SpatialHashGrid grid;
         Model[] em = new Model[1];
+
+        UI userInterface;
 
         List<Object> removeList = new List<Object>();
 
@@ -66,6 +68,7 @@ namespace F.U.E.L
 
             //NEED TO MAKE BLANK 1x1 TEXTURE
             healthTexture = Content.Load<Texture2D>(@"Textures\enemyTexture");
+            UITexture = Content.Load<Texture2D>(@"UITextures\UI");
 
             planeModel = Content.Load<Model>(@"Models\planeModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
@@ -75,6 +78,8 @@ namespace F.U.E.L
             treeModel = Content.Load<Model>(@"Models\treeModel");
             telePadModel = Content.Load<Model>(@"Models\telePadModel");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
+
+            userInterface = new UI(spriteBatch, GraphicsDevice, UITexture, healthTexture, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);
 
             //redEffect = Content.Load<Effect>(@"Effects\Red");
             //greenEffect = Content.Load<Effect>(@"Effects\Green");
@@ -266,7 +271,8 @@ namespace F.U.E.L
                 if (gc is Character && camera.onScreen((Object)gc))
                 {
                     Character c = (Character)gc;
-                    c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                    //if (!(c is Player))
+                        c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
                 }
                 if (gc is Map)
                 {
@@ -281,6 +287,8 @@ namespace F.U.E.L
                     }
                 }
             }
+
+            userInterface.drawUserInterface();
 
             spriteBatch.End();
 
