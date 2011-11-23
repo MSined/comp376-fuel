@@ -16,7 +16,7 @@ namespace F.U.E.L
         const float depth = .5f;
         const float useRange = 1f;
 
-        public static int credit = 0;
+        public static int credit = 99990;
 
         public bool placingTower = false, checkBoxCollision = false;
         public BuildBox checkBox;
@@ -71,9 +71,13 @@ namespace F.U.E.L
                         velocity += new Vector3(1, 0, 0);
                 }
 
-                if (k.IsKeyDown(Keys.Space))
-                    weapons[selectedWeapon].shoot(position, lookDirection, false);
-
+                if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
+                {
+                    Generator g = (Generator)this.getUsableBuilding();
+                    g.use();
+                }
+                else if (k.IsKeyDown(Keys.Space)){
+                    weapons[selectedWeapon].shoot(position, lookDirection, false);}
 
                 if (k.IsKeyDown(Keys.D1))
                     selectedWeapon = 0;
@@ -114,17 +118,11 @@ namespace F.U.E.L
                     placingTower = false;
                     checkBoxCollision = false;
                 }
-
-                if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
-                {
-                    Generator g = (Generator)this.getUsableBuilding();
-                    g.use();
-                }
             }
 
             else
             {
-                if (k.IsKeyDown(Keys.Enter))
+                if (k.IsKeyDown(Keys.Enter) && credit>=respawnCost)
                 {
                     credit -= respawnCost;
                     respawnCost *= 2;
