@@ -50,6 +50,22 @@ namespace F.U.E.L
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             // This removes the synchronization with the screen to allow a faster framerate
             graphics.SynchronizeWithVerticalRetrace = false;
+            //graphics.PreferredBackBufferWidth = 910;
+            //graphics.PreferredBackBufferHeight = 512;
+
+            //graphics.PreferredBackBufferWidth = 1680;
+            //graphics.PreferredBackBufferHeight = 1050;
+
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.ToggleFullScreen();
+
+            //graphics.PreferredBackBufferWidth = 800;
+            //graphics.PreferredBackBufferHeight = 480;
+
+            
+
+            //graphics.IsFullScreen = true;
         }
 
         protected override void Initialize()
@@ -271,8 +287,10 @@ namespace F.U.E.L
                 if (gc is Character && camera.onScreen((Object)gc))
                 {
                     Character c = (Character)gc;
-                    //if (!(c is Player))
+                    if (!(c is Player))
                         c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                    else
+                        c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 }
                 if (gc is Map)
                 {
