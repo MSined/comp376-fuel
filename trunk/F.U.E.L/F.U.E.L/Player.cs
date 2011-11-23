@@ -194,18 +194,18 @@ namespace F.U.E.L
             return target;
         }
 
-        public override void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
+        public override void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture, int width, int height)
         {
             if (this.isAlive)
             {
-                int healthBarWidth = 117;
-                int healthBarHeight = 18;
+                int healthBarWidth = (int)Math.Floor((145f * width / (float)1000));
+                int healthBarHeight = (int)Math.Floor((22f * width / (float)1000));
                 Rectangle srcRect, destRect;
 
                 Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 0.8f, 0), camera.projection, camera.view, Matrix.Identity);
 
                 srcRect = new Rectangle(0, 0, 1, 1);
-                destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * graphicsDevice.Viewport.Width), 442, healthBarWidth, healthBarHeight);
+                destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), healthBarWidth, healthBarHeight);
                 spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Black);
 
                 float healthPercentage = (float)hp / (float)topHP;
@@ -213,7 +213,7 @@ namespace F.U.E.L
                 Color healthColor = new Color(new Vector3(1 - healthPercentage, healthPercentage, 0));
 
                 srcRect = new Rectangle(0, 0, 1, 1);
-                destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * graphicsDevice.Viewport.Width), 442, (int)(healthPercentage * healthBarWidth), healthBarHeight);
+                destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), (int)(healthPercentage * healthBarWidth), healthBarHeight);
                 spriteBatch.Draw(healthTexture, destRect, Rectangle.Empty, healthColor);
             }
         }
