@@ -25,7 +25,7 @@ namespace F.U.E.L
 
         // Removed position from this constructor as it will be taken from the spawnpoint
         public Enemy(Game game, Model[] modelComponents,
-            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.07f
+            SpawnPoint spawnPoint, Weapon[] weapons, int topHP = 200, int topSP = 20, float speed = 0.03f
             )
             : base(game, modelComponents, new Vector3(spawnPoint.position.X +(float)rand.NextDouble()/2, 
                                                       spawnPoint.position.Y, 
@@ -91,7 +91,7 @@ namespace F.U.E.L
                 if (!g.functional) 
                 {
                     target=null;
-                    velocity=new Vector3(0,0,0);
+                    velocity = Vector3.Zero;
                 }
             }
             else if (target != null && target is Player) 
@@ -101,7 +101,7 @@ namespace F.U.E.L
                     Player p = (Player)target;
                     --p.attackerNum;
                     target = null;
-                    velocity = new Vector3(0, 0, 0);
+                    velocity = Vector3.Zero;
                 }
             }
 
@@ -120,7 +120,7 @@ namespace F.U.E.L
                     if (gc is Map)
                     {
                         Map m = (Map)gc;
-                        buildings = m.buildings;
+                        buildings = m.usableBuildings;
                     }
                     if (gc is Tower)
                     {
@@ -135,7 +135,7 @@ namespace F.U.E.L
                 float targetDist = (target.position - this.position).Length();
                 if (targetDist < weapons[selectedWeapon].range)
                 {
-                    velocity = new Vector3(0, 0, 0);
+                    velocity = Vector3.Zero;
                     weapons[selectedWeapon].shoot(this.position, lookDirection, true);
                     lookDirection = target.position - this.position;
                 }
@@ -166,8 +166,8 @@ namespace F.U.E.L
             else if (!needSteer(colliders, velocity)) {}//current direction is good, keep going
             else//need to change direction
             {
-                Vector3 right = new Vector3(0, 0, 0);
-                Vector3 left = new Vector3(0, 0, 0);
+                Vector3 right = Vector3.Zero;
+                Vector3 left = Vector3.Zero;
                 
                 right.X = (velocity.X * (float)Math.Cos(MathHelper.ToRadians(angle))) - (velocity.Z * (float)Math.Sin(MathHelper.ToRadians(angle)));
                 right.Z = (velocity.X * (float)Math.Sin(MathHelper.ToRadians(angle))) + (velocity.Z * (float)Math.Cos(MathHelper.ToRadians(angle)));

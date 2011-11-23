@@ -17,7 +17,8 @@ namespace F.U.E.L
         public float bottomYPos { get; protected set; }
         // Map has list of spawnpoints first in the list is the player spawnpoint
         public List<SpawnPoint> spawnPoints { get; protected set; }
-        
+        public List<Building> usableBuildings { get; protected set; }
+
         public Map(Game game, Model[] modelComponents, float leftX, float bottomY)
             : base(game)
         {
@@ -47,6 +48,7 @@ namespace F.U.E.L
             // Because remember the BB is on the XZ-plane
             buildings = new List<Building>();
             spawnPoints = new List<SpawnPoint>();
+            usableBuildings = new List<Building>();
 
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 24), true));
 
@@ -72,11 +74,11 @@ namespace F.U.E.L
             Model[] m = new Model[1];
             m[0] = modelComponents[2];
 
-            buildings.Add(new Generator(game, m, new Vector3(-26, 0, 24), 0f));
-            buildings.Add(new Generator(game, m, new Vector3(28, 0, 28), 0f));
-            buildings.Add(new Generator(game, m, new Vector3(-2, 0, 2), 0f));
-            buildings.Add(new Generator(game, m, new Vector3(-30, 0, -30), 0f));
-            buildings.Add(new Generator(game, m, new Vector3(28, 0, -30), 0f));
+            usableBuildings.Add(new Generator(game, m, new Vector3(-26, 0, 24), 0f));
+            usableBuildings.Add(new Generator(game, m, new Vector3(28, 0, 28), 0f));
+            usableBuildings.Add(new Generator(game, m, new Vector3(-2, 0, 2), 0f));
+            usableBuildings.Add(new Generator(game, m, new Vector3(-30, 0, -30), 0f));
+            usableBuildings.Add(new Generator(game, m, new Vector3(28, 0, -30), 0f));
 
             addTrees(game, trees, buildings);
             addBuildings(game, building, buildings);
@@ -172,11 +174,6 @@ namespace F.U.E.L
             }
         }
 
-        public void Update(GameTime gameTime, List<Object> colliders)
-        {
-            //no use
-            }
-
         public void Draw(Camera camera)
         {
             Matrix[] transforms = new Matrix[model.Bones.Count];
@@ -210,6 +207,14 @@ namespace F.U.E.L
                 //{
                     s.Draw(camera);
                 //}
+            }
+
+            foreach (Building b in usableBuildings)
+            {
+                if (camera.onScreen((Object)b))
+                {
+                    b.Draw(camera);
+                }
             }
         }
     }

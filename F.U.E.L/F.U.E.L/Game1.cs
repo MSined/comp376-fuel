@@ -17,7 +17,7 @@ namespace F.U.E.L
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Texture2D healthTexture, UITexture;
+        Texture2D healthTexture, UITexture, minimapTexture, unitsTexture;
 
         Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel, checkBoxModel;
 
@@ -56,14 +56,15 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
 
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.ToggleFullScreen();
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 720;
+            //graphics.ToggleFullScreen();
 
             //graphics.PreferredBackBufferWidth = 800;
             //graphics.PreferredBackBufferHeight = 480;
 
-            
+            graphics.PreferredBackBufferWidth = 600;
+            graphics.PreferredBackBufferHeight = 450;
 
             //graphics.IsFullScreen = true;
         }
@@ -85,6 +86,8 @@ namespace F.U.E.L
             //NEED TO MAKE BLANK 1x1 TEXTURE
             healthTexture = Content.Load<Texture2D>(@"Textures\enemyTexture");
             UITexture = Content.Load<Texture2D>(@"UITextures\UI");
+            minimapTexture = Content.Load<Texture2D>(@"UITextures\minimap");
+            unitsTexture = Content.Load<Texture2D>(@"UITextures\unitsTexture");
 
             planeModel = Content.Load<Model>(@"Models\planeModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
@@ -95,7 +98,7 @@ namespace F.U.E.L
             telePadModel = Content.Load<Model>(@"Models\telePadModel");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
 
-            userInterface = new UI(spriteBatch, GraphicsDevice, UITexture, healthTexture, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);
+            userInterface = new UI(spriteBatch, GraphicsDevice, UITexture, healthTexture, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth, minimapTexture, unitsTexture);
 
             //redEffect = Content.Load<Effect>(@"Effects\Red");
             //greenEffect = Content.Load<Effect>(@"Effects\Green");
@@ -131,6 +134,9 @@ namespace F.U.E.L
             grid = new SpatialHashGrid(72, 72, 2, map.leftXPos / 2, map.bottomYPos / 2);
             for (int i = 0; i < map.buildings.Count; ++i)
                 grid.insertStaticObject(map.buildings[i]);
+
+            for (int i = 0; i < map.usableBuildings.Count; ++i)//for collisions
+                grid.insertStaticObject(map.usableBuildings[i]);
 
             enemyModel = Content.Load<Model>(@"Models\alien788_60");
             Model[] em = new Model[1];
@@ -246,7 +252,7 @@ namespace F.U.E.L
                 }
             }
 
-            foreach(Building b in map.buildings)
+            foreach(Building b in map.usableBuildings)
             {
                 if (b is Generator)
                 {
@@ -281,7 +287,7 @@ namespace F.U.E.L
 
             spriteBatch.Begin();
 
-            List<Building> buildings = map.buildings;
+            //List<Building> buildings = map.buildings;
             foreach (GameComponent gc in Components)
             {
                 if (gc is Character && camera.onScreen((Object)gc))
@@ -295,7 +301,7 @@ namespace F.U.E.L
                 if (gc is Map)
                 {
                     Map m = (Map)gc;
-                    foreach (Building b in m.buildings)
+                    foreach (Building b in m.usableBuildings)
                     {
                         if (b is Generator && camera.onScreen((Object)b))
                         {
@@ -306,8 +312,7 @@ namespace F.U.E.L
                 }
             }
 
-            userInterface.drawUserInterface();
-
+            userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
             spriteBatch.End();
 
             base.Draw(gameTime);
