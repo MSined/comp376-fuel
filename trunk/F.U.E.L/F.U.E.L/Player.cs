@@ -175,7 +175,7 @@ namespace F.U.E.L
                 if (gc is Map)
                 {
                     Map m = (Map)gc;
-                    buildings = m.buildings;
+                    buildings = m.usableBuildings;
                 }
             }
 
