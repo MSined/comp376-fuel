@@ -139,7 +139,7 @@ namespace F.U.E.L
             }
         }
 
-        public void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
+        public override void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
         {
             if (this.isAlive)
             {

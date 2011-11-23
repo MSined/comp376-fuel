@@ -38,5 +38,10 @@ namespace F.U.E.L
         {
 
         }
+
+        public virtual void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
+        {
+
+        }
     }
 }
