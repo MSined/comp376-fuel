@@ -24,9 +24,9 @@ namespace F.U.E.L
 
         //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
         public float top=-12;
-        public float bottom=7;
-        public float left=-15;
-        public float right=15;
+        public float bottom=6;
+        public float left=-14;
+        public float right=14;
 
         // Current scroll wheel value. It stores the cumulative scroll value since start of game
         // Also used to verify against new scroll values to determine if zoom in or out
