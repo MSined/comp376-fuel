@@ -20,6 +20,8 @@ namespace F.U.E.L
         Vector3 cameraDirection;
         Vector3 cameraUp;
 
+        Vector3 cameraTarget;
+
         //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
         public float top=-12;
         public float bottom=7;
@@ -31,7 +33,9 @@ namespace F.U.E.L
         float scrollWheelValue = 0;
 
         private Game game;
-        private Player player = null;
+        //private Player player = null;
+
+        private List<Player> players = new List<Player>();
 
         public Camera(Game game, Vector3 pos /* in respect to player*/, Vector3 target, Vector3 up)
             : base(game)
@@ -57,7 +61,7 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime)
         {
-            if (player == null)
+            /*if (player == null)
             {
                 foreach (GameComponent p in game.Components)
                 {
@@ -69,7 +73,38 @@ namespace F.U.E.L
                 }
             }
             cameraPosition = player.position + cameraDistFromPlayer;
-            
+            */
+            if (players.Count == 0) 
+            {
+                foreach (GameComponent p in game.Components)
+                {
+                    if (p is Player)
+                    {
+                        players.Add((Player)p);
+                    }
+                }
+            }
+            int i = 0;//to count alive players 
+            cameraTarget = Vector3.Zero;
+            foreach (Player p in players) 
+            {
+                if (p.isAlive) 
+                {
+                    ++i;
+                    cameraTarget += p.position;
+                }
+            }
+            if (i != 0)
+            {
+                cameraTarget/=i;
+            }
+            else 
+            {
+                cameraTarget = new Vector3(-30, 0, 24);
+            }
+            cameraPosition = cameraTarget + cameraDistFromPlayer;
+
+
             // Check for scroll wheel zooming
             // Camera moves along its direction matrix (where it is looking)
             if (Mouse.GetState().ScrollWheelValue < scrollWheelValue)
@@ -97,11 +132,15 @@ namespace F.U.E.L
         public bool onScreen(Object o) 
         {
             //if (Math.Abs((o.position - (player.position+onScreenAdjust)).Length()) < 17) { return true; }
-            if (o.position.Z > player.position.Z + top &&
+            /*if (o.position.Z > player.position.Z + top &&
                 o.position.Z < player.position.Z + bottom &&
                 o.position.X > player.position.X + left &&
-                o.position.X < player.position.X + right) { return true; }
-            
+                o.position.X < player.position.X + right) { return true; }*/
+            if (o.position.Z > cameraTarget.Z + top &&
+                o.position.Z < cameraTarget.Z + bottom &&
+                o.position.X > cameraTarget.X + left &&
+                o.position.X < cameraTarget.X + right) { return true; }
+
             else { return false; }
             //return true;
         }
