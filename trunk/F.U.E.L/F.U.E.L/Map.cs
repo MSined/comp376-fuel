@@ -52,9 +52,9 @@ namespace F.U.E.L
 
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 24), true));
 
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(24, 0, -26), false));
+            //spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(24, 0, -26), false));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(24, 0, -34), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(32, 0, -26), false));
+            //spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(32, 0, -26), false));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(32, 0, -34), false));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-26, 0, -18), false));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-16, 0, -22), false));
