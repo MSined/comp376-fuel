@@ -17,6 +17,8 @@ namespace F.U.E.L
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        MenuManager menuManager;
+
         Texture2D healthTexture, UITexture, minimapTexture, unitsTexture;
 
         Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel, checkBoxModel;
@@ -29,6 +31,9 @@ namespace F.U.E.L
         SpatialHashGrid grid;
         Model[] em = new Model[1];
 
+        MouseState mouse;
+        KeyboardState keyboard;
+
         UI userInterface;
 
         List<Object> removeList = new List<Object>();
@@ -36,6 +41,8 @@ namespace F.U.E.L
         public Effect redEffect, greenEffect;
 
         FrameRateCounter fpsCounter;
+
+        private bool EscapeKeyDown = false;
 
         public Game1()
         {
@@ -56,15 +63,15 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
 
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
             //graphics.ToggleFullScreen();
 
             //graphics.PreferredBackBufferWidth = 800;
             //graphics.PreferredBackBufferHeight = 480;
 
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            //graphics.PreferredBackBufferWidth = 800;
+            //graphics.PreferredBackBufferHeight = 600;
 
             //graphics.IsFullScreen = true;
         }
@@ -74,6 +81,11 @@ namespace F.U.E.L
             // Create camera and add to components list
             camera = new Camera(this, new Vector3(0, 12, 9), Vector3.Zero, -Vector3.UnitZ);
             Components.Add(camera);
+
+            mouse = Mouse.GetState();
+            keyboard = Keyboard.GetState();
+
+            menuManager = new MenuManager(mouse, keyboard);
 
             base.Initialize();
         }
@@ -97,6 +109,21 @@ namespace F.U.E.L
             treeModel = Content.Load<Model>(@"Models\treeModel");
             telePadModel = Content.Load<Model>(@"Models\telePadModel");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
+
+            string menuBG = @"ScreenManagerAssets\Textures\MainMenuBG";
+            string menuBGSound = @"ScreenManagerAssets\Sounds\MainMenuBGM";
+            string menuOpenPath =  @"ScreenManagerAssets\Sounds\MenuOpen";
+            string menuClosePath = @"ScreenManagerAssets\Sounds\MenuClose";
+
+
+            MainMenu mainMenu = new MainMenu("Main Menu"); // main menu
+            mainMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
+            mainMenu.LoadButtons(Content,
+                new int[] { 1, 2, 3 },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, 150, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, 210, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, 270, 150, 50) },
+                new List<string>() { "Continue", "Save", "Quit" }
+                );
+            menuManager.AddMenu("Main Menu", mainMenu);// Initiate menus
 
             userInterface = new UI(spriteBatch, GraphicsDevice, UITexture, healthTexture, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth, minimapTexture, unitsTexture);
 
@@ -167,102 +194,134 @@ namespace F.U.E.L
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            #region Update Game Components
-            List<Object> colliders = new List<Object>();
-            GameComponent[] gcc = new GameComponent[Components.Count];
-            Components.CopyTo(gcc, 0);
-            foreach (GameComponent gc in gcc)
+            KeyboardState keyboard = Keyboard.GetState();
+
+            menuManager.Update();
+            if (menuManager != null)
             {
-                if (!(gc is Object))
+                switch (menuManager.MenuEvent)
                 {
-                    gc.Update(gameTime);
+                    case MenuManager.MenuEvents.None:
+                        break;
+                    case MenuManager.MenuEvents.Exit:
+                        this.Exit();
+                        break;
                 }
-                else
+            }
+
+            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null)
+            {
+               // if (menuManager.ActiveMenu == null)
+                    menuManager.Show("Main Menu");
+                EscapeKeyDown = true;
+            }
+            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu != null)
+            {
+                System.Diagnostics.Debug.WriteLine("Bazinga!");
+                menuManager.Exit();
+                EscapeKeyDown = true;
+            }
+            if(keyboard.IsKeyUp(Keys.Escape) && EscapeKeyDown)
+                EscapeKeyDown = false;
+
+            if (menuManager.ActiveMenu == null)
+            {
+                #region Update Game Components
+                List<Object> colliders = new List<Object>();
+                GameComponent[] gcc = new GameComponent[Components.Count];
+                Components.CopyTo(gcc, 0);
+                foreach (GameComponent gc in gcc)
                 {
-                    Object o = (Object)gc;
-                    // Only update if the object is alive
-                    if (o.isAlive)
+                    if (!(gc is Object))
                     {
-                        colliders = grid.getPotentialColliders(o);
-                        o.Update(gameTime, colliders);
-                        colliders.Clear();
+                        gc.Update(gameTime);
                     }
                     else
                     {
-                        if (o is Enemy)
+                        Object o = (Object)gc;
+                        // Only update if the object is alive
+                        if (o.isAlive)
                         {
-                            /*int i = 0;
-                            while (enemy[i] != null && enemy[i].objectID != o.objectID)
-                            {
-                                ++i;
-                            }
-                            enemy[i] = null;*/
-                            Enemy e = (Enemy)o;
-                            --e.spawnPoint.spawnCounter;
-                            enemyList.Remove(e);
-                        }
-                        if (o is Player)
-                        {
+                            colliders = grid.getPotentialColliders(o);
                             o.Update(gameTime, colliders);
+                            colliders.Clear();
                         }
                         else
                         {
-                            Components.Remove(o);
-                            grid.removeDynamicObject(o);
+                            if (o is Enemy)
+                            {
+                                /*int i = 0;
+                                while (enemy[i] != null && enemy[i].objectID != o.objectID)
+                                {
+                                    ++i;
+                                }
+                                enemy[i] = null;*/
+                                Enemy e = (Enemy)o;
+                                --e.spawnPoint.spawnCounter;
+                                enemyList.Remove(e);
+                            }
+                            if (o is Player)
+                            {
+                                o.Update(gameTime, colliders);
+                            }
+                            else
+                            {
+                                Components.Remove(o);
+                                grid.removeDynamicObject(o);
+                            }
                         }
                     }
                 }
-            }
-            #endregion
+                #endregion
 
-            #region Update The SpawnPoints
-            // Spawn enemies when the spawnPoints respawn rate is reached
-            foreach (SpawnPoint s in map.spawnPoints)
-            {
-                s.Update(gameTime);
-                if (s.readyToSpawn() && s.spawnCounter < s.spawnLimit)
+                #region Update The SpawnPoints
+                // Spawn enemies when the spawnPoints respawn rate is reached
+                foreach (SpawnPoint s in map.spawnPoints)
                 {
-                    /*
-                    bool skip = false;
-                    int i = 0;
-                    while (enemy[i] != null)
+                    s.Update(gameTime);
+                    if (s.readyToSpawn() && s.spawnCounter < s.spawnLimit)
                     {
-                        ++i;
-                        if (i >= enemy.Length)
+                        /*
+                        bool skip = false;
+                        int i = 0;
+                        while (enemy[i] != null)
                         {
-                            skip = true;
-                            break;
+                            ++i;
+                            if (i >= enemy.Length)
+                            {
+                                skip = true;
+                                break;
+                            }
                         }
+
+                        if (skip)
+                            continue;
+                        */
+
+                        Weapon[] w = new Weapon[1];
+                        Model[] shotModel = new Model[1];
+                        shotModel[0] = playerModel;
+                        w[0] = new PowerFist(this, shotModel, Vector3.Zero);
+                        Model[] em = new Model[1];
+                        em[0] = enemyModel;
+
+                        enemyList.Add(new Enemy(this, em, s, w));
+                        Components.Add(enemyList[enemyList.Count - 1]);// Add the newest enemy in the enemyList to Components (last indexed enemy)
+                        ++s.spawnCounter;
                     }
-
-                    if (skip)
-                        continue;
-                    */
-
-                    Weapon[] w = new Weapon[1];
-                    Model[] shotModel = new Model[1];
-                    shotModel[0] = playerModel;
-                    w[0] = new PowerFist(this, shotModel, Vector3.Zero);
-                    Model[] em = new Model[1];
-                    em[0] = enemyModel;
-
-                    enemyList.Add(new Enemy(this, em, s, w));
-                    Components.Add(enemyList[enemyList.Count-1]);// Add the newest enemy in the enemyList to Components (last indexed enemy)
-                    ++s.spawnCounter;
                 }
-            }
 
-            foreach(Building b in map.usableBuildings)
-            {
-                if (b is Generator)
+                foreach (Building b in map.usableBuildings)
                 {
-                    Generator g = (Generator)b;
-                    g.Update(gameTime);
+                    if (b is Generator)
+                    {
+                        Generator g = (Generator)b;
+                        g.Update(gameTime);
+                    }
                 }
+
+                #endregion
             }
-
-            #endregion
-
             base.Update(gameTime);
         }
 
@@ -270,52 +329,58 @@ namespace F.U.E.L
         {
             GraphicsDevice.Clear(Color.Black);
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-
-            foreach (GameComponent gc in Components)
-            {
-                if (gc is Object && camera.onScreen((Object)gc))
-                {
-                    Object o = (Object)gc;
-                    o.Draw(camera);
-                }
-                if (gc is Map)
-                {
-                    Map m = (Map)gc;
-                    m.Draw(camera);
-                }
-            }
-
             spriteBatch.Begin();
-
-            //List<Building> buildings = map.buildings;
-            foreach (GameComponent gc in Components)
+            if (menuManager.ActiveMenu == null)
             {
-                if (gc is Character && camera.onScreen((Object)gc))
+
+                foreach (GameComponent gc in Components)
                 {
-                    Character c = (Character)gc;
-                    if (!(c is Player))
-                        c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
-                    else
-                        c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-                }
-                if (gc is Map)
-                {
-                    Map m = (Map)gc;
-                    foreach (Building b in m.usableBuildings)
+                    if (gc is Object && camera.onScreen((Object)gc))
                     {
-                        if (b is Generator && camera.onScreen((Object)b))
+                        Object o = (Object)gc;
+                        o.Draw(camera);
+                    }
+                    if (gc is Map)
+                    {
+                        Map m = (Map)gc;
+                        m.Draw(camera);
+                    }
+                }
+
+                
+                
+                //List<Building> buildings = map.buildings;
+                foreach (GameComponent gc in Components)
+                {
+                    if (gc is Character && camera.onScreen((Object)gc))
+                    {
+                        Character c = (Character)gc;
+                        if (!(c is Player))
+                            c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                        else
+                            c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+                    }
+                    if (gc is Map)
+                    {
+                        Map m = (Map)gc;
+                        foreach (Building b in m.usableBuildings)
                         {
-                            Generator g = (Generator)b;
-                            g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                            if (b is Generator && camera.onScreen((Object)b))
+                            {
+                                Generator g = (Generator)b;
+                                g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                            }
                         }
                     }
                 }
+
+                userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
             }
+                menuManager.Draw(spriteBatch, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);
+                spriteBatch.End();
 
-            userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
-            spriteBatch.End();
-
-            base.Draw(gameTime);
+                base.Draw(gameTime);
+            
         }
     }
 }

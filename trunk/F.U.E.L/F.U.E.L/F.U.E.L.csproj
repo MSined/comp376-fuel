@@ -126,6 +126,10 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\Button.cs" />
+    <Compile Include="Menus\Menu.cs" />
+    <Compile Include="Menus\MenuManager.cs" />
     <Compile Include="Objects.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
