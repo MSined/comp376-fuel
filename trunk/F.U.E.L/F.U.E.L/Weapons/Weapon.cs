@@ -29,7 +29,6 @@ namespace F.U.E.L
 
             this.bulletModelComponents = new Model[1];
             this.bulletModelComponents[0] = modelComponents[0];
-
         }
 
         public virtual void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)

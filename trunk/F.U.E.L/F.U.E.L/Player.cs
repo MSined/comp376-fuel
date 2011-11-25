@@ -11,6 +11,14 @@ namespace F.U.E.L
 {
     class Player : Character
     {
+        public enum Class
+        {
+            Alchemist,
+            Gunner,
+            Sniper,
+            Tank
+        };
+
         const float height = .5f;
         const float width = .5f;
         const float depth = .5f;
@@ -22,16 +30,84 @@ namespace F.U.E.L
         public BuildBox checkBox;
         public int attackerNum=0;
 
+        private PlayerIndex playerIndex;
+        private int playerID;
+
         public int respawnCost = 500;
-        public int playerID;//0 = player 1
 
         public Player(Game game, Model[] modelComponents,
-            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons, int playerID
+            SpawnPoint spawnPoint, Class c, PlayerIndex pIndex
             )
-            : base(game, modelComponents, spawnPoint.position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
+            : base(game, modelComponents, spawnPoint.position, 10, 10, 10, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
+
+            playerIndex = pIndex;
+            switch (pIndex)
+            {
+                case PlayerIndex.One:
+                    playerID = 0;
+                    break;
+                case PlayerIndex.Two:
+                    playerID = 1;
+                    break;
+                case PlayerIndex.Three:
+                    playerID = 2;
+                    break;
+                case PlayerIndex.Four:
+                    playerID = 3;
+                    break;
+            }
+
+            switch (c)
+            {
+                case Class.Alchemist:
+                    weapons[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[1] = new Heal(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[2] = new Renew(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[3] = new PoisonRing(game, modelComponents, new Vector3(0, 0, 0));
+                    topHP = 500;
+                    hp = topHP;
+                    topSP = 100;
+                    sp = topSP;
+                    speed = 0.08f;
+                    break;
+                case Class.Gunner:
+                    weapons[0] = new MiniGun(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[1] = new FlameThrower(game, modelComponents, new Vector3(0, 0, 0), this);
+                    weapons[2] = new SnakeGun(game, modelComponents, new Vector3(0, 0, 0), this);
+                    weapons[3] = new RocketLauncher(game, modelComponents, new Vector3(0, 0, 0));
+                    topHP = 500;
+                    hp = topHP;
+                    topSP = 100;
+                    sp = topSP;
+                    speed = 0.08f;
+                    break;
+                case Class.Sniper:
+                    weapons[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[1] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[2] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[3] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    topHP = 500;
+                    hp = topHP;
+                    topSP = 100;
+                    sp = topSP;
+                    speed = 0.08f;
+                    break;
+                case Class.Tank:
+                    weapons[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[1] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[2] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[3] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
+                    topHP = 500;
+                    hp = topHP;
+                    topSP = 100;
+                    sp = topSP;
+                    speed = 0.08f;
+                    break;
+            }
+            
+
             selectedWeapon = 1;
-            this.playerID = playerID;
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
@@ -39,7 +115,7 @@ namespace F.U.E.L
             #region Keyboard Controls
             //Hack to get it working on a computer
             KeyboardState k = Keyboard.GetState();
-            if (this.playerID == 0)
+            if (playerIndex == PlayerIndex.One)
             {
                 if (this.isAlive)
                 {
@@ -142,7 +218,7 @@ namespace F.U.E.L
             #endregion
 
             //Gamepad Support
-            GamePadState gp = GamePad.GetState(PlayerIndex.One);
+            GamePadState gp = GamePad.GetState(playerIndex);
             if (!(gp.ThumbSticks.Right.X == 0 && gp.ThumbSticks.Right.Y == 0)) lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
 
             if (gp.IsButtonDown(Buttons.X))
@@ -166,7 +242,12 @@ namespace F.U.E.L
             if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
             if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false);
 
-            //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+            velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+
+            foreach (Weapon w in weapons)
+            {
+                w.Update(gameTime, colliders);
+            }
 
             base.Update(gameTime, colliders);
         }

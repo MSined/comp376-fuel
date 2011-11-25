@@ -11,13 +11,13 @@ namespace F.U.E.L
 {
     class Character : Object
     {
-        protected int topHP;
+        public int topHP;
         public int hp;// { get; protected set; }
-        protected int topSP;
+        public int topSP;
         public int sp { get; protected set; }
 
         public SpawnPoint spawnPoint { get; private set; }
-        protected Weapon[] weapons { get; private set; }
+        public Weapon[] weapons { get; private set; }
         public int selectedWeapon { get; protected set; }
         protected int[] attributes { get; private set; }
 
@@ -25,7 +25,8 @@ namespace F.U.E.L
         protected Vector3 velocity = new Vector3(0,0,0);
         protected float speed;
 
-        public Effect effect;
+        public Boolean poisoned = false;
+        public int burningStacks = 0;
 
         // Characters initial position is defined by the spawnpoint ther are associated with
         public Character(Game game, Model[] modelComponents, Vector3 position,

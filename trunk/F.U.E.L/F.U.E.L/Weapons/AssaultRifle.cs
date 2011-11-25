@@ -14,7 +14,8 @@ namespace F.U.E.L
     {
         private const float RANGE = 5;
         private const int DAMAGE = 5;
-        private const int FIRERATE = 1000000;
+        private const int FIRERATE = (int)(1 / 10.0 * 10000000);
+        
 
         private SoundEffect soundEffect;
 
@@ -27,7 +28,7 @@ namespace F.U.E.L
 
         public override void Draw(Camera camera)
         {
-
+            
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)

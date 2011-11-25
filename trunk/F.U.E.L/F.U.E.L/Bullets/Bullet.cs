@@ -17,7 +17,7 @@ namespace F.U.E.L
         public const float width = 0.5f, height = 0.5f;
         public Boolean shotByEnemy { get; protected set; }
 
-        public const float speed = 0.1f;
+        public float speed = 0.2f;
 
         public Bullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)

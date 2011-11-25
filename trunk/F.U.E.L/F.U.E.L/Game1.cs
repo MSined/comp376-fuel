@@ -17,6 +17,8 @@ namespace F.U.E.L
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        SpriteFont spriteFont;
+
         MenuManager menuManager;
 
         Texture2D healthTexture, UITexture, minimapTexture, unitsTexture;
@@ -92,6 +94,8 @@ namespace F.U.E.L
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), spriteBatch);
 
+            spriteFont = Content.Load<SpriteFont>(@"FPSFont");
+
             //NEED TO MAKE BLANK 1x1 TEXTURE
             healthTexture = Content.Load<Texture2D>(@"Textures\enemyTexture");
             UITexture = Content.Load<Texture2D>(@"UITextures\UI");
@@ -143,15 +147,7 @@ namespace F.U.E.L
             p[0] = playerModel;
             Model[] t = new Model[1];
             t[0] = checkBoxModel;
-            Weapon[] w = new Weapon[4];
-            w[0] = new Pistol(this, p, new Vector3(0, 0, 0));
-            w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
-            w[2] = new Shotgun(this, p, new Vector3(0, 0, 0));
-            w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
-            players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[0], w, 0));//player 1
-            //players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[1], w, 1));//player 2
-            //players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[2], w, 2));//player 3
-            //players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[3], w, 3));//player 4
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Gunner, PlayerIndex.One));
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);
@@ -352,6 +348,31 @@ namespace F.U.E.L
                 //List<Building> buildings = map.buildings;
                 foreach (GameComponent gc in Components)
                 {
+                    //For cooldown Testing purposes!
+                    if (gc is Player)
+                    {
+                        Player p = (Player)gc;
+                        String s = "";
+                        long nowTick = DateTime.Now.Ticks;
+                        foreach (Weapon w in p.weapons)
+                        {
+                            long t = (w.lastShot + w.fireRate - nowTick) / 100000;
+                            if (t < 0)
+                            {
+                                s += "0 ";
+                            }
+                            else
+                            {
+                                s += t+" ";
+                            }
+                        }
+                        spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black);
+                        spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White);
+                    }
+                    //END TEST
+
+
+
                     if (gc is Character && camera.onScreen((Object)gc))
                     {
                         Character c = (Character)gc;

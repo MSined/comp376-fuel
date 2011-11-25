@@ -70,7 +70,7 @@ namespace F.U.E.L
                     {
                         UISprites.Draw(unitsTexture, minimapPosition, generatorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
                     }
-                    else
+					else
                     {
                         UISprites.Draw(unitsTexture, minimapPosition, brokenGeneratorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
                     }
