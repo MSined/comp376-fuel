@@ -219,7 +219,7 @@ namespace F.U.E.L
                 Color healthColor = new Color(new Vector3(1 - healthPercentage, healthPercentage, 0));
 
                 srcRect = new Rectangle(0, 0, 1, 1);
-                destRect = new Rectangle((int)Math.Floor((float)(203+(playerID*200)) / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), (int)(healthPercentage * healthBarWidth), healthBarHeight);
+                destRect = new Rectangle((int)Math.Floor((float)(253+(playerID*200)) / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), (int)(healthPercentage * healthBarWidth), healthBarHeight);
                 spriteBatch.Draw(healthTexture, destRect, Rectangle.Empty, healthColor);
             }
         }
