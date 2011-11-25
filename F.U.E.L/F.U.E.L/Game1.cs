@@ -63,15 +63,12 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
 
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 720;
             //graphics.ToggleFullScreen();
 
-            //graphics.PreferredBackBufferWidth = 800;
-            //graphics.PreferredBackBufferHeight = 480;
-
-            //graphics.PreferredBackBufferWidth = 800;
-            //graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
 
             //graphics.IsFullScreen = true;
         }
@@ -151,7 +148,10 @@ namespace F.U.E.L
             w[1] = new FlameThrower(this, p, new Vector3(0, 0, 0));
             w[2] = new Shotgun(this, p, new Vector3(0, 0, 0));
             w[3] = new Grenade(this, p, new Vector3(0, 0, 0));
-            players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[0], w));
+            players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[0], w, 0));//player 1
+            //players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[1], w, 1));//player 2
+            //players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[2], w, 2));//player 3
+            //players.Add(new Player(this, p, 500, 100, 0.08f, map.spawnPoints[3], w, 3));//player 4
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);

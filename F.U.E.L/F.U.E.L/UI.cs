@@ -44,14 +44,13 @@ namespace F.U.E.L
 
         public void drawUserInterface(List<Player> players, List<Enemy> enemies, List<Building> usableBuildings)
         {
+            DrawMinimap(players, enemies, usableBuildings);
+            UISprites.Draw(UITexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+        }
+
+        private void DrawMinimap(List<Player> players, List<Enemy> enemies, List<Building> usableBuildings) 
+        {
             UISprites.Draw(minimapTexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
-            foreach (Player p in players) 
-            {
-                Vector2 minimapPosition = Vector2.Zero;
-                minimapPosition.X = position.X + (100f + (p.position.X * 2.778f))*scale.X;
-                minimapPosition.Y = position.Y + (100f + (p.position.Z * 2.778f))*scale.Y;
-                UISprites.Draw(unitsTexture, minimapPosition, playerIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
-            }
             foreach (Enemy e in enemies)
             {
                 Vector2 minimapPosition = Vector2.Zero;
@@ -71,13 +70,19 @@ namespace F.U.E.L
                     {
                         UISprites.Draw(unitsTexture, minimapPosition, generatorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
                     }
-                    else 
+                    else
                     {
                         UISprites.Draw(unitsTexture, minimapPosition, brokenGeneratorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
                     }
                 }
             }
-            UISprites.Draw(UITexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            foreach (Player p in players)
+            {
+                Vector2 minimapPosition = Vector2.Zero;
+                minimapPosition.X = position.X + (100f + (p.position.X * 2.778f)) * scale.X;
+                minimapPosition.Y = position.Y + (100f + (p.position.Z * 2.778f)) * scale.Y;
+                UISprites.Draw(unitsTexture, minimapPosition, playerIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            }
         }
     }
 }

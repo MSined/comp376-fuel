@@ -51,6 +51,9 @@ namespace F.U.E.L
             usableBuildings = new List<Building>();
 
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 24), true));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-28, 0, 24), true));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 26), true));
+            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-28, 0, 26), true));
 
             //spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(24, 0, -26), false));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(24, 0, -34), false));

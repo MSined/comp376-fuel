@@ -23,13 +23,15 @@ namespace F.U.E.L
         public int attackerNum=0;
 
         public int respawnCost = 500;
+        public int playerID;//0 = player 1
 
         public Player(Game game, Model[] modelComponents,
-            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons
+            int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons, int playerID
             )
             : base(game, modelComponents, spawnPoint.position, topHP, topSP, speed, spawnPoint, weapons, new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
             selectedWeapon = 1;
+            this.playerID = playerID;
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders)
@@ -37,102 +39,106 @@ namespace F.U.E.L
             #region Keyboard Controls
             //Hack to get it working on a computer
             KeyboardState k = Keyboard.GetState();
-            if (this.isAlive)
+            if (this.playerID == 0)
             {
-                if (k.IsKeyDown(Keys.Up) || k.IsKeyDown(Keys.Down) || k.IsKeyDown(Keys.Left) || k.IsKeyDown(Keys.Right))
+                if (this.isAlive)
                 {
-                    lookDirection = new Vector3(0, 0, 0);
-                    if (k.IsKeyDown(Keys.Up))
-                        lookDirection += new Vector3(0, 0, -1);
-
-                    else if (k.IsKeyDown(Keys.Down))
-                        lookDirection += new Vector3(0, 0, 1);
-
-                    if (k.IsKeyDown(Keys.Left))
-                        lookDirection += new Vector3(-1, 0, 0);
-
-                    else if (k.IsKeyDown(Keys.Right))
-                        lookDirection += new Vector3(1, 0, 0);
-                }
-
-                velocity = new Vector3(0, 0, 0);
-                if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.D))
-                {
-                    if (k.IsKeyDown(Keys.W))
-                        velocity += new Vector3(0, 0, -1);
-
-                    else if (k.IsKeyDown(Keys.S))
-                        velocity += new Vector3(0, 0, 1);
-
-                    if (k.IsKeyDown(Keys.A))
-                        velocity += new Vector3(-1, 0, 0);
-
-                    else if (k.IsKeyDown(Keys.D))
-                        velocity += new Vector3(1, 0, 0);
-                }
-
-                if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
-                {
-                    Generator g = (Generator)this.getUsableBuilding();
-                    g.use();
-                }
-                else if (k.IsKeyDown(Keys.Space)){
-                    weapons[selectedWeapon].shoot(position, lookDirection, false);}
-
-                if (k.IsKeyDown(Keys.D1))
-                    selectedWeapon = 0;
-
-                if (k.IsKeyDown(Keys.D2))
-                    selectedWeapon = 1;
-
-                if (k.IsKeyDown(Keys.D3))
-                    selectedWeapon = 2;
-
-                if (k.IsKeyDown(Keys.D4))
-                    selectedWeapon = 3;
-
-                //Doesn't need cooldown, fixed the tower spamming to a single button press
-                if (k.IsKeyDown(Keys.T))
-                {
-                    placingTower = true;
-                    checkBox.Update(gameTime);
-                    foreach (Object o in colliders)
+                    if (k.IsKeyDown(Keys.Up) || k.IsKeyDown(Keys.Down) || k.IsKeyDown(Keys.Left) || k.IsKeyDown(Keys.Right))
                     {
-                        if (checkBox.bounds.FloatIntersects(o.bounds))
+                        lookDirection = new Vector3(0, 0, 0);
+                        if (k.IsKeyDown(Keys.Up))
+                            lookDirection += new Vector3(0, 0, -1);
+
+                        else if (k.IsKeyDown(Keys.Down))
+                            lookDirection += new Vector3(0, 0, 1);
+
+                        if (k.IsKeyDown(Keys.Left))
+                            lookDirection += new Vector3(-1, 0, 0);
+
+                        else if (k.IsKeyDown(Keys.Right))
+                            lookDirection += new Vector3(1, 0, 0);
+                    }
+
+                    velocity = new Vector3(0, 0, 0);
+                    if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.D))
+                    {
+                        if (k.IsKeyDown(Keys.W))
+                            velocity += new Vector3(0, 0, -1);
+
+                        else if (k.IsKeyDown(Keys.S))
+                            velocity += new Vector3(0, 0, 1);
+
+                        if (k.IsKeyDown(Keys.A))
+                            velocity += new Vector3(-1, 0, 0);
+
+                        else if (k.IsKeyDown(Keys.D))
+                            velocity += new Vector3(1, 0, 0);
+                    }
+
+                    if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
+                    {
+                        Generator g = (Generator)this.getUsableBuilding();
+                        g.use();
+                    }
+                    else if (k.IsKeyDown(Keys.Space))
+                    {
+                        weapons[selectedWeapon].shoot(position, lookDirection, false);
+                    }
+
+                    if (k.IsKeyDown(Keys.D1))
+                        selectedWeapon = 0;
+
+                    if (k.IsKeyDown(Keys.D2))
+                        selectedWeapon = 1;
+
+                    if (k.IsKeyDown(Keys.D3))
+                        selectedWeapon = 2;
+
+                    if (k.IsKeyDown(Keys.D4))
+                        selectedWeapon = 3;
+
+                    //Doesn't need cooldown, fixed the tower spamming to a single button press
+                    if (k.IsKeyDown(Keys.T))
+                    {
+                        placingTower = true;
+                        checkBox.Update(gameTime);
+                        foreach (Object o in colliders)
                         {
-                            checkBoxCollision = true;
-                            break;
+                            if (checkBox.bounds.FloatIntersects(o.bounds))
+                            {
+                                checkBoxCollision = true;
+                                break;
+                            }
+                            checkBoxCollision = false;
                         }
+                    }
+                    if (k.IsKeyUp(Keys.T) && placingTower)
+                    {
+                        if (!checkBoxCollision && credit >= Tower.towerCost)
+                        {
+                            Weapon[] w = new Weapon[1];
+                            w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
+                            credit -= Tower.towerCost;
+                            game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                        }
+                        placingTower = false;
                         checkBoxCollision = false;
                     }
                 }
-                if (k.IsKeyUp(Keys.T) && placingTower)
+
+                else
                 {
-                    if (!checkBoxCollision && credit >= Tower.towerCost)
+                    if (k.IsKeyDown(Keys.Enter) && credit >= respawnCost)
                     {
-                        Weapon[] w = new Weapon[1];
-                        w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
-                        credit -= Tower.towerCost;
-                        game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                        credit -= respawnCost;
+                        respawnCost *= 2;
+                        this.isAlive = true;
+                        this.hp = this.topHP;
+                        this.position = this.spawnPoint.position;
+                        this.attackerNum = 0;
                     }
-                    placingTower = false;
-                    checkBoxCollision = false;
                 }
             }
-
-            else
-            {
-                if (k.IsKeyDown(Keys.Enter) && credit>=respawnCost)
-                {
-                    credit -= respawnCost;
-                    respawnCost *= 2;
-                    this.isAlive = true;
-                    this.hp = this.topHP;
-                    this.position = this.spawnPoint.position;
-                    this.attackerNum = 0;
-                }
-            }
-
             #endregion
 
             //Gamepad Support
@@ -203,17 +209,17 @@ namespace F.U.E.L
                 Rectangle srcRect, destRect;
 
                 Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 0.8f, 0), camera.projection, camera.view, Matrix.Identity);
-
+                /*
                 srcRect = new Rectangle(0, 0, 1, 1);
                 destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), healthBarWidth, healthBarHeight);
                 spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Black);
-
+                */
                 float healthPercentage = (float)hp / (float)topHP;
 
                 Color healthColor = new Color(new Vector3(1 - healthPercentage, healthPercentage, 0));
 
                 srcRect = new Rectangle(0, 0, 1, 1);
-                destRect = new Rectangle((int)Math.Floor((float)203 / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), (int)(healthPercentage * healthBarWidth), healthBarHeight);
+                destRect = new Rectangle((int)Math.Floor((float)(203+(playerID*200)) / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), (int)(healthPercentage * healthBarWidth), healthBarHeight);
                 spriteBatch.Draw(healthTexture, destRect, Rectangle.Empty, healthColor);
             }
         }

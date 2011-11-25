@@ -170,7 +170,7 @@ namespace F.U.E.L
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
-                    if (o is Building || o is Tower || o is Enemy || o is Generator)
+                    if (o is Building || o is Tower || o is Enemy || o is Generator || o is Player)
                     {
                         //neutralize the Z movement if going in a collision by moving up/down
                         if (bounds.CenterX > o.bounds.Left && bounds.CenterX < o.bounds.Right)
