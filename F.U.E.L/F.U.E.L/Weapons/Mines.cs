@@ -13,7 +13,7 @@ namespace F.U.E.L
     {
         private const float RANGE = 10;
         private const int DAMAGE = 100;
-        private const int FIRERATE = 10000000;
+        private const int FIRERATE = 1 * 10000000;
 
         public Mines(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)

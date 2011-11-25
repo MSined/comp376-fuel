@@ -14,7 +14,7 @@ namespace F.U.E.L
     {
         private const float RANGE = 10;
         private const int DAMAGE = 50;
-        private const int FIRERATE = 10000000;
+        private const int FIRERATE = 1 * 10000000;
 
         private SoundEffect soundEffect;
 

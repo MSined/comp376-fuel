@@ -10,14 +10,14 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
-    class FlameThrower : Weapon
+    class SnakeGun : Weapon
     {
-        private const float RANGE = 5;
+        private const float RANGE = 6;
         private const int DAMAGE = 1;
-        private const int FIRERATE = (int)(6 * 10000000);
+        private const int FIRERATE = (int)(4 * 10000000);
 
-        private const int NUMBULLETS = 100;
-        private const int LAUNCHSPEED = (int)(5 / 1000.0 * 10000000);
+        private const int NUMBULLETS = 250;
+        private const int LAUNCHSPEED = (int)(1 / 1000.0 * 10000000);
         private int bulletsLeft = 0;
         private long lastLaunch = 0;
         private Boolean shotByEnemy;
@@ -25,10 +25,11 @@ namespace F.U.E.L
 
         //private SoundEffect soundEffect;
 
-        private Random random = new Random();
-        private const int maxSpread = 50;
+        private const int maxSpread = 30;
+        private int currentAngle = (int)(30/2.0f);
+        private int sweepDir = 1;
 
-        public FlameThrower(Game game, Model[] modelComponents, Vector3 position/*,
+        public SnakeGun(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
@@ -47,12 +48,13 @@ namespace F.U.E.L
                     shotAngle = MathHelper.ToRadians(180) - shotAngle;
                 }
 
-                float a = -MathHelper.ToRadians(maxSpread) / 2 + MathHelper.ToRadians(maxSpread) * (float)random.NextDouble();
+                float a = MathHelper.ToRadians(currentAngle);
                 Matrix m = Matrix.CreateRotationY(a);
 
-                float r = range / 2 + range / 2 * (float)random.NextDouble();
+                currentAngle += sweepDir;
+                if ((currentAngle >= maxSpread / 2.0f && sweepDir == 1) || (currentAngle <= -maxSpread / 2.0f && sweepDir == -1)) sweepDir = -sweepDir;
 
-                game.Components.Add(new BurningBullet(game, this.bulletModelComponents, player.position, Vector3.Transform(player.lookDirection, m), r, damage, shotByEnemy));
+                game.Components.Add(new Bullet(game, this.bulletModelComponents, player.position, Vector3.Transform(player.lookDirection, m), range, damage, shotByEnemy));
 
                 --bulletsLeft;
                 lastLaunch = nowTick;
@@ -65,6 +67,7 @@ namespace F.U.E.L
 
             if (lastShot + fireRate < nowTick)
             {
+                currentAngle = (int)(30 / 2.0f);
                 //launchPosition = position;
                 //this.direction = direction;
                 this.shotByEnemy = shotByEnemy;

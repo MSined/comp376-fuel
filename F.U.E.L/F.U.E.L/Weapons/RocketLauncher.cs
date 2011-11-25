@@ -10,22 +10,22 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
-    class MiniGun : Weapon
+    class RocketLauncher : Weapon
     {
-        private const float RANGE = 7;
-        private const int DAMAGE = 1;
-        private const int FIRERATE = (int)(1 / 20.0 * 10000000);
+        private const float RANGE = 100;
+        private const int DAMAGE = 25;
+        private const int FIRERATE = (int)(10 * 10000000);
 
-        private SoundEffect soundEffect;
+        //private SoundEffect soundEffect;
 
-        private Random random = new Random();
-        private const int maxSpread = 10;
+        private const int angleDiff = 25;
+        private const int numBullets = 3;
 
-        public MiniGun(Game game, Model[] modelComponents, Vector3 position/*,
+        public RocketLauncher(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
-            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/minigun");
+            //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/shotgun");
             
         }
 
@@ -41,11 +41,16 @@ namespace F.U.E.L
                     shotAngle = MathHelper.ToRadians(180) - shotAngle;
                 }
 
-                float a = -MathHelper.ToRadians(maxSpread)/2 + MathHelper.ToRadians(maxSpread) * (float) random.NextDouble();
-                Matrix m = Matrix.CreateRotationY(a);
-                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
+                float stratingNum = (numBullets-1)/2f;
+                for (float i = -stratingNum; i <= stratingNum; ++i)
+                {
+                    float a = MathHelper.ToRadians(angleDiff) * i;
+                    Matrix m = Matrix.CreateRotationY(a);
+                    game.Components.Add(new SeekingBullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
+                }
+                
                 lastShot = nowTick;
-                soundEffect.Play();
+                //soundEffect.Play();
             }
         }
 

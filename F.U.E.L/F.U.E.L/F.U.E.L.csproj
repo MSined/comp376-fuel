@@ -110,12 +110,12 @@
     <Compile Include="BuildBox.cs" />
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Buildings\Tower.cs" />
-    <Compile Include="Bullet.cs" />
+    <Compile Include="Bullets\Bullet.cs" />
     <Compile Include="Bullets\AOEBullet.cs" />
     <Compile Include="Bullets\BounceBullet.cs" />
     <Compile Include="Bullets\LobBullet.cs" />
-    <Compile Include="Bullets\DOTBullet.cs" />
     <Compile Include="Bullets\PushBackBullet.cs" />
+    <Compile Include="Bullets\BurningBullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Enemies\HunterEnemy.cs" />
@@ -125,6 +125,7 @@
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
+    <Compile Include="Weapons\Heal.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\Button.cs" />
@@ -132,8 +133,14 @@
     <Compile Include="Menus\MenuManager.cs" />
     <Compile Include="Objects.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Bullets\PoisonBullet.cs" />
+    <Compile Include="Weapons\PoisonRing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renew.cs" />
+    <Compile Include="Weapons\RocketLauncher.cs" />
+    <Compile Include="Bullets\SeekingBullet.cs" />
+    <Compile Include="Weapons\SnakeGun.cs" />
     <Compile Include="SpatialHashGrid.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="UI.cs" />
