@@ -57,7 +57,7 @@ namespace F.U.E.L
         /// <param name="bgmPath">Path to bgm file in relation to Content Manager</param>
         public virtual void Load(ContentManager Content, string bgTexturePath, string bgmPath, string menuOpenPath, string menuClosePath)
         {
-            titleFont = Content.Load<SpriteFont>(@"ScreenManagerAssets\MenuFonts\menuFont");
+            titleFont = Content.Load<SpriteFont>(@"ScreenManagerAssets\MenuFonts\menuFontTitle");
             textFont = Content.Load<SpriteFont>(@"ScreenManagerAssets\MenuFonts\menuFont");
             //Load in our image and audio files
             backgroundImage = Content.Load<Texture2D>(bgTexturePath);
@@ -66,7 +66,7 @@ namespace F.U.E.L
             menuClose = Content.Load<SoundEffect>(menuClosePath);
         }
 
-        public virtual void Update(MouseState mouse, KeyboardState keyboard)
+        public virtual void Update(KeyboardState keyboard)
         {
             //inputHandle.Update();
         }

@@ -45,6 +45,9 @@ namespace F.U.E.L
         FrameRateCounter fpsCounter;
 
         private bool EscapeKeyDown = false;
+        private bool EnterKeyDown = false;
+        private bool inGame = false;
+        private bool inMainMenu = false;
 
         public Game1()
         {
@@ -59,18 +62,20 @@ namespace F.U.E.L
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             // This removes the synchronization with the screen to allow a faster framerate
             graphics.SynchronizeWithVerticalRetrace = false;
+
+            //Multiple Resolutions for debugging purposes
             //graphics.PreferredBackBufferWidth = 910;
             //graphics.PreferredBackBufferHeight = 512;
 
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
 
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
             //graphics.ToggleFullScreen();
 
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
+            //graphics.PreferredBackBufferWidth = 800;
+            //graphics.PreferredBackBufferHeight = 480;
 
             //graphics.IsFullScreen = true;
         }
@@ -117,14 +122,24 @@ namespace F.U.E.L
             string menuClosePath = @"ScreenManagerAssets\Sounds\MenuClose";
 
 
+            MainMenu pauseMenu = new MainMenu("Pause Menu"); // pause menu
+            pauseMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
+            pauseMenu.LoadButtons(Content,
+                new int[] { 1, 2 },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 150, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 210, 150, 50) },
+                new List<string>() { "Continue", "Quit" }
+                );
             MainMenu mainMenu = new MainMenu("Main Menu"); // main menu
             mainMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             mainMenu.LoadButtons(Content,
-                new int[] { 1, 2, 3 },
-                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, 150, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, 210, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, 270, 150, 50) },
-                new List<string>() { "Continue", "Save", "Quit" }
+                new int[] { 1, 2 },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 150, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 210, 150, 50) },
+                new List<string>() { "New Game", "Quit" }
                 );
-            menuManager.AddMenu("Main Menu", mainMenu);// Initiate menus
+
+            // Initiate menus
+            menuManager.AddMenu("Main Menu", mainMenu);
+            menuManager.AddMenu("Pause Menu", pauseMenu);
 
             userInterface = new UI(spriteBatch, GraphicsDevice, UITexture, healthTexture, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth, minimapTexture, unitsTexture);
 
@@ -205,22 +220,45 @@ namespace F.U.E.L
                 }
             }
 
-            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null)
+            if (!inGame && !inMainMenu)
+            {
+                menuManager.Show("Main Menu");
+                inMainMenu = true;
+            }
+
+            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu)
+            {
+                menuManager.Exit();
+                EnterKeyDown = true;
+                inMainMenu = false;
+                inGame = true;
+            }
+
+            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu != null && inMainMenu)
+            {
+                this.Exit();
+            }
+
+
+            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu)
             {
                // if (menuManager.ActiveMenu == null)
-                    menuManager.Show("Main Menu");
+                    menuManager.Show("Pause Menu");
                 EscapeKeyDown = true;
             }
             if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu != null)
             {
-                System.Diagnostics.Debug.WriteLine("Bazinga!");
                 menuManager.Exit();
                 EscapeKeyDown = true;
             }
+
             if(keyboard.IsKeyUp(Keys.Escape) && EscapeKeyDown)
                 EscapeKeyDown = false;
 
-            if (menuManager.ActiveMenu == null)
+            if (keyboard.IsKeyUp(Keys.Enter) && EnterKeyDown)
+                EnterKeyDown = false;
+
+            if (menuManager.ActiveMenu == null) //Encapsulation to "Pause" game
             {
                 #region Update Game Components
                 List<Object> colliders = new List<Object>();
