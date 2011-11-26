@@ -44,6 +44,9 @@ namespace F.U.E.L
 
         FrameRateCounter fpsCounter;
 
+        MainMenu pauseMenu;
+        MainMenu mainMenu;
+
         private bool EscapeKeyDown = false;
         private bool EnterKeyDown = false;
         private bool inGame = false;
@@ -122,14 +125,14 @@ namespace F.U.E.L
             string menuClosePath = @"ScreenManagerAssets\Sounds\MenuClose";
 
 
-            MainMenu pauseMenu = new MainMenu("Pause Menu"); // pause menu
+            pauseMenu = new MainMenu("Pause Menu"); // pause menu
             pauseMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             pauseMenu.LoadButtons(Content,
                 new int[] { 1, 2 },
                 new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 150, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 210, 150, 50) },
                 new List<string>() { "Continue", "Quit" }
                 );
-            MainMenu mainMenu = new MainMenu("Main Menu"); // main menu
+            mainMenu = new MainMenu("Main Menu"); // main menu
             mainMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             mainMenu.LoadButtons(Content,
                 new int[] { 1, 2 },
@@ -208,6 +211,9 @@ namespace F.U.E.L
             KeyboardState keyboard = Keyboard.GetState();
 
             menuManager.Update();
+            pauseMenu.Update(keyboard);
+            mainMenu.Update(keyboard);
+
             if (menuManager != null)
             {
                 switch (menuManager.MenuEvent)
@@ -226,7 +232,7 @@ namespace F.U.E.L
                 inMainMenu = true;
             }
 
-            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu)
+            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
             {
                 menuManager.Exit();
                 EnterKeyDown = true;
@@ -234,16 +240,38 @@ namespace F.U.E.L
                 inGame = true;
             }
 
+            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "Quit"))
+            {
+                menuManager.Exit();
+                this.Exit();
+            }
+
+            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Continue"))
+            {
+                menuManager.Exit();
+                EnterKeyDown = true;
+                inGame = true;
+            }
+
+            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
+            {
+                menuManager.Exit();
+                menuManager.Show("Main Menu");
+                EnterKeyDown = true;
+                inGame = false;
+                inMainMenu = true;
+            }
+
             if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu != null && inMainMenu)
             {
+                menuManager.Exit();
                 this.Exit();
             }
 
 
             if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu)
             {
-               // if (menuManager.ActiveMenu == null)
-                    menuManager.Show("Pause Menu");
+                menuManager.Show("Pause Menu");
                 EscapeKeyDown = true;
             }
             if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu != null)
