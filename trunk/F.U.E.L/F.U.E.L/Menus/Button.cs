@@ -22,6 +22,7 @@ namespace F.U.E.L
 
         Texture2D texture;
         Rectangle dimensions;
+        bool isSelected = false;
 
         string label;
         Vector2 position;
@@ -38,6 +39,16 @@ namespace F.U.E.L
             return buttonID;
         }
 
+        public void setSelected(bool input)
+        {
+            isSelected = input;
+        }
+
+        public bool getSelected()
+        {
+            return isSelected;
+        }
+
         public Rectangle getDimensions()
         {
             return dimensions;
@@ -48,13 +59,21 @@ namespace F.U.E.L
             texture = Content.Load<Texture2D>(@"ScreenManagerAssets\Textures\Button");
         }
 
+        public string getText()
+        {
+            return label;
+        }
+
         public void Draw(SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
             position = new Vector2(dimensions.X, dimensions.Y);
             position += new Vector2((dimensions.Width / 2) - (spriteFont.MeasureString(label).X / 2), (dimensions.Height / 2) - (spriteFont.MeasureString(label).Y / 2)) - new Vector2(texture.Width / 2, 0);
 
             spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y) - new Vector2(texture.Width/2,0), Color.White);
-            spriteBatch.DrawString(spriteFont, label, position, Color.Black);
+            if (isSelected)
+                spriteBatch.DrawString(spriteFont, label, position, Color.Red);
+            else
+                spriteBatch.DrawString(spriteFont, label, position, Color.Black);
         }
     }
 }

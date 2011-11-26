@@ -19,6 +19,8 @@ namespace F.U.E.L
     class MainMenu : Menu
     {
         List<Button> buttons;
+        bool wKeyDown = false;
+        bool sKeyDown = false;
 
         public MainMenu(string title)
             : base(title)
@@ -31,23 +33,100 @@ namespace F.U.E.L
             for (int i = 0; i < id.Count(); i++)
             {
                 this.buttons.Add(new Button(id[i], bounds[i], text[i]));
+                if (i == 0)
+                    buttons[i].setSelected(true);
                 buttons[i].Load(Content);
             }
         }
 
-        public override void Update(MouseState mouse, KeyboardState keyboard)
+        public override void Update(KeyboardState keyboard)
         {
-            base.Update(mouse, keyboard);
+            
 
             //if (inputHandle.isMouseLeftNew())
-            if (mouse.LeftButton == ButtonState.Pressed)
+            //if (mouse.LeftButton == ButtonState.Pressed)
+            //{
+            //    foreach (Button b in buttons)
+            //    {
+            //        if (b.getDimensions().Contains(new Point(mouse.X, mouse.Y)))
+            //            ButtonPush(b.getID());
+            //    }
+            //}
+
+            if (keyboard.IsKeyDown(Keys.W) && !wKeyDown)
             {
-                foreach (Button b in buttons)
+                int temp = 0;
+                wKeyDown = true;
+                for (int i = 0; i < buttons.Count; i++)
                 {
-                    if (b.getDimensions().Contains(new Point(mouse.X, mouse.Y)))
-                        ButtonPush(b.getID());
+                    if (buttons[i].getSelected())
+                    {
+                        buttons[i].setSelected(false);
+                        int position = Math.Abs((i-1) % buttons.Count);
+                        temp = buttons[position].getID();
+                    }
+                }
+
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    if (buttons[i].getID() == temp)
+                    {
+                        buttons[i].setSelected(true);
+                        
+                    }
                 }
             }
+
+            if (keyboard.IsKeyUp(Keys.W) && wKeyDown)
+            {
+                wKeyDown = false;
+
+                System.Diagnostics.Debug.WriteLine(keyboard.IsKeyUp(Keys.W));
+            }
+            if (keyboard.IsKeyDown(Keys.S) && !sKeyDown)
+            {
+                int temp = 0;
+                sKeyDown = true;
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    if (buttons[i].getSelected())
+                    {
+                        buttons[i].setSelected(false);
+                        int position = Math.Abs((i + 1) % buttons.Count);
+                        temp = buttons[position].getID();
+                    }
+                }
+
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    if (buttons[i].getID() == temp)
+                    {
+                        buttons[i].setSelected(true);
+
+                    }
+                }
+            }
+
+            if (keyboard.IsKeyUp(Keys.S) && sKeyDown)
+            {
+                sKeyDown = false;
+            }
+
+            base.Update(keyboard);
+
+        }
+
+        public string selected()
+        {
+            string output = "";
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                if (buttons[i].getSelected())
+                {
+                    output = buttons[i].getText();
+                }
+            }
+            return output;
         }
 
         public override void Draw(SpriteBatch spriteBatch, int height, int width)
@@ -64,18 +143,18 @@ namespace F.U.E.L
 
         public void ButtonPush(int id)
         {
-            switch (id)
-            {
-                case 1:
-                    ButtonEvent = ButtonEvents.Close;
-                    break;
-                case 2:
-                    this.ButtonEvent = ButtonEvents.Save;
-                    break;
-                case 3:
-                    this.ButtonEvent = ButtonEvents.Quit;
-                    break;
-            }
+            //switch (id)
+            //{
+            //    case 1:
+            //        ButtonEvent = ButtonEvents.Close;
+            //        break;
+            //    case 2:
+            //        this.ButtonEvent = ButtonEvents.Save;
+            //        break;
+            //    case 3:
+            //        this.ButtonEvent = ButtonEvents.Quit;
+            //        break;
+            //}
         }
     }
 }

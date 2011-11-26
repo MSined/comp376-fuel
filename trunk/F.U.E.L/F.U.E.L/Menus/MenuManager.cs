@@ -46,7 +46,7 @@ namespace F.U.E.L
         public void Update()
         {
             if (activeMenu != null)
-                activeMenu.Update(mouse, keyboard);
+                activeMenu.Update(keyboard);
 
             GetButtonEvent();
         }
