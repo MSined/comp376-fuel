@@ -33,7 +33,6 @@ namespace F.U.E.L
             textureHeight = UITexture.Height;
             textureWidth = UITexture.Width;
             scale = new Vector2(((float)width / (float)textureWidth), ((float)width / (float)textureWidth));
-            System.Diagnostics.Debug.WriteLine(scale);
             position = new Vector2(0, height - ((float)textureHeight * ((float)width / (float)textureWidth)));
 
             this.height = height;
