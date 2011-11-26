@@ -73,12 +73,12 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
 
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 720;
             //graphics.ToggleFullScreen();
 
-            //graphics.PreferredBackBufferWidth = 800;
-            //graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
 
             //graphics.IsFullScreen = true;
         }
@@ -92,7 +92,7 @@ namespace F.U.E.L
             mouse = Mouse.GetState();
             keyboard = Keyboard.GetState();
 
-            menuManager = new MenuManager(mouse, keyboard);
+            menuManager = new MenuManager(mouse, ref keyboard);
 
             base.Initialize();
         }
@@ -208,9 +208,9 @@ namespace F.U.E.L
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            KeyboardState keyboard = Keyboard.GetState();
+            keyboard = Keyboard.GetState();
 
-            menuManager.Update();
+            menuManager.Update(keyboard);
             pauseMenu.Update(keyboard);
             mainMenu.Update(keyboard);
 

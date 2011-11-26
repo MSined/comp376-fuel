@@ -35,7 +35,7 @@ namespace F.U.E.L
             get { return activeMenu; }
         }
 
-        public MenuManager(MouseState mouse, KeyboardState keyboard)
+        public MenuManager(MouseState mouse, ref KeyboardState keyboard)
         {
             Menus = new Dictionary<string, Menu>();
             previousMenus = new Stack<Menu>();
@@ -43,10 +43,10 @@ namespace F.U.E.L
             this.keyboard = keyboard;
         }
 
-        public void Update()
+        public void Update(KeyboardState k)
         {
             if (activeMenu != null)
-                activeMenu.Update(keyboard);
+                activeMenu.Update(k);
 
             GetButtonEvent();
         }

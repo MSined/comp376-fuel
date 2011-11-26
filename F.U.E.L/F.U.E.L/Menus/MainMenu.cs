@@ -41,18 +41,6 @@ namespace F.U.E.L
 
         public override void Update(KeyboardState keyboard)
         {
-            
-
-            //if (inputHandle.isMouseLeftNew())
-            //if (mouse.LeftButton == ButtonState.Pressed)
-            //{
-            //    foreach (Button b in buttons)
-            //    {
-            //        if (b.getDimensions().Contains(new Point(mouse.X, mouse.Y)))
-            //            ButtonPush(b.getID());
-            //    }
-            //}
-
             if (keyboard.IsKeyDown(Keys.W) && !wKeyDown)
             {
                 int temp = 0;
@@ -80,9 +68,8 @@ namespace F.U.E.L
             if (keyboard.IsKeyUp(Keys.W) && wKeyDown)
             {
                 wKeyDown = false;
-
-                System.Diagnostics.Debug.WriteLine(keyboard.IsKeyUp(Keys.W));
             }
+
             if (keyboard.IsKeyDown(Keys.S) && !sKeyDown)
             {
                 int temp = 0;
