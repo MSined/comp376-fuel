@@ -72,13 +72,17 @@ namespace F.U.E.L
 
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
-
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 720;
             //graphics.ToggleFullScreen();
 
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+
+
+            //graphics.PreferredBackBufferWidth = 800;
+            //graphics.PreferredBackBufferHeight = 480;
+
+            //graphics.PreferredBackBufferWidth = 400;
+            //graphics.PreferredBackBufferHeight = 240;
 
             //graphics.IsFullScreen = true;
         }
@@ -129,14 +133,14 @@ namespace F.U.E.L
             pauseMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             pauseMenu.LoadButtons(Content,
                 new int[] { 1, 2 },
-                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 150, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 210, 150, 50) },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
                 new List<string>() { "Continue", "Quit" }
                 );
             mainMenu = new MainMenu("Main Menu"); // main menu
             mainMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             mainMenu.LoadButtons(Content,
                 new int[] { 1, 2 },
-                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 150, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 4 + 210, 150, 50) },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
                 new List<string>() { "New Game", "Quit" }
                 );
 
@@ -409,7 +413,7 @@ namespace F.U.E.L
                     }
                 }
 
-                
+                userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
                 
                 //List<Building> buildings = map.buildings;
                 foreach (GameComponent gc in Components)
@@ -420,24 +424,27 @@ namespace F.U.E.L
                         Player p = (Player)gc;
                         String s = "";
                         long nowTick = DateTime.Now.Ticks;
+                        int abilityNum = 0;
                         foreach (Weapon w in p.weapons)
                         {
-                            long t = (w.lastShot + w.fireRate - nowTick) / 100000;
+                            long t = (long)Math.Ceiling((double)(w.lastShot + w.fireRate - nowTick) / 12000000);
                             if (t < 0)
                             {
                                 s += "0 ";
                             }
                             else
                             {
-                                s += t+" ";
+                                s += t + "s ";
+                                userInterface.drawCooldowns(healthTexture, Math.Ceiling((double)(w.fireRate / 12000000)), (double)((long)Math.Ceiling((double)(w.lastShot + w.fireRate - nowTick) / 12000000)), abilityNum);
                             }
+                            abilityNum++;
+
                         }
                         spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black);
                         spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White);
+                        
                     }
                     //END TEST
-
-
 
                     if (gc is Character && camera.onScreen((Object)gc))
                     {
@@ -461,7 +468,7 @@ namespace F.U.E.L
                     }
                 }
 
-                userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
+                
             }
                 menuManager.Draw(spriteBatch, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);
                 spriteBatch.End();
