@@ -43,10 +43,10 @@ namespace F.U.E.L
             this.keyboard = keyboard;
         }
 
-        public void Update(KeyboardState k)
+        public void Update(KeyboardState k, GamePadState g)
         {
             if (activeMenu != null)
-                activeMenu.Update(k);
+                activeMenu.Update(k, g);
 
             GetButtonEvent();
         }

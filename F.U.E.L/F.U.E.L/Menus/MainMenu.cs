@@ -39,9 +39,9 @@ namespace F.U.E.L
             }
         }
 
-        public override void Update(KeyboardState keyboard)
+        public override void Update(KeyboardState keyboard, GamePadState gamepad)
         {
-            if (keyboard.IsKeyDown(Keys.W) && !wKeyDown)
+            if ((keyboard.IsKeyDown(Keys.W) && !wKeyDown) || (gamepad.IsButtonDown(Buttons.DPadUp) && !wKeyDown))
             {
                 int temp = 0;
                 wKeyDown = true;
@@ -60,17 +60,19 @@ namespace F.U.E.L
                     if (buttons[i].getID() == temp)
                     {
                         buttons[i].setSelected(true);
-                        
+
+                        System.Diagnostics.Debug.WriteLine(temp);
                     }
                 }
+
             }
 
-            if (keyboard.IsKeyUp(Keys.W) && wKeyDown)
+            if ((keyboard.IsKeyUp(Keys.W) && wKeyDown) || (gamepad.IsButtonUp(Buttons.DPadUp) && wKeyDown))
             {
                 wKeyDown = false;
             }
 
-            if (keyboard.IsKeyDown(Keys.S) && !sKeyDown)
+            if ((keyboard.IsKeyDown(Keys.S) && !sKeyDown) || gamepad.IsButtonDown(Buttons.DPadDown))
             {
                 int temp = 0;
                 sKeyDown = true;
@@ -99,7 +101,7 @@ namespace F.U.E.L
                 sKeyDown = false;
             }
 
-            base.Update(keyboard);
+            base.Update(keyboard, gamepad);
 
         }
 

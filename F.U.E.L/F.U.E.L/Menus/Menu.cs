@@ -66,7 +66,7 @@ namespace F.U.E.L
             menuClose = Content.Load<SoundEffect>(menuClosePath);
         }
 
-        public virtual void Update(KeyboardState keyboard)
+        public virtual void Update(KeyboardState keyboard, GamePadState gamepad)
         {
             //inputHandle.Update();
         }
