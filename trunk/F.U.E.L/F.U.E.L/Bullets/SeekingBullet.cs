@@ -64,7 +64,7 @@ namespace F.U.E.L
                 if (gc is Object)
                 {
                     Object o = (Object)gc;
-                    if (o is Player && this.shotByEnemy)
+                    /*if (o is Player && this.shotByEnemy)
                     {
                         if ((o.position - this.position).Length() < distance)
                         {
@@ -72,7 +72,7 @@ namespace F.U.E.L
                             target = o;
                         }
                         continue;
-                    }
+                    }*/
                     if (o is Enemy && !this.shotByEnemy)
                     {
                         if ((o.position - this.position).Length() < distance)
@@ -82,7 +82,7 @@ namespace F.U.E.L
                         }
                         continue;
                     }
-                    if (o is Tower && this.shotByEnemy)//same as player, but tower
+                    /*if (o is Tower && this.shotByEnemy)//same as player, but tower
                     {
                         if ((o.position - this.position).Length() < distance)
                         {
@@ -99,7 +99,7 @@ namespace F.U.E.L
                             target = o;
                         }
                         continue;
-                    }
+                    }*/
                 }
             }
         }

@@ -74,15 +74,12 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferHeight = 1050;
             //graphics.ToggleFullScreen();
 
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 720;
 
 
-            //graphics.PreferredBackBufferWidth = 800;
-            //graphics.PreferredBackBufferHeight = 480;
-
-            //graphics.PreferredBackBufferWidth = 400;
-            //graphics.PreferredBackBufferHeight = 240;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
 
             //graphics.IsFullScreen = true;
         }

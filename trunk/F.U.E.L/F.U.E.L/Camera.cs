@@ -25,8 +25,8 @@ namespace F.U.E.L
         //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
         public float top=-12;
         public float bottom=6;
-        public float left=-16;
-        public float right=17;
+        public float left=-18;
+        public float right=18;
 
         // Current scroll wheel value. It stores the cumulative scroll value since start of game
         // Also used to verify against new scroll values to determine if zoom in or out
@@ -61,19 +61,6 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime)
         {
-            /*if (player == null)
-            {
-                foreach (GameComponent p in game.Components)
-                {
-                    if (p is Player)
-                    {
-                        player = (Player)p;
-                    }
-
-                }
-            }
-            cameraPosition = player.position + cameraDistFromPlayer;
-            */
             if (players.Count == 0) 
             {
                 foreach (GameComponent p in game.Components)
@@ -132,17 +119,12 @@ namespace F.U.E.L
         public bool onScreen(Object o) 
         {
             //if (Math.Abs((o.position - (player.position+onScreenAdjust)).Length()) < 17) { return true; }
-            /*if (o.position.Z > player.position.Z + top &&
-                o.position.Z < player.position.Z + bottom &&
-                o.position.X > player.position.X + left &&
-                o.position.X < player.position.X + right) { return true; }*/
             if (o.position.Z > cameraTarget.Z + top &&
                 o.position.Z < cameraTarget.Z + bottom &&
                 o.position.X > cameraTarget.X + left &&
                 o.position.X < cameraTarget.X + right) { return true; }
 
             else { return false; }
-            //return true;
         }
     }
 }
