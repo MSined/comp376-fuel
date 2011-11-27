@@ -19,7 +19,7 @@ namespace F.U.E.L
         public HunterEnemy(Game game, Model[] modelComponents,
             SpawnPoint spawnPoint, Weapon[] weapons
             )
-            : base(game, modelComponents, spawnPoint, weapons, TOPHP, TOPSP, SPEED)
+            : base(game, modelComponents, spawnPoint, weapons)
         {
 
         }

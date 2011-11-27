@@ -35,6 +35,7 @@ namespace F.U.E.L
 
         MouseState mouse;
         KeyboardState keyboard;
+        GamePadState gamepad1;
 
         UI userInterface;
 
@@ -74,12 +75,12 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferHeight = 1050;
             //graphics.ToggleFullScreen();
 
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
 
 
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
+            //graphics.PreferredBackBufferWidth = 800;
+            //graphics.PreferredBackBufferHeight = 480;
 
             //graphics.IsFullScreen = true;
         }
@@ -92,6 +93,7 @@ namespace F.U.E.L
 
             mouse = Mouse.GetState();
             keyboard = Keyboard.GetState();
+            gamepad1 = GamePad.GetState(PlayerIndex.One);
 
             menuManager = new MenuManager(mouse, ref keyboard);
 
@@ -166,7 +168,7 @@ namespace F.U.E.L
             p[0] = playerModel;
             Model[] t = new Model[1];
             t[0] = checkBoxModel;
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Gunner, PlayerIndex.One));
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Alchemist, PlayerIndex.One));
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);
@@ -210,10 +212,13 @@ namespace F.U.E.L
                 this.Exit();
 
             keyboard = Keyboard.GetState();
+            gamepad1 = GamePad.GetState(PlayerIndex.One);
 
-            menuManager.Update(keyboard);
-            pauseMenu.Update(keyboard);
-            mainMenu.Update(keyboard);
+            
+
+            menuManager.Update(keyboard, gamepad1);
+            pauseMenu.Update(keyboard, gamepad1);
+            mainMenu.Update(keyboard, gamepad1);
 
             if (menuManager != null)
             {
@@ -233,7 +238,7 @@ namespace F.U.E.L
                 inMainMenu = true;
             }
 
-            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+            if ((keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game")) || gamepad1.IsButtonDown(Buttons.A) && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
             {
                 menuManager.Exit();
                 EnterKeyDown = true;
@@ -270,7 +275,7 @@ namespace F.U.E.L
             }
 
 
-            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu)
+            if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu) || (gamepad1.Buttons.Start == ButtonState.Pressed && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
             {
                 menuManager.Show("Pause Menu");
                 EscapeKeyDown = true;
@@ -281,7 +286,7 @@ namespace F.U.E.L
                 EscapeKeyDown = true;
             }
 
-            if(keyboard.IsKeyUp(Keys.Escape) && EscapeKeyDown)
+            if ((keyboard.IsKeyUp(Keys.Escape) && EscapeKeyDown) || (gamepad1.Buttons.Start == ButtonState.Pressed && EscapeKeyDown))
                 EscapeKeyDown = false;
 
             if (keyboard.IsKeyUp(Keys.Enter) && EnterKeyDown)
