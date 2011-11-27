@@ -64,7 +64,7 @@ namespace F.U.E.L
             {
                 if (bounds.FloatIntersects(o.bounds))
                 {
-                    if (o is Player && this.shotByEnemy)
+                    /*if (o is Player && this.shotByEnemy)
                     {
                         Character c = (Character)o;
                         if (c.poisoned == false)
@@ -74,7 +74,7 @@ namespace F.U.E.L
                             currentHitTime = HITTIME;
                             continue;
                         }
-                    }
+                    }*/
                     if (o is Enemy && !this.shotByEnemy)
                     {
                         Character c = (Character)o;
@@ -86,7 +86,7 @@ namespace F.U.E.L
                             continue;
                         }
                     }
-                    if (o is Tower && this.shotByEnemy)//same as player, but tower
+                    /*if (o is Tower && this.shotByEnemy)//same as player, but tower
                     {
                         Character c = (Character)o;
                         if (c.poisoned == false)
@@ -96,16 +96,16 @@ namespace F.U.E.L
                             currentHitTime = HITTIME;
                             continue;
                         }
-                    }
+                    }*/
                     if (o is Building)// && bounds.FloatIntersects(o.bounds))
                     {
                         this.isAlive = false;
                     }
-                    if (o is Generator && this.shotByEnemy)//same as player, but generator
+                    /*if (o is Generator && this.shotByEnemy)//same as player, but generator
                     {
                         this.isAlive = false;
                         continue;
-                    }
+                    }*/
 
                 }
             }
