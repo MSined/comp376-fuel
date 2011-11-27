@@ -412,10 +412,39 @@ namespace F.U.E.L
                         m.Draw(camera);
                     }
                 }
-
-                userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
                 
                 //List<Building> buildings = map.buildings;
+                foreach (GameComponent gc in Components)
+                {
+                    if (gc is Character && camera.onScreen((Object)gc))
+                    {
+                        Character c = (Character)gc;
+                        if (!(c is Player))
+                            c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                        else
+                            c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+                    }
+                    if (gc is Map)
+                    {
+                        Map m = (Map)gc;
+                        foreach (Building b in m.usableBuildings)
+                        {
+                            if (b is Generator && camera.onScreen((Object)b))
+                            {
+                                Generator g = (Generator)b;
+                                g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
+                            }
+                        }
+                    }
+
+                    
+                }
+
+
+                userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
+
+
+
                 foreach (GameComponent gc in Components)
                 {
                     //For cooldown Testing purposes!
@@ -442,33 +471,11 @@ namespace F.U.E.L
                         }
                         spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black);
                         spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White);
-                        
+
                     }
                     //END TEST
-
-                    if (gc is Character && camera.onScreen((Object)gc))
-                    {
-                        Character c = (Character)gc;
-                        if (!(c is Player))
-                            c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
-                        else
-                            c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-                    }
-                    if (gc is Map)
-                    {
-                        Map m = (Map)gc;
-                        foreach (Building b in m.usableBuildings)
-                        {
-                            if (b is Generator && camera.onScreen((Object)b))
-                            {
-                                Generator g = (Generator)b;
-                                g.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture);
-                            }
-                        }
-                    }
                 }
 
-                
             }
                 menuManager.Draw(spriteBatch, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);
                 spriteBatch.End();
