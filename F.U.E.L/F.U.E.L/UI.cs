@@ -20,6 +20,7 @@ namespace F.U.E.L
 
         Texture2D minimapTexture;
         Texture2D unitsTexture;
+        Texture2D cooldownBG;
         Rectangle playerIconRect = new Rectangle(0,0,5,5);
         Rectangle enemyIconRect = new Rectangle(5,0,5,5);
         Rectangle generatorIconRect = new Rectangle(10, 0, 5, 5);
@@ -45,6 +46,12 @@ namespace F.U.E.L
         {
             DrawMinimap(players, enemies, usableBuildings);
             UISprites.Draw(UITexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+        }
+
+        public void drawCooldowns(Texture2D texture, double totalTime, double elapsedTime, int abilityNum)
+        {
+            //203x103
+            UISprites.Draw(texture, new Rectangle(((int)Math.Floor((float)(203) / (float)1000 * width)) + ((int)(((float)44 / (float)1000) * width) * abilityNum) + ((int)(((float)7 / (float)1000) * width) * abilityNum), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((103 / 200f) * (width / 1000f * 200f))), (int)(((float)44 / (float)1000) * width), (int)(MathHelper.Clamp((float)(elapsedTime / totalTime), 0f, 1f) * (int)(((float)44 / (float)1000) * width))), Color.Black * 0.5f);
         }
 
         private void DrawMinimap(List<Player> players, List<Enemy> enemies, List<Building> usableBuildings) 

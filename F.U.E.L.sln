@@ -9,15 +9,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Windows Phone = Debug|Windows Phone
 		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Windows Phone = Release|Windows Phone
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Debug|Windows Phone.Build.0 = Debug|x86
 		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Debug|x86.ActiveCfg = Debug|x86
 		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Debug|x86.Build.0 = Debug|x86
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Release|Windows Phone.ActiveCfg = Release|x86
+		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Release|Windows Phone.Build.0 = Release|x86
 		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Release|x86.ActiveCfg = Release|x86
 		{47F84CF0-7EB0-4078-B66F-E9686D03AB6A}.Release|x86.Build.0 = Release|x86
+		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Debug|Windows Phone.ActiveCfg = Debug|x86
 		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Debug|x86.ActiveCfg = Debug|x86
+		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Release|Windows Phone.ActiveCfg = Release|x86
 		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
