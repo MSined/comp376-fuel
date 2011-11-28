@@ -63,13 +63,13 @@ namespace F.U.E.L
 
             srcRect = new Rectangle(0, 0, 1, 1);
             destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, healthBarWidth, healthBarHeight);
-            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.LightGray);
+            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.LightGray, 0f, Vector2.Zero, SpriteEffects.None, 0.91f);
 
             float healthPercentage = (float)hp / (float)topHP;
 
             srcRect = new Rectangle(0, 0, 1, 1);
             destRect = new Rectangle((int)screenPos.X - healthBarWidth / 2, (int)screenPos.Y, (int)(healthPercentage * healthBarWidth), healthBarHeight);
-            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Blue);
+            spriteBatch.Draw(healthTexture, destRect, srcRect, Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 0.9f);
         }
     }
 }

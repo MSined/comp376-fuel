@@ -21,10 +21,10 @@ namespace F.U.E.L
         Texture2D minimapTexture;
         Texture2D unitsTexture;
         Texture2D cooldownBG;
-        Rectangle playerIconRect = new Rectangle(0,0,5,5);
-        Rectangle enemyIconRect = new Rectangle(5,0,5,5);
-        Rectangle generatorIconRect = new Rectangle(10, 0, 5, 5);
-        Rectangle brokenGeneratorIconRect = new Rectangle(15, 0, 5, 5);
+        Rectangle playerIconRect = new Rectangle(5,0,5,5);
+        Rectangle enemyIconRect = new Rectangle(10,0,5,5);
+        Rectangle generatorIconRect = new Rectangle(15, 0, 5, 5);
+        Rectangle brokenGeneratorIconRect = new Rectangle(20, 0, 5, 5);
 
         public UI(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D UITxt, Texture2D healthTexture, int height, int width, Texture2D minimapTexture, Texture2D unitsTexture)
         {
@@ -45,24 +45,40 @@ namespace F.U.E.L
         public void drawUserInterface(List<Player> players, List<Enemy> enemies, List<Building> usableBuildings)
         {
             DrawMinimap(players, enemies, usableBuildings);
-            UISprites.Draw(UITexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            UISprites.Draw(UITexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.2f);
         }
 
         public void drawCooldowns(Texture2D texture, double totalTime, double elapsedTime, int abilityNum)
         {
             //203x103
             UISprites.Draw(texture, new Rectangle(((int)Math.Floor((float)(203) / (float)1000 * width)) + ((int)(((float)44 / (float)1000) * width) * abilityNum) + ((int)(((float)7 / (float)1000) * width) * abilityNum), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((103 / 200f) * (width / 1000f * 200f))), (int)(((float)44 / (float)1000) * width), (int)(MathHelper.Clamp((float)(elapsedTime / totalTime), 0f, 1f) * (int)(((float)44 / (float)1000) * width))), Color.Black * 0.5f);
+            /*UISprites.Draw(texture,
+                new Vector2(((int)Math.Floor(203f * width / 1000)) + ((int)(44f * width / 1000) * abilityNum) + ((int)(7f * width / 1000) * abilityNum), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((103 / 200f) * (width / 1000f * 200f)))),
+                new Rectangle(0, 0, 44, (int)((elapsedTime / totalTime)*44)),
+                Color.Black*0.5f, 0f, Vector2.Zero,
+                scale,
+                SpriteEffects.None, 0.11f);*/
+        }
+
+        public void drawSelectedWeapon(Texture2D texture, int selectedNum) 
+        {
+            UISprites.Draw(texture,
+                new Vector2 (((int)Math.Floor(203f * width/1000)) + ((int)(44f * width/1000) * selectedNum) + ((int)(7f * width/1000) * selectedNum), (height - (int)(width/1000f * 200f) + (int)Math.Floor((103 / 200f) * (width/1000f * 200f)))),
+                new Rectangle(0, 0, 44, 44),
+                Color.White,0f,Vector2.Zero,
+                scale,
+                SpriteEffects.None,0.1f);
         }
 
         private void DrawMinimap(List<Player> players, List<Enemy> enemies, List<Building> usableBuildings) 
         {
-            UISprites.Draw(minimapTexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            UISprites.Draw(minimapTexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.34f);
             foreach (Enemy e in enemies)
             {
                 Vector2 minimapPosition = Vector2.Zero;
                 minimapPosition.X = position.X + (100f + (e.position.X * 2.778f)) * scale.X;
                 minimapPosition.Y = position.Y + (100f + (e.position.Z * 2.778f)) * scale.Y;
-                UISprites.Draw(unitsTexture, minimapPosition, enemyIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+                UISprites.Draw(unitsTexture, minimapPosition, enemyIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.32f);
             }
             foreach (Building b in usableBuildings)
             {
@@ -74,11 +90,11 @@ namespace F.U.E.L
                     minimapPosition.Y = position.Y + (100f + (g.position.Z * 2.778f)) * scale.Y;
                     if (g.functional)
                     {
-                        UISprites.Draw(unitsTexture, minimapPosition, generatorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+                        UISprites.Draw(unitsTexture, minimapPosition, generatorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.31f);
                     }
 					else
                     {
-                        UISprites.Draw(unitsTexture, minimapPosition, brokenGeneratorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+                        UISprites.Draw(unitsTexture, minimapPosition, brokenGeneratorIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.31f);
                     }
                 }
             }
@@ -87,7 +103,7 @@ namespace F.U.E.L
                 Vector2 minimapPosition = Vector2.Zero;
                 minimapPosition.X = position.X + (100f + (p.position.X * 2.778f)) * scale.X;
                 minimapPosition.Y = position.Y + (100f + (p.position.Z * 2.778f)) * scale.Y;
-                UISprites.Draw(unitsTexture, minimapPosition, playerIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+                UISprites.Draw(unitsTexture, minimapPosition, playerIconRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.3f);
             }
         }
     }
