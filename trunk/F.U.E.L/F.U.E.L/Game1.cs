@@ -168,7 +168,7 @@ namespace F.U.E.L
             p[0] = playerModel;
             Model[] t = new Model[1];
             t[0] = checkBoxModel;
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Sniper, PlayerIndex.One));
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);

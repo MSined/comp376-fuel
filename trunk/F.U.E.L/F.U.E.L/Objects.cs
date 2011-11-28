@@ -13,7 +13,7 @@ namespace F.U.E.L
         public Game1 game { get; private set; }
         protected Matrix world = Matrix.Identity;
         protected Model[] modelComponents { get; private set; }
-        public Vector3 position { get; protected set; }
+        public Vector3 position; //{ get; protected set; }
         static int objectIDCounter = 0;
         public int objectID = objectIDCounter++;
         public int[] cellIDs = { -1, -1, -1, -1 };

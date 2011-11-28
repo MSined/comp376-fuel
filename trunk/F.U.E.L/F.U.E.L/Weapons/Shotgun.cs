@@ -12,7 +12,7 @@ namespace F.U.E.L
     class Shotgun : Weapon
     {
         private const float RANGE = 4;
-        private const int DAMAGE = 9001;
+        private const int DAMAGE = 15;
         private const int FIRERATE = 10000000;
 
         private SoundEffect soundEffect;
