@@ -69,11 +69,11 @@ namespace F.U.E.L
             position = new Vector2(dimensions.X, dimensions.Y);
             position += new Vector2((dimensions.Width / 2) - (spriteFont.MeasureString(label).X / 2), (dimensions.Height / 2) - (spriteFont.MeasureString(label).Y / 2)) - new Vector2(texture.Width / 2, 0);
 
-            spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y) - new Vector2(texture.Width/2,0), Color.White);
+            spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y) - new Vector2(texture.Width / 2, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.25f);
             if (isSelected)
-                spriteBatch.DrawString(spriteFont, label, position, Color.Red);
+                spriteBatch.DrawString(spriteFont, label, position, Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             else
-                spriteBatch.DrawString(spriteFont, label, position, Color.Black);
+                spriteBatch.DrawString(spriteFont, label, position, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

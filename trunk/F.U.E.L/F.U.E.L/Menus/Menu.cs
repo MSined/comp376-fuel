@@ -39,7 +39,6 @@ namespace F.U.E.L
         protected SoundEffect menuClose;            //Plays when menu closes.
         protected string title;                     //Title at top of menu
 
-
         /// <summary>
         /// Constructs a base menu item.
         /// </summary>
@@ -50,6 +49,7 @@ namespace F.U.E.L
             this.title = title;
             this.ButtonEvent = ButtonEvents.None;
         }
+
         /// <summary>
         /// Load the menus content
         /// </summary>
@@ -73,11 +73,10 @@ namespace F.U.E.L
 
         public virtual void Draw(SpriteBatch spriteBatch, int height, int width)
         {
-            //spriteBatch.Draw(backgroundImage, Vector2.Zero, Color.White);
-            spriteBatch.Draw(backgroundImage, new Rectangle(0, 0, width, height), Color.White);
+            spriteBatch.Draw(backgroundImage, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.5f);
 
             Vector2 titlePosition = new Vector2(width / 2 - (titleFont.MeasureString(title).X / 2), 50);
-            spriteBatch.DrawString(titleFont, title, titlePosition, Color.Black);
+            spriteBatch.DrawString(titleFont, title, titlePosition, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
         /// <summary>
