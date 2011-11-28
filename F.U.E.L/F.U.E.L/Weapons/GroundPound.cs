@@ -9,19 +9,18 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
-    class Grenade : Weapon
+    class GroundPound : Weapon
     {
-        private const float RANGE = 10;
+        private const float RANGE = 2;
         private const int DAMAGE = 10;
-        private const int FIRERATE = 6 * 10000000;
+        private const int FIRERATE = (int)(10 * 10000000);
 
-        private SoundEffect soundEffect;
+        //private SoundEffect soundEffect;
 
-        public Grenade(Game game, Model[] modelComponents, Vector3 position/*,
+        public GroundPound(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
-            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/grenade");
 
         }
 
@@ -31,10 +30,12 @@ namespace F.U.E.L
 
             if (lastShot + fireRate < nowTick)
             {
-                game.Components.Add(new LobAOEBullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
+                for (float i = 0; i < 2*Math.PI; i += 0.2f)
+                {
+                    Matrix m = Matrix.CreateRotationY(i);
+                    game.Components.Add(new PushBackBullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
+                }
                 lastShot = nowTick;
-
-                soundEffect.Play();
             }
         }
 

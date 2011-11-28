@@ -74,7 +74,7 @@ namespace F.U.E.L
                 case Class.Gunner:
                     weapons[0] = new MiniGun(game, modelComponents, new Vector3(0, 0, 0));
                     weapons[1] = new FlameThrower(game, modelComponents, new Vector3(0, 0, 0), this);
-                    weapons[2] = new Stimpack(game, modelComponents, new Vector3(0, 0, 0), this);
+                    weapons[2] = new Mines(game, modelComponents, new Vector3(0, 0, 0));
                     weapons[3] = new RocketLauncher(game, modelComponents, new Vector3(0, 0, 0));
                     topHP = 500;
                     hp = topHP;
@@ -94,11 +94,11 @@ namespace F.U.E.L
                     speed = 0.08f;
                     break;
                 case Class.Tank:
-                    weapons[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[1] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[2] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[3] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    topHP = 600;
+                    weapons[0] = new Punch(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[1] = new GroundPound(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[2] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[3] = new Grenade(game, modelComponents, new Vector3(0, 0, 0));
+                    topHP = 650;
                     hp = topHP;
                     topSP = 100;
                     sp = topSP;

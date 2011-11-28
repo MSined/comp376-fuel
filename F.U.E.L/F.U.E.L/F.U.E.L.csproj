@@ -114,7 +114,7 @@
     <Compile Include="Bullets\AOEBullet.cs" />
     <Compile Include="Bullets\BounceBullet.cs" />
     <Compile Include="Bullets\PiercingBullet.cs" />
-    <Compile Include="Bullets\LobBullet.cs" />
+    <Compile Include="Bullets\LobAOEBullet.cs" />
     <Compile Include="Bullets\PushBackBullet.cs" />
     <Compile Include="Bullets\BurningBullet.cs" />
     <Compile Include="Camera.cs" />
@@ -127,6 +127,8 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
     <Compile Include="Weapons\AirStrike.cs" />
+    <Compile Include="Weapons\GroundPound.cs" />
+    <Compile Include="Weapons\Punch.cs" />
     <Compile Include="Weapons\HeadShot.cs" />
     <Compile Include="Weapons\PiercingShot.cs" />
     <Compile Include="Weapons\Sniper.cs" />
