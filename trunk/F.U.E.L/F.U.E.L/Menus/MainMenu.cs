@@ -43,130 +43,129 @@ namespace F.U.E.L
 
         public override void Update(KeyboardState keyboard, GamePadState gamepad)
         {
-            #region Gamepad Support
-            if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown))
-            {
-                int temp = 0;
-                upButtonDown = true;
-                for (int i = 0; i < buttons.Count; i++)
+                #region Gamepad Support
+                if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown))
                 {
-                    if (buttons[i].getSelected())
+                    int temp = 0;
+                    upButtonDown = true;
+                    for (int i = 0; i < buttons.Count; i++)
                     {
-                        buttons[i].setSelected(false);
-                        int position = Math.Abs((i - 1) % buttons.Count);
-                        temp = buttons[position].getID();
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((((i - 1) % buttons.Count) + buttons.Count) % buttons.Count);
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = 0; i < buttons.Count; i++)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+
+                        }
+                    }
+
+                }
+
+                if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown))
+                {
+                    upButtonDown = false;
+                }
+
+                if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown))
+                {
+                    int temp = 0;
+                    downButtonDown = true;
+                    for (int i = 0; i < buttons.Count; i++)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((i + 1) % buttons.Count);
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = 0; i < buttons.Count; i++)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+
+                        }
                     }
                 }
 
-                for (int i = 0; i < buttons.Count; i++)
+                if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown))
                 {
-                    if (buttons[i].getID() == temp)
-                    {
-                        buttons[i].setSelected(true);
+                    downButtonDown = false;
+                }
+                #endregion
 
+                #region Keyboard Controls
+                if ((keyboard.IsKeyDown(Keys.W) && !wKeyDown))
+                {
+                    int temp = 0;
+                    wKeyDown = true;
+
+                    for (int i = 0; i < buttons.Count; i++)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((((i - 1) % buttons.Count) + buttons.Count) % buttons.Count);
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = 0; i < buttons.Count; i++)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+
+                        }
+                    }
+
+                }
+
+                if (keyboard.IsKeyUp(Keys.W) && wKeyDown)
+                {
+                    wKeyDown = false;
+                }
+
+                if ((keyboard.IsKeyDown(Keys.S) && !sKeyDown))
+                {
+                    int temp = 0;
+                    sKeyDown = true;
+                    for (int i = 0; i < buttons.Count; i++)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((i + 1) % buttons.Count);
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = 0; i < buttons.Count; i++)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+
+                        }
                     }
                 }
 
-            }
-
-            if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown))
-            {
-                upButtonDown = false;
-            }
-
-            if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown))
-            {
-                int temp = 0;
-                downButtonDown = true;
-                for (int i = 0; i < buttons.Count; i++)
+                if (keyboard.IsKeyUp(Keys.S) && sKeyDown)
                 {
-                    if (buttons[i].getSelected())
-                    {
-                        buttons[i].setSelected(false);
-                        int position = Math.Abs((i + 1) % buttons.Count);
-                        temp = buttons[position].getID();
-                    }
+                    sKeyDown = false;
                 }
 
-                for (int i = 0; i < buttons.Count; i++)
-                {
-                    if (buttons[i].getID() == temp)
-                    {
-                        buttons[i].setSelected(true);
-
-                    }
-                }
-            }
-
-            if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown))
-            {
-                downButtonDown = false;
-            }
-            #endregion
-
-            #region Keyboard Controls
-            //System.Diagnostics.Debug.WriteLine((gamepad.IsButtonDown(Buttons.DPadUp)));
-            if ((keyboard.IsKeyDown(Keys.W) && !wKeyDown))
-            {
-                int temp = 0;
-                wKeyDown = true;
-                for (int i = 0; i < buttons.Count; i++)
-                {
-                    if (buttons[i].getSelected())
-                    {
-                        buttons[i].setSelected(false);
-                        int position = Math.Abs((i-1) % buttons.Count);
-                        temp = buttons[position].getID();
-                    }
-                }
-
-                for (int i = 0; i < buttons.Count; i++)
-                {
-                    if (buttons[i].getID() == temp)
-                    {
-                        buttons[i].setSelected(true);
-
-                    }
-                }
-
-            }
-
-            if (keyboard.IsKeyUp(Keys.W) && wKeyDown)
-            {
-                wKeyDown = false;
-            }
-
-            if ((keyboard.IsKeyDown(Keys.S) && !sKeyDown))
-            {
-                int temp = 0;
-                sKeyDown = true;
-                for (int i = 0; i < buttons.Count; i++)
-                {
-                    if (buttons[i].getSelected())
-                    {
-                        buttons[i].setSelected(false);
-                        int position = Math.Abs((i + 1) % buttons.Count);
-                        temp = buttons[position].getID();
-                    }
-                }
-
-                for (int i = 0; i < buttons.Count; i++)
-                {
-                    if (buttons[i].getID() == temp)
-                    {
-                        buttons[i].setSelected(true);
-
-                    }
-                }
-            }
-
-            if (keyboard.IsKeyUp(Keys.S) && sKeyDown)
-            {
-                sKeyDown = false;
-            }
-
-            #endregion
-
+                #endregion
             base.Update(keyboard, gamepad);
 
         }

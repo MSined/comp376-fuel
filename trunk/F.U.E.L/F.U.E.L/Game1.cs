@@ -32,6 +32,8 @@ namespace F.U.E.L
         List<Enemy> enemyList = new List<Enemy>();
         SpatialHashGrid grid;
         Model[] em = new Model[1];
+        Model[] p;
+        Model[] t;
 
         MouseState mouse;
         KeyboardState keyboard;
@@ -47,6 +49,7 @@ namespace F.U.E.L
 
         MainMenu pauseMenu;
         MainMenu mainMenu;
+        MainMenu characterMenu;
 
         private bool EscapeKeyDown = false;
         private bool EnterKeyDown = false;
@@ -57,6 +60,7 @@ namespace F.U.E.L
 
         private bool inGame = false;
         private bool inMainMenu = false;
+        private bool inCharacterMenu = false;
 
         public SoundEffect shotgunSFX;
 
@@ -152,9 +156,17 @@ namespace F.U.E.L
                 new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
                 new List<string>() { "New Game", "Quit" }
                 );
+            characterMenu = new MainMenu("Character Menu"); // main menu
+            characterMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
+            characterMenu.LoadButtons(Content,
+                new int[] { 1, 2, 3, 4 },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 90, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 90, 150, 50) },
+                new List<string>() { "Gunner", "Alchemist", "Sniper", "Tank" }
+                );
 
             // Initiate menus
             menuManager.AddMenu("Main Menu", mainMenu);
+            menuManager.AddMenu("Character Menu", characterMenu);
             menuManager.AddMenu("Pause Menu", pauseMenu);
 
             userInterface = new UI(spriteBatch, GraphicsDevice, UITexture, healthTexture, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth, minimapTexture, unitsTexture);
@@ -174,9 +186,9 @@ namespace F.U.E.L
 
             // The first model will be of the player
             // The LAST model (always last) will be the checkBox model
-            Model[] p = new Model[1];
+            p = new Model[1];
             p[0] = playerModel;
-            Model[] t = new Model[1];
+            t = new Model[1];
             t[0] = checkBoxModel;
             players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
             players[0].checkBox = new BuildBox(this, t, players[0].position,
@@ -240,26 +252,44 @@ namespace F.U.E.L
                 }
             }
 
-            if (!inGame && !inMainMenu)
+            if (!inGame && !inMainMenu && !inCharacterMenu)
             {
                 menuManager.Show("Main Menu");
                 inMainMenu = true;
             }
 
             #region Keyboard Controls for menu
-            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+            // Enter in main
+            if (keyboard.IsKeyDown(Keys.Enter) &&
+                !EnterKeyDown &&
+                menuManager.ActiveMenu != null &&
+                inMainMenu &&
+                (mainMenu.selected() == "New Game"))
             {
                 menuManager.Exit();
+                menuManager.Show("Character Menu");
                 EnterKeyDown = true;
+                inCharacterMenu = true;
                 inMainMenu = false;
-                inGame = true;
+                //inGame = true;
             }
 
-            else if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "Quit"))
+            if (keyboard.IsKeyDown(Keys.Enter) &&
+                !EnterKeyDown &&
+                menuManager.ActiveMenu != null &&
+                inMainMenu &&
+                (mainMenu.selected() == "Quit"))
             {
                 menuManager.Exit();
                 this.Exit();
             }
+
+            //if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && inCharacterMenu && (characterMenu.selected() == "Gunner"))
+            //{
+            //    //players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
+            //    inGame = true;
+            //    inCharacterMenu = false;
+            //}
 
             if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Continue"))
             {
@@ -268,7 +298,7 @@ namespace F.U.E.L
                 inGame = true;
             }
 
-            else if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
+            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
             {
                 menuManager.Exit();
                 menuManager.Show("Main Menu");
@@ -283,7 +313,7 @@ namespace F.U.E.L
                 this.Exit();
             }
 
-            else if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
+            if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
             {
                 menuManager.Show("Pause Menu");
                 EscapeKeyDown = true;
