@@ -30,7 +30,7 @@ namespace F.U.E.L
             direction.Normalize();
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
             position += Vector3.Multiply(direction, speed);
             world = Matrix.CreateTranslation(position);

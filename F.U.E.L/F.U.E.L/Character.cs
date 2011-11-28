@@ -46,7 +46,7 @@ namespace F.U.E.L
             this.selectedWeapon = 0;
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
             lookDirection.Normalize();
 
@@ -103,7 +103,7 @@ namespace F.U.E.L
                     isAlive = false;
             }
 
-            base.Update(gameTime, colliders);
+            base.Update(gameTime, colliders, cameraTarget);
         }
 
         public override void Draw(Camera camera)

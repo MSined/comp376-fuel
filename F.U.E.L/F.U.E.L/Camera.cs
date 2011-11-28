@@ -20,7 +20,7 @@ namespace F.U.E.L
         Vector3 cameraDirection;
         Vector3 cameraUp;
 
-        Vector3 cameraTarget;
+        public Vector3 cameraTarget;
 
         //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
         public float top=-12;

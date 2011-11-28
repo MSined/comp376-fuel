@@ -83,7 +83,7 @@ namespace F.U.E.L
             }
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
             if (target != null && target is Generator) 
             {
@@ -136,7 +136,7 @@ namespace F.U.E.L
                 if (targetDist < weapons[selectedWeapon].range)
                 {
                     velocity = Vector3.Zero;
-                    weapons[selectedWeapon].shoot(this.position, lookDirection, true);
+                    weapons[selectedWeapon].shoot(this.position, lookDirection, true, cameraTarget);
                     lookDirection = target.position - this.position;
                 }
                 else
@@ -154,7 +154,7 @@ namespace F.U.E.L
             //bounds are updated in Character
             //this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
 
-            base.Update(gameTime, colliders);
+            base.Update(gameTime, colliders, cameraTarget);
         }
 
         private void collisionAvoidance(List<Object> colliders, float angle)

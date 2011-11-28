@@ -22,7 +22,7 @@ namespace F.U.E.L
             speed = 0.05f;
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
             if (target == null || target.isAlive == false) chooseTarget(colliders);
 
@@ -52,7 +52,7 @@ namespace F.U.E.L
                 }
             }
             
-            base.Update(gameTime, colliders);
+            base.Update(gameTime, colliders, cameraTarget);
         }
 
         protected virtual void chooseTarget(List<Object> colliders)
