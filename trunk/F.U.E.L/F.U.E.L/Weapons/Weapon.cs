@@ -31,7 +31,7 @@ namespace F.U.E.L
             this.bulletModelComponents[0] = modelComponents[0];
         }
 
-        public virtual void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)
+        public virtual void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
         {
             long nowTick = DateTime.Now.Ticks;
 

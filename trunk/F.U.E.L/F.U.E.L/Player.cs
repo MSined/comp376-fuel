@@ -109,26 +109,26 @@ namespace F.U.E.L
             selectedWeapon = 1;
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
             #region Keyboard Controls
             //Hack to get it working on a computer
-            KeyboardControls(gameTime, colliders);
+            KeyboardControls(gameTime, colliders, cameraTarget);
             #endregion
 
             #region Gamepad Support
-            //GamePadControls(gameTime, colliders);
+            //GamePadControls(gameTime, colliders, Vector3 cameraTarget);
             #endregion
             
             foreach (Weapon w in weapons)
             {
-                w.Update(gameTime, colliders);
+                w.Update(gameTime, colliders, cameraTarget);
             }
 
-            base.Update(gameTime, colliders);
+            base.Update(gameTime, colliders, cameraTarget);
         }
 
-        private void KeyboardControls(GameTime gameTime, List<Object> colliders) 
+        private void KeyboardControls(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget) 
         {
             KeyboardState k = Keyboard.GetState();
             if (playerIndex == PlayerIndex.One)
@@ -174,7 +174,7 @@ namespace F.U.E.L
                     }
                     else if (k.IsKeyDown(Keys.Space))
                     {
-                        weapons[selectedWeapon].shoot(position, lookDirection, false);
+                        weapons[selectedWeapon].shoot(position, lookDirection, false, cameraTarget);
                     }
 
                     if (k.IsKeyDown(Keys.D1))
@@ -233,7 +233,7 @@ namespace F.U.E.L
             }
         }
 
-        private void GamePadControls(GameTime gameTime, List<Object> colliders) 
+        private void GamePadControls(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget) 
         {
             GamePadState gp = GamePad.GetState(playerIndex);
             if (this.isAlive)
@@ -304,8 +304,8 @@ namespace F.U.E.L
                 else if (switching && gp.IsButtonUp(Buttons.LeftShoulder) && gp.IsButtonUp(Buttons.RightShoulder))
                 { switching = false; }
 
-                if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
-                if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false);
+                if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false, cameraTarget);
+                if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false, cameraTarget);
                 else if (gp.IsButtonDown(Buttons.A))//cannot repair if shooting
                 {
                     Building b = getUsableBuilding();

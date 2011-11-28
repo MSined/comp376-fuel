@@ -49,7 +49,7 @@ namespace F.U.E.L
             }
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
             if (target == null || !target.isAlive)//choose target if it doesn't have one or the last one is dead
             {
@@ -69,14 +69,14 @@ namespace F.U.E.L
                 if (targetDist < weapons[selectedWeapon].range)
                 {
                     lookDirection = target.position - this.position;
-                    weapons[selectedWeapon].shoot(this.position, lookDirection, false);
+                    weapons[selectedWeapon].shoot(this.position, lookDirection, false, cameraTarget);
                 }
                 else //target went away, choose another target
                 {
                     target = null;
                 }
             }
-            base.Update(gameTime, colliders);
+            base.Update(gameTime, colliders, cameraTarget);
         }
     }
 }

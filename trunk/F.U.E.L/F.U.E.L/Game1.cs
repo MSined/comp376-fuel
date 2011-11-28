@@ -62,7 +62,7 @@ namespace F.U.E.L
         private bool inMainMenu = false;
         private bool inCharacterMenu = false;
 
-        public SoundEffect shotgunSFX;
+        public Vector3 cameraTarget { get; private set; }
 
         public Game1()
         {
@@ -232,6 +232,8 @@ namespace F.U.E.L
             // Allows the game to exit
             //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             //    this.Exit();
+
+            cameraTarget = camera.cameraTarget;
 
             keyboard = Keyboard.GetState();
             gamepad1 = GamePad.GetState(PlayerIndex.One);
@@ -409,7 +411,7 @@ namespace F.U.E.L
                         if (o.isAlive)
                         {
                             colliders = grid.getPotentialColliders(o);
-                            o.Update(gameTime, colliders);
+                            o.Update(gameTime, colliders, cameraTarget);
                             colliders.Clear();
                         }
                         else
@@ -428,7 +430,7 @@ namespace F.U.E.L
                             }
                             if (o is Player)
                             {
-                                o.Update(gameTime, colliders);
+                                o.Update(gameTime, colliders, cameraTarget);
                             }
                             else
                             {

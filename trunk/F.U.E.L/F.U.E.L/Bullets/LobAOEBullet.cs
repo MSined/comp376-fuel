@@ -23,7 +23,7 @@ namespace F.U.E.L
             this.direction += impulse;
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
             position += Vector3.Multiply(direction, speed);
             direction += gravity;

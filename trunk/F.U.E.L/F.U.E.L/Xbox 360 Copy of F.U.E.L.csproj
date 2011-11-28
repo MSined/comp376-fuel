@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{14cc568c-425a-4d69-9d1c-26f7695363c1}</ProjectGuid>
+    <ProjectGuid>{a8a4b908-4627-4a7b-8fe8-1f7ffc2de91d}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
@@ -71,7 +71,8 @@
     <Compile Include="Bullets\Bullet.cs" />
     <Compile Include="Bullets\AOEBullet.cs" />
     <Compile Include="Bullets\BounceBullet.cs" />
-    <Compile Include="Bullets\LobBullet.cs" />
+    <Compile Include="Bullets\PiercingBullet.cs" />
+    <Compile Include="Bullets\LobAOEBullet.cs" />
     <Compile Include="Bullets\PushBackBullet.cs" />
     <Compile Include="Bullets\BurningBullet.cs" />
     <Compile Include="Camera.cs" />
@@ -83,6 +84,13 @@
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
+    <Compile Include="Weapons\AirStrike.cs" />
+    <Compile Include="Weapons\GroundPound.cs" />
+    <Compile Include="Weapons\Punch.cs" />
+    <Compile Include="Weapons\HeadShot.cs" />
+    <Compile Include="Weapons\PiercingShot.cs" />
+    <Compile Include="Weapons\Sniper.cs" />
+    <Compile Include="Weapons\Stimpack.cs" />
     <Compile Include="Weapons\Heal.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Menus\MainMenu.cs" />
@@ -95,7 +103,7 @@
     <Compile Include="Weapons\PoisonRing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renew.cs" />
+    <Compile Include="Weapons\Renew.cs" />
     <Compile Include="Weapons\RocketLauncher.cs" />
     <Compile Include="Bullets\SeekingBullet.cs" />
     <Compile Include="Weapons\SnakeGun.cs" />

@@ -34,7 +34,7 @@ namespace F.U.E.L
 
         public abstract void Draw(Camera camera);
 
-        public virtual void Update(GameTime gameTime, List<Object> colliders)
+        public virtual void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
 
         }

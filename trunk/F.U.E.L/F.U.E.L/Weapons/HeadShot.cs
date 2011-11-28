@@ -25,7 +25,7 @@ namespace F.U.E.L
 
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
         {
             long nowTick = DateTime.Now.Ticks;
 
