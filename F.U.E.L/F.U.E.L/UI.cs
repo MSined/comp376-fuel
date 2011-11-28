@@ -16,6 +16,8 @@ namespace F.U.E.L
         int textureWidth;
         Vector2 position;
         Vector2 scale;
+        Vector2 blackboxScale = new Vector2(40,20);
+        Vector2 blackboxPosition;
         int height, width;
 
         Texture2D minimapTexture;
@@ -35,6 +37,7 @@ namespace F.U.E.L
             textureWidth = UITexture.Width;
             scale = new Vector2(((float)width / (float)textureWidth), ((float)width / (float)textureWidth));
             position = new Vector2(0, height - ((float)textureHeight * ((float)width / (float)textureWidth)));
+            blackboxPosition = new Vector2(0, height - (((float)textureHeight * ((float)width / (float)textureWidth))/2));
 
             this.height = height;
             this.width = width;
@@ -46,18 +49,19 @@ namespace F.U.E.L
         {
             DrawMinimap(players, enemies, usableBuildings);
             UISprites.Draw(UITexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.2f);
+            UISprites.Draw(unitsTexture, blackboxPosition, null, Color.Black, 0.0f, Vector2.Zero, blackboxScale*scale, SpriteEffects.None, 0.4f);
         }
 
         public void drawCooldowns(Texture2D texture, double totalTime, double elapsedTime, int abilityNum)
         {
             //203x103
-            UISprites.Draw(texture, new Rectangle(((int)Math.Floor((float)(203) / (float)1000 * width)) + ((int)(((float)44 / (float)1000) * width) * abilityNum) + ((int)(((float)7 / (float)1000) * width) * abilityNum), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((103 / 200f) * (width / 1000f * 200f))), (int)(((float)44 / (float)1000) * width), (int)(MathHelper.Clamp((float)(elapsedTime / totalTime), 0f, 1f) * (int)(((float)44 / (float)1000) * width))), Color.Black * 0.5f);
-            /*UISprites.Draw(texture,
+            //UISprites.Draw(texture, new Rectangle(((int)Math.Floor((float)(203) / (float)1000 * width)) + ((int)(((float)44 / (float)1000) * width) * abilityNum) + ((int)(((float)7 / (float)1000) * width) * abilityNum), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((103 / 200f) * (width / 1000f * 200f))), (int)(((float)44 / (float)1000) * width), (int)(MathHelper.Clamp((float)(elapsedTime / totalTime), 0f, 1f) * (int)(((float)44 / (float)1000) * width))), Color.Black * 0.5f);
+            UISprites.Draw(texture,
                 new Vector2(((int)Math.Floor(203f * width / 1000)) + ((int)(44f * width / 1000) * abilityNum) + ((int)(7f * width / 1000) * abilityNum), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((103 / 200f) * (width / 1000f * 200f)))),
-                new Rectangle(0, 0, 44, (int)((elapsedTime / totalTime)*44)),
+                new Rectangle(0, 0, 44, (int)(MathHelper.Clamp((float)(elapsedTime / totalTime)*44,0,44))),
                 Color.Black*0.5f, 0f, Vector2.Zero,
                 scale,
-                SpriteEffects.None, 0.11f);*/
+                SpriteEffects.None, 0.11f);
         }
 
         public void drawSelectedWeapon(Texture2D texture, int selectedNum) 
