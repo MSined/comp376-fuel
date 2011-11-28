@@ -9,15 +9,15 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
-    class Pistol : Weapon
+    class Sniper : Weapon
     {
-        private const float RANGE = 7;
-        private const int DAMAGE = 10;
-        private const int FIRERATE = (int)(0.7f * 10000000);
+        private const float RANGE = 10;
+        private const int DAMAGE = 25;
+        private const int FIRERATE = (int)(1.5f * 10000000);
 
         private SoundEffect soundEffect;
 
-        public Pistol(Game game, Model[] modelComponents, Vector3 position/*,
+        public Sniper(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {

@@ -23,7 +23,7 @@ namespace F.U.E.L
 
         public Vector3 lookDirection = new Vector3(1, 0, 0);
         protected Vector3 velocity = new Vector3(0,0,0);
-        protected float speed;
+        public float speed;
 
         public Boolean poisoned = false;
         public int burningStacks = 0;
