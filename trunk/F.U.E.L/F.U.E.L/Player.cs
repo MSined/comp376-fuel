@@ -242,7 +242,7 @@ namespace F.U.E.L
             if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
             if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false);
 
-            //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+            velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             
             #endregion
             

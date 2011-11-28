@@ -50,6 +50,11 @@ namespace F.U.E.L
 
         private bool EscapeKeyDown = false;
         private bool EnterKeyDown = false;
+
+        private bool BackButtonDown = false;
+        private bool StartButtonDown = false;
+        private bool AButtonDown = false;
+
         private bool inGame = false;
         private bool inMainMenu = false;
 
@@ -67,15 +72,19 @@ namespace F.U.E.L
             // This removes the synchronization with the screen to allow a faster framerate
             graphics.SynchronizeWithVerticalRetrace = false;
 
-            //Multiple Resolutions for debugging purposes
-            //graphics.PreferredBackBufferWidth = 910;
-            //graphics.PreferredBackBufferHeight = 512;
+            //***************Multiple Resolutions for debugging purposes************************
+            //graphics.PreferredBackBufferWidth = 1024;
+            //graphics.PreferredBackBufferHeight = 768;
+
+            // We will most probably use this resolution (1680*1050) for the demo as it seems that there is little to NO FPS change when changing resolution
+            // Also it is the native resolution of the gaming room monitors
+            // At lower resolutions our models and graphics become REALLY UGLY
 
             //graphics.PreferredBackBufferWidth = 1680;
             //graphics.PreferredBackBufferHeight = 1050;
             //graphics.ToggleFullScreen();
 
-            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferWidth = 1280; 
             graphics.PreferredBackBufferHeight = 720;
 
 
@@ -208,8 +217,8 @@ namespace F.U.E.L
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            //    this.Exit();
 
             keyboard = Keyboard.GetState();
             gamepad1 = GamePad.GetState(PlayerIndex.One);
@@ -238,7 +247,8 @@ namespace F.U.E.L
                 inMainMenu = true;
             }
 
-            if ((keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game")) || gamepad1.IsButtonDown(Buttons.A) && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+            #region Keyboard Controls for menu
+            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
             {
                 menuManager.Exit();
                 EnterKeyDown = true;
@@ -275,7 +285,7 @@ namespace F.U.E.L
             }
 
 
-            if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu) || (gamepad1.Buttons.Start == ButtonState.Pressed && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
+            if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
             {
                 menuManager.Show("Pause Menu");
                 EscapeKeyDown = true;
@@ -286,11 +296,71 @@ namespace F.U.E.L
                 EscapeKeyDown = true;
             }
 
-            if ((keyboard.IsKeyUp(Keys.Escape) && EscapeKeyDown) || (gamepad1.Buttons.Start == ButtonState.Pressed && EscapeKeyDown))
+            if ((keyboard.IsKeyUp(Keys.Escape) && EscapeKeyDown))
                 EscapeKeyDown = false;
 
             if (keyboard.IsKeyUp(Keys.Enter) && EnterKeyDown)
                 EnterKeyDown = false;
+            #endregion
+
+            #region gamepad controls for menu
+            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+            {
+                menuManager.Exit();
+                AButtonDown = true;
+                inMainMenu = false;
+                inGame = true;
+            }
+
+            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "Quit"))
+            {
+                menuManager.Exit();
+                this.Exit();
+            }
+
+            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Continue"))
+            {
+                menuManager.Exit();
+                AButtonDown = true;
+                inGame = true;
+            }
+
+            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
+            {
+                menuManager.Exit();
+                menuManager.Show("Main Menu");
+                AButtonDown = true;
+                inGame = false;
+                inMainMenu = true;
+            }
+
+            if (gamepad1.IsButtonDown(Buttons.Back) && !BackButtonDown && menuManager.ActiveMenu != null && inMainMenu)
+            {
+                menuManager.Exit();
+                this.Exit();
+            }
+
+
+            if ((gamepad1.IsButtonDown(Buttons.Start) && !StartButtonDown && menuManager.ActiveMenu == null && !inMainMenu))
+            {
+                menuManager.Show("Pause Menu");
+                StartButtonDown = true;
+            }
+            if (gamepad1.IsButtonDown(Buttons.Start) && !StartButtonDown && menuManager.ActiveMenu != null)
+            {
+                menuManager.Exit();
+                StartButtonDown = true;
+            }
+
+            if (gamepad1.IsButtonUp(Buttons.Start) && StartButtonDown)
+                StartButtonDown = false;
+
+            if (gamepad1.IsButtonUp(Buttons.Back) && BackButtonDown)
+                BackButtonDown = false;
+
+            if (gamepad1.IsButtonUp(Buttons.A) && AButtonDown)
+                AButtonDown = false;
+            #endregion
 
             if (menuManager.ActiveMenu == null) //Encapsulation to "Pause" game
             {
