@@ -21,7 +21,7 @@ namespace F.U.E.L
 
         MenuManager menuManager;
 
-        Texture2D healthTexture, UITexture, minimapTexture, unitsTexture;
+        Texture2D healthTexture, UITexture, minimapTexture, unitsTexture, iconsTexture;
 
         Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel, checkBoxModel;
 
@@ -117,10 +117,11 @@ namespace F.U.E.L
             spriteFont = Content.Load<SpriteFont>(@"FPSFont");
 
             //NEED TO MAKE BLANK 1x1 TEXTURE
-            healthTexture = Content.Load<Texture2D>(@"Textures\enemyTexture");
+            healthTexture = Content.Load<Texture2D>(@"UITextures\unitsTexture");
             UITexture = Content.Load<Texture2D>(@"UITextures\UI");
             minimapTexture = Content.Load<Texture2D>(@"UITextures\minimap");
             unitsTexture = Content.Load<Texture2D>(@"UITextures\unitsTexture");
+            iconsTexture = Content.Load<Texture2D>(@"UITextures\icons");
 
             planeModel = Content.Load<Model>(@"Models\planeModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
@@ -467,10 +468,11 @@ namespace F.U.E.L
         {
             GraphicsDevice.Clear(Color.Black);
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+
             if (menuManager.ActiveMenu == null)
             {
-
+                //List<Building> buildings = map.buildings;
                 foreach (GameComponent gc in Components)
                 {
                     if (gc is Object && camera.onScreen((Object)gc))
@@ -483,11 +485,8 @@ namespace F.U.E.L
                         Map m = (Map)gc;
                         m.Draw(camera);
                     }
-                }
-                
-                //List<Building> buildings = map.buildings;
-                foreach (GameComponent gc in Components)
-                {
+
+                    #region drawHealth
                     if (gc is Character && camera.onScreen((Object)gc))
                     {
                         Character c = (Character)gc;
@@ -496,7 +495,7 @@ namespace F.U.E.L
                         else
                             c.drawHealth(camera, spriteBatch, GraphicsDevice, healthTexture, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                     }
-                    if (gc is Map)
+                    else if (gc is Map)
                     {
                         Map m = (Map)gc;
                         foreach (Building b in m.usableBuildings)
@@ -508,17 +507,9 @@ namespace F.U.E.L
                             }
                         }
                     }
+                    #endregion
 
-                    
-                }
-
-
-                userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
-
-
-
-                foreach (GameComponent gc in Components)
-                {
+                    #region cooldown Testing purposes
                     //For cooldown Testing purposes!
                     if (gc is Player)
                     {
@@ -541,12 +532,16 @@ namespace F.U.E.L
                             abilityNum++;
 
                         }
+                        userInterface.drawSelectedWeapon(iconsTexture, p.selectedWeapon);//draw selected weapon frame
                         spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black);
                         spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White);
 
                     }
                     //END TEST
+                    #endregion
                 }
+
+                userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
 
             }
                 menuManager.Draw(spriteBatch, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);

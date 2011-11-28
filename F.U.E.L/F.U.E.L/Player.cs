@@ -26,7 +26,7 @@ namespace F.U.E.L
 
         public static int credit = 99990;
 
-        public bool placingTower = false, checkBoxCollision = false;
+        public bool placingTower = false, checkBoxCollision = false, switching = false;
         public BuildBox checkBox;
         public int attackerNum=0;
 
@@ -114,6 +114,23 @@ namespace F.U.E.L
         {
             #region Keyboard Controls
             //Hack to get it working on a computer
+            //KeyboardControls(gameTime, colliders);
+            #endregion
+
+            #region Gamepad Support
+            GamePadControls(gameTime, colliders);
+            #endregion
+            
+            foreach (Weapon w in weapons)
+            {
+                w.Update(gameTime, colliders);
+            }
+
+            base.Update(gameTime, colliders);
+        }
+
+        private void KeyboardControls(GameTime gameTime, List<Object> colliders) 
+        {
             KeyboardState k = Keyboard.GetState();
             if (playerIndex == PlayerIndex.One)
             {
@@ -215,43 +232,88 @@ namespace F.U.E.L
                     }
                 }
             }
-            #endregion
+        }
 
-            #region Gamepad Support
+        private void GamePadControls(GameTime gameTime, List<Object> colliders) 
+        {
             GamePadState gp = GamePad.GetState(playerIndex);
-            if (!(gp.ThumbSticks.Right.X == 0 && gp.ThumbSticks.Right.Y == 0)) lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
-
-            if (gp.IsButtonDown(Buttons.X))
-                selectedWeapon = 1;
-            if (gp.IsButtonDown(Buttons.Y))
-                selectedWeapon = 2;
-            if (gp.IsButtonDown(Buttons.B))
-                selectedWeapon = 3;
-
-            if (gp.IsButtonDown(Buttons.A))
+            if (this.isAlive)
             {
-                Building b = getUsableBuilding();
-                if (b != null) b.use();
+                if (!(gp.ThumbSticks.Right.X == 0 && gp.ThumbSticks.Right.Y == 0))
+                {
+                    lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
+                }
+
+                /*if (gp.IsButtonDown(Buttons.X))
+                {
+                    selectedWeapon = 1;
+                }
+                if (gp.IsButtonDown(Buttons.Y))
+                {
+                    selectedWeapon = 2;
+                }
+                if (gp.IsButtonDown(Buttons.B))
+                {
+                    selectedWeapon = 3;
+                }*/
+                if (gp.IsButtonDown(Buttons.X))
+                {
+                    placingTower = true;
+                    checkBox.Update(gameTime);
+                    foreach (Object o in colliders)
+                    {
+                        if (checkBox.bounds.FloatIntersects(o.bounds))
+                        {
+                            checkBoxCollision = true;
+                            break;
+                        }
+                        checkBoxCollision = false;
+                    }
+                }
+                else if (placingTower)
+                {
+                    if (!checkBoxCollision && credit >= Tower.towerCost)
+                    {
+                        Weapon[] w = new Weapon[1];
+                        w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
+                        credit -= Tower.towerCost;
+                        game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                    }
+                    placingTower = false;
+                    checkBoxCollision = false;
+                }
+
+                if (gp.IsButtonDown(Buttons.LeftShoulder) && !switching)
+                {
+                    switching = true;
+                    --selectedWeapon;
+                    if (selectedWeapon == 0)
+                    {
+                        selectedWeapon = 3;// specials are 1-3
+                    }
+                }
+                else if (gp.IsButtonDown(Buttons.RightShoulder) && !switching)
+                {
+                    switching = true;
+                    ++selectedWeapon;
+                    if (selectedWeapon == 4)
+                    {
+                        selectedWeapon = 1;// specials are 1-3
+                    }
+                }
+                else if (switching && gp.IsButtonUp(Buttons.LeftShoulder) && gp.IsButtonUp(Buttons.RightShoulder))
+                { switching = false; }
+
+                if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
+                if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false);
+                else if (gp.IsButtonDown(Buttons.A))//cannot repair if shooting
+                {
+                    Building b = getUsableBuilding();
+                    if (b != null) b.use();
+                }
+
+                velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             }
-
-            if (gp.IsButtonDown(Buttons.LeftShoulder)) { }
-            //Recover EP
-            if (gp.IsButtonDown(Buttons.RightShoulder)) { }
-            //Recover HP
-
-            if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
-            if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false);
-
-            velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
-            
-            #endregion
-            
-            foreach (Weapon w in weapons)
-            {
-                w.Update(gameTime, colliders);
-            }
-
-            base.Update(gameTime, colliders);
         }
 
         protected Building getUsableBuilding()
@@ -303,7 +365,7 @@ namespace F.U.E.L
 
                 srcRect = new Rectangle(0, 0, 1, 1);
                 destRect = new Rectangle((int)Math.Floor((float)(253+(playerID*200)) / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), (int)(healthPercentage * healthBarWidth), healthBarHeight);
-                spriteBatch.Draw(healthTexture, destRect, Rectangle.Empty, healthColor);
+                spriteBatch.Draw(healthTexture, destRect, Rectangle.Empty, healthColor,0f,Vector2.Zero,SpriteEffects.None,0.3f);
             }
         }
 
