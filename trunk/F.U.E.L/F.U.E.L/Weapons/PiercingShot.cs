@@ -9,15 +9,15 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
-    class Pistol : Weapon
+    class PiercingShot : Weapon
     {
-        private const float RANGE = 7;
-        private const int DAMAGE = 10;
-        private const int FIRERATE = (int)(0.7f * 10000000);
+        private const float RANGE = 15;
+        private const int DAMAGE = 20;
+        private const int FIRERATE = (int)(8f * 10000000);
 
         private SoundEffect soundEffect;
 
-        public Pistol(Game game, Model[] modelComponents, Vector3 position/*,
+        public PiercingShot(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
@@ -31,7 +31,7 @@ namespace F.U.E.L
 
             if (lastShot + fireRate < nowTick)
             {
-                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
+                game.Components.Add(new PiercingBullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
                 lastShot = nowTick;
                 soundEffect.Play();
             }

@@ -9,19 +9,19 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
-    class Pistol : Weapon
+    class HeadShot : Weapon
     {
-        private const float RANGE = 7;
-        private const int DAMAGE = 10;
-        private const int FIRERATE = (int)(0.7f * 10000000);
+        private const float RANGE = 10;
+        private const int DAMAGE = 100;
+        private const int FIRERATE = (int)(6f * 10000000);
 
         private SoundEffect soundEffect;
 
-        public Pistol(Game game, Model[] modelComponents, Vector3 position/*,
+        public HeadShot(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
-            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/pistol");
+            //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/pistol");
 
         }
 
@@ -33,16 +33,11 @@ namespace F.U.E.L
             {
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
                 lastShot = nowTick;
-                soundEffect.Play();
+                //soundEffect.Play();
             }
-
         }
 
         public override void Draw(Camera camera)
-        {
-
-        }
-        public override void Update(GameTime gameTime, List<Object> colliders)
         {
 
         }

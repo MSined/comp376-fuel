@@ -112,5 +112,27 @@ namespace F.U.E.L
             }
         }
 
+        public override void Draw(Camera camera)
+        {
+            if (target == null)
+            {
+                Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
+                modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
+
+                foreach (ModelMesh mesh in modelComponents[0].Meshes)
+                {
+                    foreach (BasicEffect be in mesh.Effects)
+                    {
+                        be.EnableDefaultLighting();
+                        be.Projection = camera.projection;
+                        be.View = camera.view;
+                        be.World = world * mesh.ParentBone.Transform;
+                    }
+
+                    mesh.Draw();
+                }
+            }
+        }
+
     }
 }

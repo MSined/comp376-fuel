@@ -65,31 +65,31 @@ namespace F.U.E.L
                     weapons[1] = new Heal(game, modelComponents, new Vector3(0, 0, 0));
                     weapons[2] = new Renew(game, modelComponents, new Vector3(0, 0, 0));
                     weapons[3] = new PoisonRing(game, modelComponents, new Vector3(0, 0, 0));
-                    topHP = 500;
+                    topHP = 350;
                     hp = topHP;
-                    topSP = 100;
+                    topSP = 250;
                     sp = topSP;
                     speed = 0.08f;
                     break;
                 case Class.Gunner:
                     weapons[0] = new MiniGun(game, modelComponents, new Vector3(0, 0, 0));
                     weapons[1] = new FlameThrower(game, modelComponents, new Vector3(0, 0, 0), this);
-                    weapons[2] = new SnakeGun(game, modelComponents, new Vector3(0, 0, 0), this);
+                    weapons[2] = new Stimpack(game, modelComponents, new Vector3(0, 0, 0), this);
                     weapons[3] = new RocketLauncher(game, modelComponents, new Vector3(0, 0, 0));
                     topHP = 500;
                     hp = topHP;
-                    topSP = 100;
+                    topSP = 200;
                     sp = topSP;
                     speed = 0.08f;
                     break;
                 case Class.Sniper:
-                    weapons[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[1] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[2] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[3] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    topHP = 500;
+                    weapons[0] = new Sniper(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[1] = new HeadShot(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[2] = new PiercingShot(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[3] = new AirStrike(game, modelComponents, new Vector3(0, 0, 0));
+                    topHP = 400;
                     hp = topHP;
-                    topSP = 100;
+                    topSP = 200;
                     sp = topSP;
                     speed = 0.08f;
                     break;
@@ -98,7 +98,7 @@ namespace F.U.E.L
                     weapons[1] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
                     weapons[2] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
                     weapons[3] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    topHP = 500;
+                    topHP = 600;
                     hp = topHP;
                     topSP = 100;
                     sp = topSP;
@@ -242,7 +242,7 @@ namespace F.U.E.L
             if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false);
             if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false);
 
-            velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+            //velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
             
             #endregion
             
