@@ -106,7 +106,6 @@ namespace F.U.E.L
                     break;
             }
             
-
             selectedWeapon = 1;
         }
 
@@ -114,11 +113,11 @@ namespace F.U.E.L
         {
             #region Keyboard Controls
             //Hack to get it working on a computer
-            //KeyboardControls(gameTime, colliders);
+            KeyboardControls(gameTime, colliders);
             #endregion
 
             #region Gamepad Support
-            GamePadControls(gameTime, colliders);
+            //GamePadControls(gameTime, colliders);
             #endregion
             
             foreach (Weapon w in weapons)

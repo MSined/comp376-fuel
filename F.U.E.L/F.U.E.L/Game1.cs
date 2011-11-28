@@ -58,6 +58,8 @@ namespace F.U.E.L
         private bool inGame = false;
         private bool inMainMenu = false;
 
+        public SoundEffect shotgunSFX;
+
         public Game1()
         {
             fpsCounter = new FrameRateCounter(this);
@@ -86,7 +88,6 @@ namespace F.U.E.L
 
             //graphics.PreferredBackBufferWidth = 1280; 
             //graphics.PreferredBackBufferHeight = 720;
-
 
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
@@ -136,7 +137,6 @@ namespace F.U.E.L
             string menuBGSound = @"ScreenManagerAssets\Sounds\MainMenuBGM";
             string menuOpenPath =  @"ScreenManagerAssets\Sounds\MenuOpen";
             string menuClosePath = @"ScreenManagerAssets\Sounds\MenuClose";
-
 
             pauseMenu = new MainMenu("Pause Menu"); // pause menu
             pauseMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
@@ -204,10 +204,10 @@ namespace F.U.E.L
             }
             */
             /*
-          foreach (Enemy e in enemy)
-          {
-              Components.Add(e);
-          }*/
+            foreach (Enemy e in enemy)
+            {
+                Components.Add(e);
+            }*/
         }
 
         protected override void UnloadContent()
@@ -223,8 +223,6 @@ namespace F.U.E.L
 
             keyboard = Keyboard.GetState();
             gamepad1 = GamePad.GetState(PlayerIndex.One);
-
-            
 
             menuManager.Update(keyboard, gamepad1);
             pauseMenu.Update(keyboard, gamepad1);
@@ -257,7 +255,7 @@ namespace F.U.E.L
                 inGame = true;
             }
 
-            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "Quit"))
+            else if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "Quit"))
             {
                 menuManager.Exit();
                 this.Exit();
@@ -270,7 +268,7 @@ namespace F.U.E.L
                 inGame = true;
             }
 
-            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
+            else if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
             {
                 menuManager.Exit();
                 menuManager.Show("Main Menu");
@@ -285,8 +283,7 @@ namespace F.U.E.L
                 this.Exit();
             }
 
-
-            if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
+            else if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
             {
                 menuManager.Show("Pause Menu");
                 EscapeKeyDown = true;
@@ -485,7 +482,7 @@ namespace F.U.E.L
                         Map m = (Map)gc;
                         m.Draw(camera);
                     }
-
+                
                     #region drawHealth
                     if (gc is Character && camera.onScreen((Object)gc))
                     {
@@ -529,26 +526,22 @@ namespace F.U.E.L
                                 s += t + "s ";
                                 userInterface.drawCooldowns(healthTexture, Math.Ceiling((double)(w.fireRate / 12000000)), (double)((long)Math.Ceiling((double)(w.lastShot + w.fireRate - nowTick) / 12000000)), abilityNum);
                             }
-                            abilityNum++;
-
+                            ++abilityNum;
                         }
                         userInterface.drawSelectedWeapon(iconsTexture, p.selectedWeapon);//draw selected weapon frame
                         spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.01f);
                         spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
                     }
                     //END TEST
                     #endregion
                 }
-
                 userInterface.drawUserInterface(players, enemyList, map.usableBuildings);
 
             }
-                menuManager.Draw(spriteBatch, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);
-                spriteBatch.End();
+            menuManager.Draw(spriteBatch, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth);
+            spriteBatch.End();
 
-                base.Draw(gameTime);
-            
+            base.Draw(gameTime);
         }
     }
 }

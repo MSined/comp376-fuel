@@ -25,7 +25,6 @@ namespace F.U.E.L
             : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
         {
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/shotgun");
-            
         }
 
         public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy)
@@ -57,6 +56,7 @@ namespace F.U.E.L
         {
 
         }
+
         public override void Update(GameTime gameTime, List<Object> colliders)
         {
 

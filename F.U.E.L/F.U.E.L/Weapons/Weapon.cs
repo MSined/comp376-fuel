@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -40,6 +41,5 @@ namespace F.U.E.L
                 lastShot = nowTick;
             }
         }
-
     }
 }
