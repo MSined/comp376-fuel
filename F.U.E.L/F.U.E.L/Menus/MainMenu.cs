@@ -21,6 +21,8 @@ namespace F.U.E.L
         List<Button> buttons;
         bool wKeyDown = false;
         bool sKeyDown = false;
+        bool upButtonDown = false;
+        bool downButtonDown = false;
 
         public MainMenu(string title)
             : base(title)
@@ -41,7 +43,70 @@ namespace F.U.E.L
 
         public override void Update(KeyboardState keyboard, GamePadState gamepad)
         {
-            if ((keyboard.IsKeyDown(Keys.W) && !wKeyDown) || (gamepad.IsButtonDown(Buttons.DPadUp) && !wKeyDown))
+            #region Gamepad Support
+            if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown))
+            {
+                int temp = 0;
+                upButtonDown = true;
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    if (buttons[i].getSelected())
+                    {
+                        buttons[i].setSelected(false);
+                        int position = Math.Abs((i - 1) % buttons.Count);
+                        temp = buttons[position].getID();
+                    }
+                }
+
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    if (buttons[i].getID() == temp)
+                    {
+                        buttons[i].setSelected(true);
+
+                    }
+                }
+
+            }
+
+            if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown))
+            {
+                upButtonDown = false;
+            }
+
+            if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown))
+            {
+                int temp = 0;
+                downButtonDown = true;
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    if (buttons[i].getSelected())
+                    {
+                        buttons[i].setSelected(false);
+                        int position = Math.Abs((i + 1) % buttons.Count);
+                        temp = buttons[position].getID();
+                    }
+                }
+
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    if (buttons[i].getID() == temp)
+                    {
+                        buttons[i].setSelected(true);
+
+                    }
+                }
+            }
+
+            if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown))
+            {
+                downButtonDown = false;
+            }
+            #endregion
+
+            #region Keyboard Controls
+            //System.Diagnostics.Debug.WriteLine((gamepad.IsButtonDown(Buttons.DPadUp)));
+            if ((keyboard.IsKeyDown(Keys.W) && !wKeyDown))
             {
                 int temp = 0;
                 wKeyDown = true;
@@ -61,18 +126,17 @@ namespace F.U.E.L
                     {
                         buttons[i].setSelected(true);
 
-                        System.Diagnostics.Debug.WriteLine(temp);
                     }
                 }
 
             }
 
-            if ((keyboard.IsKeyUp(Keys.W) && wKeyDown) || (gamepad.IsButtonUp(Buttons.DPadUp) && wKeyDown))
+            if (keyboard.IsKeyUp(Keys.W) && wKeyDown)
             {
                 wKeyDown = false;
             }
 
-            if ((keyboard.IsKeyDown(Keys.S) && !sKeyDown) || gamepad.IsButtonDown(Buttons.DPadDown))
+            if ((keyboard.IsKeyDown(Keys.S) && !sKeyDown))
             {
                 int temp = 0;
                 sKeyDown = true;
@@ -100,6 +164,8 @@ namespace F.U.E.L
             {
                 sKeyDown = false;
             }
+
+            #endregion
 
             base.Update(keyboard, gamepad);
 
