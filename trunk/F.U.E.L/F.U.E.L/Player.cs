@@ -242,6 +242,7 @@ namespace F.U.E.L
                 if (!(gp.ThumbSticks.Right.X == 0 && gp.ThumbSticks.Right.Y == 0))
                 {
                     lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);
+                    lookDirection.Normalize();
                 }
 
                 /*if (gp.IsButtonDown(Buttons.X))
@@ -313,6 +314,18 @@ namespace F.U.E.L
                 }
 
                 velocity = new Vector3(gp.ThumbSticks.Left.X, 0, -gp.ThumbSticks.Left.Y);
+            }
+            else
+            {
+                if (gp.IsButtonDown(Buttons.Y) && credit >= respawnCost)
+                {
+                    credit -= respawnCost;
+                    respawnCost *= 2;
+                    this.isAlive = true;
+                    this.hp = this.topHP;
+                    this.position = this.spawnPoint.position;
+                    this.attackerNum = 0;
+                }
             }
         }
 

@@ -84,12 +84,12 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferHeight = 1050;
             //graphics.ToggleFullScreen();
 
-            graphics.PreferredBackBufferWidth = 1280; 
-            graphics.PreferredBackBufferHeight = 720;
+            //graphics.PreferredBackBufferWidth = 1280; 
+            //graphics.PreferredBackBufferHeight = 720;
 
 
-            //graphics.PreferredBackBufferWidth = 800;
-            //graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
 
             //graphics.IsFullScreen = true;
         }
@@ -533,8 +533,8 @@ namespace F.U.E.L
 
                         }
                         userInterface.drawSelectedWeapon(iconsTexture, p.selectedWeapon);//draw selected weapon frame
-                        spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black);
-                        spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White);
+                        spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.01f);
+                        spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
                     }
                     //END TEST
