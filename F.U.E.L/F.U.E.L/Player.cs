@@ -31,8 +31,9 @@ namespace F.U.E.L
         public int attackerNum=0;
 
         private PlayerIndex playerIndex;
-        private int playerID;
-
+        public int playerID;
+        public int playerClass;//for skill icons
+        
         public int respawnCost = 500;
 
         public Player(Game game, Model[] modelComponents,
@@ -70,6 +71,7 @@ namespace F.U.E.L
                     topSP = 250;
                     sp = topSP;
                     speed = 0.08f;
+                    playerClass = 1;
                     break;
                 case Class.Gunner:
                     weapons[0] = new MiniGun(game, modelComponents, new Vector3(0, 0, 0));
@@ -81,6 +83,7 @@ namespace F.U.E.L
                     topSP = 200;
                     sp = topSP;
                     speed = 0.08f;
+                    playerClass = 2;
                     break;
                 case Class.Sniper:
                     weapons[0] = new Sniper(game, modelComponents, new Vector3(0, 0, 0));
@@ -92,6 +95,7 @@ namespace F.U.E.L
                     topSP = 200;
                     sp = topSP;
                     speed = 0.08f;
+                    playerClass = 3;
                     break;
                 case Class.Tank:
                     weapons[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
@@ -103,6 +107,7 @@ namespace F.U.E.L
                     topSP = 100;
                     sp = topSP;
                     speed = 0.08f;
+                    playerClass = 4;
                     break;
             }
             
@@ -275,7 +280,7 @@ namespace F.U.E.L
                     if (!checkBoxCollision && credit >= Tower.towerCost)
                     {
                         Weapon[] w = new Weapon[1];
-                        w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
+                        w[0] = new Shotgun(game, modelComponents, Vector3.Zero);
                         credit -= Tower.towerCost;
                         game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
                     }

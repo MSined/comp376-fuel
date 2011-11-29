@@ -74,6 +74,26 @@ namespace F.U.E.L
                 SpriteEffects.None,0.1f);
         }
 
+        public void drawSkills(Texture2D texture, Player player)
+        {
+            UISprites.Draw(texture,
+                    new Vector2(((int)Math.Floor(203f * width / 1000)) + ((int)(44f * width / 1000) * (player.playerID * 4)) + ((int)(7f * width / 1000) * (player.playerID * 4)), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153 / 200f) * (width / 1000f * 200f)))),
+                    new Rectangle(176, (player.playerID+1) * 44, 44, 44),
+                    Color.White, 0f, Vector2.Zero,
+                    scale,
+                    SpriteEffects.None, 0.12f);
+            
+            for (int i = 0; i < 4; i++)
+            {
+                UISprites.Draw(texture,
+                    new Vector2(((int)Math.Floor(203f * width / 1000)) + ((int)(44f * width / 1000) * (i + (player.playerID * 4))) + ((int)(7f * width / 1000) * (i + (player.playerID * 4))), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((103 / 200f) * (width / 1000f * 200f)))),
+                    new Rectangle(i*44, player.playerClass*44, 44, 44),
+                    Color.White, 0f, Vector2.Zero,
+                    scale,
+                    SpriteEffects.None, 0.12f);
+            }
+        }
+
         private void DrawMinimap(List<Player> players, List<Enemy> enemies, List<Building> usableBuildings) 
         {
             UISprites.Draw(minimapTexture, position, null, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.34f);

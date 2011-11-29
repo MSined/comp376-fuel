@@ -76,6 +76,7 @@ namespace F.U.E.L
                     target = null;
                 }
             }
+            weapons[selectedWeapon].Update(gameTime, colliders, cameraTarget);
             base.Update(gameTime, colliders, cameraTarget);
         }
     }
