@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -21,7 +22,7 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
-            
+            //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/powerfist");
         }
 
         public override void Draw(Camera camera)

@@ -29,7 +29,7 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
-
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/AirStrike");
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
@@ -41,9 +41,9 @@ namespace F.U.E.L
                 for (float i = 0; i < 2 * Math.PI; i += 0.2f)
                 {
                     Matrix m = Matrix.CreateRotationY(i);
-                    game.Components.Add(new Bullet(game, this.bulletModelComponents, launchPosition + direction * (NUMEXPLOSIONS - bulletsLeft + 1) * (range / NUMEXPLOSIONS), Vector3.Transform(direction, m), EXPLOSIONRANGE, damage, shotByEnemy));
+                    game.Components.Add(new Bullet(game, this.bulletModelComponents, launchPosition + direction * (NUMEXPLOSIONS - bulletsLeft + 1) * (range / NUMEXPLOSIONS), Vector3.Transform(direction, m), EXPLOSIONRANGE, damage, shotByEnemy));                    
                 }
-
+                playSound(launchPosition, cameraTarget);
                 --bulletsLeft;
                 launchInterval = 0;
             }
@@ -59,6 +59,7 @@ namespace F.U.E.L
                 this.shotByEnemy = shotByEnemy;
                 bulletsLeft = NUMEXPLOSIONS;
                 interval = 0;
+                
             }
         }
 

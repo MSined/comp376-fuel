@@ -23,7 +23,7 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
-            //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/shotgun");
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/seakingmissle");
             
         }
 
@@ -46,7 +46,7 @@ namespace F.U.E.L
                 }
 
                 interval = 0;
-                //soundEffect.Play();
+                playSound(position, cameraTarget);
             }
         }
 
