@@ -14,13 +14,14 @@ namespace F.U.E.L
         private const float RANGE = 7;
         private const int DAMAGE = 1;
         private const int FIREDELAY = (int)(1 / 20.0 * 1000);
+        private const int SPCOST = 10;
 
         private Random random = new Random();
         private const int maxSpread = 10;
 
         public MiniGun(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/minigun");
             

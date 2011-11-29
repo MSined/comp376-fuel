@@ -14,10 +14,11 @@ namespace F.U.E.L
         private const float RANGE = 7;
         private const int DAMAGE = 10;
         private const int FIREDELAY = (int)(0.7f * 1000);
+        private const int SPCOST = 10;
 
         public Pistol(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/pistol");
         }

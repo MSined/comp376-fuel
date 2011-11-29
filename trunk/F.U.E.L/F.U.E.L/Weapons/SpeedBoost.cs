@@ -14,6 +14,7 @@ namespace F.U.E.L
         private const float RANGE = 0;
         private const int DAMAGE = 0;
         private const int FIREDELAY = 10 * 1000;
+        private const int SPCOST = 10;
 
         private const float SPEEDBOOST = 0.04f;
         private const int BOOSTTIME = 3 * 1000;
@@ -25,7 +26,7 @@ namespace F.U.E.L
 
         public SpeedBoost(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/assaultrifle");
             player = p;

@@ -14,6 +14,7 @@ namespace F.U.E.L
         private const float RANGE = 10;
         private const int DAMAGE = 8;
         private const int FIREDELAY = (int)(15 * 1000);
+        private const int SPCOST = 10;
 
         private const int NUMEXPLOSIONS = 8;
         private const float EXPLOSIONRANGE = 2;
@@ -26,7 +27,7 @@ namespace F.U.E.L
 
         public AirStrike(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
 
         }

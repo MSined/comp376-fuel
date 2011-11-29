@@ -14,10 +14,11 @@ namespace F.U.E.L
         private const float RANGE = 10;
         private const int DAMAGE = 25;
         private const int FIREDELAY = (int)(1.5f * 1000);
+        private const int SPCOST = 10;
 
         public Sniper(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/pistol");
         }

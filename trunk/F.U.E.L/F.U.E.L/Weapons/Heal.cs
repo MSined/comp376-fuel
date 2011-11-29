@@ -15,12 +15,13 @@ namespace F.U.E.L
         private const int DAMAGE = 0;
         private const int HEALING = 100;
         private const int FIREDELAY = 12 * 1000;
+        private const int SPCOST = 10;
 
         //private SoundEffect soundEffect;
 
         public Heal(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/assaultrifle");
         }

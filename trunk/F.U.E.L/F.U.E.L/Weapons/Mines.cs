@@ -13,10 +13,11 @@ namespace F.U.E.L
         private const float RANGE = 10;
         private const int DAMAGE = 20;
         private const int FIREDELAY = 5 * 1000;
+        private const int SPCOST = 10;
 
         public Mines(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             
         }
