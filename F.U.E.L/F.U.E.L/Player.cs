@@ -346,6 +346,7 @@ namespace F.U.E.L
                     respawnCost *= 2;
                     this.isAlive = true;
                     this.hp = this.topHP;
+                    this.sp = this.topSP;
                     this.position = this.spawnPoint.position;
                     this.attackerNum = 0;
                 }

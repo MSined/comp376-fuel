@@ -197,9 +197,23 @@ namespace F.U.E.L
             t = new Model[1];
             t[0] = checkBoxModel;
             players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
+            /*players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
+            players.Add(new Player(this, p, map.spawnPoints[2], Player.Class.Gunner, PlayerIndex.Three));
+            players.Add(new Player(this, p, map.spawnPoints[3], Player.Class.Alchemist, PlayerIndex.Four));
+            */
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);
+            /*players[1].checkBox = new BuildBox(this, t, players[1].position,
+                                                new FloatRectangle((players[1].position + players[1].lookDirection).X, (players[1].position + players[1].lookDirection).Z, 1, 1),
+                                                players[1]);
+            players[2].checkBox = new BuildBox(this, t, players[2].position,
+                                                new FloatRectangle((players[2].position + players[2].lookDirection).X, (players[2].position + players[2].lookDirection).Z, 1, 1),
+                                                players[2]);
+            players[3].checkBox = new BuildBox(this, t, players[3].position,
+                                                new FloatRectangle((players[3].position + players[3].lookDirection).X, (players[3].position + players[3].lookDirection).Z, 1, 1),
+                                                players[3]);
+            */
             foreach (Player ply in players) { Components.Add(ply); }
 
             // Create the grid with necessary information
@@ -573,11 +587,11 @@ namespace F.U.E.L
                             }*/
                             if (t >= 0) 
                             {
-                                userInterface.drawCooldowns(healthTexture, w.fireDelay, w.interval, abilityNum);
+                                userInterface.drawCooldowns(healthTexture, w.fireDelay, w.interval, abilityNum, p.playerID);
                             }
                             ++abilityNum;
                         }
-                        userInterface.drawSelectedWeapon(iconsTexture, p.selectedWeapon);//draw selected weapon frame
+                        userInterface.drawSelectedWeapon(iconsTexture, p);//draw selected weapon frame
                         userInterface.drawSkills(iconsTexture, p);//draw icons
                         //spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.01f);
                         //spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
