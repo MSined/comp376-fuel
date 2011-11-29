@@ -90,11 +90,11 @@ namespace F.U.E.L
             //graphics.PreferredBackBufferHeight = 1050;
             //graphics.ToggleFullScreen();
 
-            //graphics.PreferredBackBufferWidth = 1280; 
-            //graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280; 
+            graphics.PreferredBackBufferHeight = 720;
 
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
+            //graphics.PreferredBackBufferWidth = 800;
+            //graphics.PreferredBackBufferHeight = 480;
 
             //graphics.IsFullScreen = true;
         }
@@ -190,7 +190,7 @@ namespace F.U.E.L
             p[0] = playerModel;
             t = new Model[1];
             t[0] = checkBoxModel;
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Sniper, PlayerIndex.One));
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);
@@ -538,18 +538,17 @@ namespace F.U.E.L
                     }
                     #endregion
 
-                    #region cooldown Testing purposes
-                    //For cooldown Testing purposes!
+                    #region weapons/skills
                     if (gc is Player)
                     {
                         Player p = (Player)gc;
-                        String s = "";
-                        long nowTick = DateTime.Now.Ticks;
+                        //String s = "";
+                        //long nowTick = DateTime.Now.Ticks;
                         int abilityNum = 0;
                         foreach (Weapon w in p.weapons)
                         {
                             float t = w.fireDelay - w.interval;
-                            if (t < 0)
+                            /*if (t < 0)
                             {
                                 s += "0 ";
                             }
@@ -557,12 +556,17 @@ namespace F.U.E.L
                             {
                                 s += t + "s ";
                                 userInterface.drawCooldowns(healthTexture, w.fireDelay, w.interval, abilityNum);
+                            }*/
+                            if (t >= 0) 
+                            {
+                                userInterface.drawCooldowns(healthTexture, w.fireDelay, w.interval, abilityNum);
                             }
                             ++abilityNum;
                         }
                         userInterface.drawSelectedWeapon(iconsTexture, p.selectedWeapon);//draw selected weapon frame
-                        spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.01f);
-                        spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                        userInterface.drawSkills(iconsTexture, p);//draw icons
+                        //spriteBatch.DrawString(spriteFont, s, new Vector2(33, 73), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.01f);
+                        //spriteBatch.DrawString(spriteFont, s, new Vector2(32, 72), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                     }
                     //END TEST
                     #endregion

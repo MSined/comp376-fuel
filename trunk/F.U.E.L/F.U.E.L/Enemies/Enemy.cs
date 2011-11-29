@@ -153,7 +153,7 @@ namespace F.U.E.L
             
             //bounds are updated in Character
             //this.bounds = new FloatRectangle(position.X, position.Z, width, depth);
-
+            weapons[selectedWeapon].Update(gameTime, colliders, cameraTarget);
             base.Update(gameTime, colliders, cameraTarget);
         }
 
