@@ -14,6 +14,7 @@ namespace F.U.E.L
         private const float RANGE = 5;
         private const int DAMAGE = 1;
         private const int FIREDELAY = (int)(6 * 1000);
+        private const int SPCOST = 10;
 
         private const int NUMBULLETS = 100;
         private const int LAUNCHDELAY = (int)(5 / 1000.0 * 1000);
@@ -27,7 +28,7 @@ namespace F.U.E.L
 
         public FlameThrower(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             this.player = p;
         }

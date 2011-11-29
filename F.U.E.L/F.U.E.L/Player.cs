@@ -36,6 +36,9 @@ namespace F.U.E.L
         
         public int respawnCost = 500;
 
+        private float spRecoverTimer = 0f;
+        private float spRecoverInterval = 1000f;
+
         public Player(Game game, Model[] modelComponents,
             SpawnPoint spawnPoint, Class c, PlayerIndex pIndex
             )
@@ -116,6 +119,13 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
+            spRecoverTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (sp < topSP && spRecoverTimer > spRecoverInterval) 
+            {
+                ++sp;
+                spRecoverTimer = 0;
+            }
+
             #region Keyboard Controls
             //Hack to get it working on a computer
             //KeyboardControls(gameTime, colliders, cameraTarget);
@@ -309,8 +319,17 @@ namespace F.U.E.L
                 else if (switching && gp.IsButtonUp(Buttons.LeftShoulder) && gp.IsButtonUp(Buttons.RightShoulder))
                 { switching = false; }
 
-                if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false, gameTime, cameraTarget);
-                if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false, gameTime, cameraTarget);
+                if (gp.Triggers.Left > 0 && sp>=weapons[selectedWeapon].spCost) 
+                {
+                    if (weapons[selectedWeapon].interval > weapons[selectedWeapon].fireDelay)//no spCost if can't shoot
+                    {sp -= weapons[selectedWeapon].spCost;}
+                    weapons[selectedWeapon].shoot(position, lookDirection, false, gameTime, cameraTarget);
+                    
+                }
+                if (gp.Triggers.Right > 0)
+                {
+                    weapons[0].shoot(position, lookDirection, false, gameTime, cameraTarget);
+                }
                 else if (gp.IsButtonDown(Buttons.A))//cannot repair if shooting
                 {
                     Building b = getUsableBuilding();
@@ -368,7 +387,7 @@ namespace F.U.E.L
             {
                 int healthBarWidth = (int)Math.Floor((145f * width / (float)1000));
                 int healthBarHeight = (int)Math.Floor((22f * width / (float)1000));
-                Rectangle srcRect, destRect;
+                Rectangle srcRect, destRect, spRect;
 
                 Vector3 screenPos = graphicsDevice.Viewport.Project(this.position + new Vector3(0, 0.8f, 0), camera.projection, camera.view, Matrix.Identity);
                 /*
@@ -383,6 +402,10 @@ namespace F.U.E.L
                 srcRect = new Rectangle(0, 0, 1, 1);
                 destRect = new Rectangle((int)Math.Floor((float)(253+(playerID*200)) / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((153f / 200f) * (width / 1000f * 200f))), (int)(healthPercentage * healthBarWidth), healthBarHeight);
                 spriteBatch.Draw(healthTexture, destRect, Rectangle.Empty, healthColor,0f,Vector2.Zero,SpriteEffects.None,0.3f);
+                
+                float spPercentage = (float)sp / (float)topSP;
+                spRect = new Rectangle((int)Math.Floor((float)(253 + (playerID * 200)) / (float)1000 * width), (height - (int)(width / 1000f * 200f) + (int)Math.Floor((176f / 200f) * (width / 1000f * 200f))), (int)(spPercentage * healthBarWidth), healthBarHeight);
+                spriteBatch.Draw(healthTexture, spRect, Rectangle.Empty, Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 0.3f);
             }
         }
 

@@ -14,6 +14,7 @@ namespace F.U.E.L
         private const float RANGE = 0;
         private const int DAMAGE = 0;
         private const int FIREDELAY = 3 * 1000;
+        private const int SPCOST = 10;
 
         private const int HEALING = 5;
         private const int HEALINGTIME = 10 * 1000;
@@ -24,7 +25,7 @@ namespace F.U.E.L
 
         public Renew(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/assaultrifle");
         }

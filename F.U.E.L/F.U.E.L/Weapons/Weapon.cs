@@ -16,18 +16,21 @@ namespace F.U.E.L
         public int fireDelay { get; protected set; }
         public float interval { get; protected set; }
 
+        public int spCost { get; protected set; }
+
         protected SoundEffect soundEffect;
 
         public Model[] bulletModelComponents;
 
         public Weapon(Game game, Model[] modelComponents, Vector3 position,
-                      float range, int damage, int fireDelay)
+                      float range, int damage, int fireDelay, int spCost)
                : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 0,0), true)
         {
             this.range = range;
             this.damage = damage;
             this.fireDelay = fireDelay;
             this.interval = fireDelay;
+            this.spCost = spCost;
 
             this.bulletModelComponents = new Model[1];
             this.bulletModelComponents[0] = modelComponents[0];

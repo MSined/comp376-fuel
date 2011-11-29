@@ -14,12 +14,13 @@ namespace F.U.E.L
         private const float RANGE = 3;
         private const int DAMAGE = 5;
         private const int FIREDELAY = (int)(10 * 1000);
+        private const int SPCOST = 10;
 
         //private SoundEffect soundEffect;
 
         public PoisonRing(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
 
         }

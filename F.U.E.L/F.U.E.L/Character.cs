@@ -14,7 +14,7 @@ namespace F.U.E.L
         public int topHP;
         public int hp;// { get; protected set; }
         public int topSP;
-        public int sp { get; protected set; }
+        public int sp;// { get; protected set; }
 
         public SpawnPoint spawnPoint { get; private set; }
         public Weapon[] weapons { get; private set; }

@@ -15,10 +15,11 @@ namespace F.U.E.L
         private const float RANGE = 1f;
         private const int DAMAGE = 15;
         private const int FIREDELAY = 1 * 1000;
+        private const int SPCOST = 10;
 
         public PowerFist(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             
         }
