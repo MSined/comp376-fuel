@@ -22,7 +22,7 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
-
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/poisonring");
         }
 
         public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
@@ -34,6 +34,7 @@ namespace F.U.E.L
                     Matrix m = Matrix.CreateRotationY(i);
                     game.Components.Add(new PoisonBullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
                 }
+                playSound(position, cameraTarget);
                 interval = 0;
             }
         }

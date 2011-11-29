@@ -31,6 +31,7 @@ namespace F.U.E.L
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
             this.player = p;
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/FlameThrower");
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
@@ -66,6 +67,7 @@ namespace F.U.E.L
                 this.shotByEnemy = shotByEnemy;
                 bulletsLeft = NUMBULLETS;
                 interval = 0;
+                playSound(position, cameraTarget);
             }
         }
 

@@ -28,7 +28,7 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
-            //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/assaultrifle");
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/speedup");
             player = p;
         }
 
@@ -47,7 +47,7 @@ namespace F.U.E.L
                 checkInterval = 0;
                 if (currentBoostInterval < 0)
                     player.speed -= SPEEDBOOST;
-                //soundEffect.Play();
+                playSound(position, cameraTarget);
             }
         }
 
