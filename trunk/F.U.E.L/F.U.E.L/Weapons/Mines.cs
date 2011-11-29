@@ -11,32 +11,26 @@ namespace F.U.E.L
     class Mines : Weapon
     {
         private const float RANGE = 10;
-        private const int DAMAGE = 100;
-        private const int FIRERATE = 1 * 10000000;
+        private const int DAMAGE = 20;
+        private const int FIREDELAY = 5 * 1000;
 
         public Mines(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 game.Components.Add(new AOEBullet(game, this.bulletModelComponents, position, new Vector3(0,0,0), range, damage, shotByEnemy));
-                lastShot = nowTick;
+                interval = 0;
             }
         }
 
         public override void Draw(Camera camera)
-        {
-
-        }
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
 
         }

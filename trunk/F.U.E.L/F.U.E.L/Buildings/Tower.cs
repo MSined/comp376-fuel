@@ -69,7 +69,7 @@ namespace F.U.E.L
                 if (targetDist < weapons[selectedWeapon].range)
                 {
                     lookDirection = target.position - this.position;
-                    weapons[selectedWeapon].shoot(this.position, lookDirection, false, cameraTarget);
+                    weapons[selectedWeapon].shoot(this.position, lookDirection, false, gameTime, cameraTarget);
                 }
                 else //target went away, choose another target
                 {

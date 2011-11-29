@@ -13,16 +13,14 @@ namespace F.U.E.L
     {
         private const float RANGE = 6;
         private const int DAMAGE = 1;
-        private const int FIRERATE = (int)(4 * 10000000);
+        private const int FIREDELAY = (int)(4 * 1000);
 
         private const int NUMBULLETS = 250;
-        private const int LAUNCHSPEED = (int)(1 / 1000.0 * 10000000);
+        private const int LAUNCHDELAY = (int)(1 / 1000.0 * 1000);
         private int bulletsLeft = 0;
-        private long lastLaunch = 0;
+        private float launchInterval = 0;
         private Boolean shotByEnemy;
         private Player player;
-
-        //private SoundEffect soundEffect;
 
         private const int maxSpread = 30;
         private int currentAngle = (int)(30/2.0f);
@@ -30,16 +28,16 @@ namespace F.U.E.L
 
         public SnakeGun(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             this.player = p;
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastLaunch + LAUNCHSPEED < nowTick && bulletsLeft > 0)
+            interval += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            launchInterval += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (launchInterval > LAUNCHDELAY && bulletsLeft > 0)
             {
                 float shotAngle = (float)Math.Asin(player.lookDirection.X) + MathHelper.ToRadians(180);
                 if (player.lookDirection.Z > 0)
@@ -56,22 +54,20 @@ namespace F.U.E.L
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, player.position, Vector3.Transform(player.lookDirection, m), range, damage, shotByEnemy));
 
                 --bulletsLeft;
-                lastLaunch = nowTick;
+                launchInterval = 0;
             }
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 currentAngle = (int)(30 / 2.0f);
                 //launchPosition = position;
                 //this.direction = direction;
                 this.shotByEnemy = shotByEnemy;
                 bulletsLeft = NUMBULLETS;
-                lastShot = nowTick;
+                interval = 0;
             }
         }
 

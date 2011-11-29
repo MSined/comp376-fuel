@@ -68,13 +68,14 @@ namespace F.U.E.L
         {
             foreach (Object o in colliders)
             {
-                if (bounds.FloatIntersects(o.bounds))
+                if (bounds.FloatIntersects(o.bounds) && o.isAlive)
                 {
                     if (o is Player && this.shotByEnemy)
                     {
                         this.isAlive = false;
                         Player p = (Player)o;
                         p.hp = p.hp - this.damage;
+                        p.checkIfDead();
                         continue;
                     }
                     if (o is Enemy && !this.shotByEnemy)
@@ -82,6 +83,7 @@ namespace F.U.E.L
                         this.isAlive = false;
                         Enemy e = (Enemy)o;
                         e.hp = e.hp - this.damage;
+                        e.checkIfDead();
                         continue;
                     }
                     if (o is Tower && this.shotByEnemy)//same as player, but tower
@@ -89,6 +91,7 @@ namespace F.U.E.L
                         this.isAlive = false;
                         Tower t = (Tower)o;
                         t.hp = t.hp - this.damage;
+                        t.checkIfDead();
                         continue;
                     }
                     if (o is Building)// && bounds.FloatIntersects(o.bounds))

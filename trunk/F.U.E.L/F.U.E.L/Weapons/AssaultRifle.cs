@@ -13,14 +13,11 @@ namespace F.U.E.L
     {
         private const float RANGE = 5;
         private const int DAMAGE = 5;
-        private const int FIRERATE = (int)(1 / 10.0 * 10000000);
-        
-
-        private SoundEffect soundEffect;
+        private const int FIREDELAY = (int)(1 / 10.0 * 1000);
 
         public AssaultRifle(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/assaultrifle");
         }
@@ -30,20 +27,13 @@ namespace F.U.E.L
             
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-
-        }
-
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
-        {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
-                lastShot = nowTick;
-                soundEffect.Play();
+                interval = 0;
+                playSound(position, cameraTarget);
             }
         }
     }

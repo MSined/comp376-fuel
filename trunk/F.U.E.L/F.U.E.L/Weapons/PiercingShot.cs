@@ -13,36 +13,27 @@ namespace F.U.E.L
     {
         private const float RANGE = 15;
         private const int DAMAGE = 20;
-        private const int FIRERATE = (int)(8f * 10000000);
-
-        private SoundEffect soundEffect;
+        private const int FIREDELAY = (int)(8f * 1000);
 
         public PiercingShot(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/pistol");
-
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 game.Components.Add(new PiercingBullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
-                lastShot = nowTick;
-                soundEffect.Play();
+                interval = 0;
+                playSound(position, cameraTarget);
             }
 
         }
 
         public override void Draw(Camera camera)
-        {
-
-        }
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
 
         }

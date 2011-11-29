@@ -13,26 +13,22 @@ namespace F.U.E.L
     {
         private const float RANGE = 100;
         private const int DAMAGE = 25;
-        private const int FIRERATE = (int)(10 * 10000000);
-
-        //private SoundEffect soundEffect;
+        private const int FIREDELAY = (int)(10 * 1000);
 
         private const int angleDiff = 25;
         private const int numBullets = 3;
 
         public RocketLauncher(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/shotgun");
             
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 float shotAngle = (float)Math.Asin(direction.X) + MathHelper.ToRadians(180);
                 if (direction.Z > 0)
@@ -47,17 +43,13 @@ namespace F.U.E.L
                     Matrix m = Matrix.CreateRotationY(a);
                     game.Components.Add(new SeekingBullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
                 }
-                
-                lastShot = nowTick;
+
+                interval = 0;
                 //soundEffect.Play();
             }
         }
 
         public override void Draw(Camera camera)
-        {
-
-        }
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
 
         }

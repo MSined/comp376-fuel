@@ -190,7 +190,7 @@ namespace F.U.E.L
             p[0] = playerModel;
             t = new Model[1];
             t[0] = checkBoxModel;
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Sniper, PlayerIndex.One));
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);
@@ -548,7 +548,7 @@ namespace F.U.E.L
                         int abilityNum = 0;
                         foreach (Weapon w in p.weapons)
                         {
-                            long t = (long)Math.Ceiling((double)(w.lastShot + w.fireRate - nowTick) / 12000000);
+                            float t = w.fireDelay - w.interval;
                             if (t < 0)
                             {
                                 s += "0 ";
@@ -556,7 +556,7 @@ namespace F.U.E.L
                             else
                             {
                                 s += t + "s ";
-                                userInterface.drawCooldowns(healthTexture, Math.Ceiling((double)(w.fireRate / 12000000)), (double)((long)Math.Ceiling((double)(w.lastShot + w.fireRate - nowTick) / 12000000)), abilityNum);
+                                userInterface.drawCooldowns(healthTexture, w.fireDelay, w.interval, abilityNum);
                             }
                             ++abilityNum;
                         }

@@ -127,6 +127,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
     <Compile Include="Weapons\AirStrike.cs" />
+    <Compile Include="Weapons\SpeedBoost.cs" />
     <Compile Include="Weapons\GroundPound.cs" />
     <Compile Include="Weapons\Punch.cs" />
     <Compile Include="Weapons\HeadShot.cs" />

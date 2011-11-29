@@ -14,20 +14,16 @@ namespace F.U.E.L
         //range changed to 1/ enemy size is .7
         private const float RANGE = 1f;
         private const int DAMAGE = 15;
-        private const int FIRERATE = 1 * 10000000;
+        private const int FIREDELAY = 1 * 1000;
 
         public PowerFist(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             
         }
 
         public override void Draw(Camera camera)
-        {
-
-        }
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
 
         }

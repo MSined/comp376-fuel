@@ -13,33 +13,46 @@ namespace F.U.E.L
     {
         public float range { get; protected set; }
         public int damage { get; protected set; }
-        public int fireRate { get; protected set; }
-        public long lastShot { get; protected set; }
+        public int fireDelay { get; protected set; }
+        public float interval { get; protected set; }
+
+        protected SoundEffect soundEffect;
 
         public Model[] bulletModelComponents;
 
         public Weapon(Game game, Model[] modelComponents, Vector3 position,
-                      float range, int damage, int fireRate)
+                      float range, int damage, int fireDelay)
                : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, 0,0), true)
         {
             this.range = range;
             this.damage = damage;
-            this.fireRate = fireRate;
-            this.lastShot = 0;
+            this.fireDelay = fireDelay;
+            this.interval = fireDelay;
 
             this.bulletModelComponents = new Model[1];
             this.bulletModelComponents[0] = modelComponents[0];
         }
 
-        public virtual void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
+            interval += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+        }
 
-            if (lastShot + fireRate < nowTick)
+        public virtual void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
+        {
+            if (interval > fireDelay)
             {
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
-                lastShot = nowTick;
+                interval = 0;
             }
+        }
+
+        protected void playSound(Vector3 position, Vector3 cameraTarget)
+        {
+            float dist = (cameraTarget - position).LengthSquared();
+            float vol = dist / 300;
+            float scaledVol = (vol >= 1 ? 0 : (1 - vol));
+            soundEffect.Play(scaledVol, 0.0f, 0.0f);
         }
     }
 }

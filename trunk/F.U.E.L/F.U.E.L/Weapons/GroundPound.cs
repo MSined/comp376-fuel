@@ -13,37 +13,29 @@ namespace F.U.E.L
     {
         private const float RANGE = 2;
         private const int DAMAGE = 10;
-        private const int FIRERATE = (int)(10 * 10000000);
-
-        //private SoundEffect soundEffect;
+        private const int FIREDELAY = (int)(10 * 1000);
 
         public GroundPound(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
 
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 for (float i = 0; i < 2*Math.PI; i += 0.2f)
                 {
                     Matrix m = Matrix.CreateRotationY(i);
                     game.Components.Add(new PushBackBullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
                 }
-                lastShot = nowTick;
+                interval = 0;
             }
         }
 
         public override void Draw(Camera camera)
-        {
-
-        }
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
 
         }
