@@ -47,7 +47,7 @@ namespace F.U.E.L
                 checkInterval = 0;
                 if (currentBoostInterval < 0)
                     player.speed -= SPEEDBOOST;
-                playSound(position, cameraTarget);
+                
             }
         }
 
@@ -58,7 +58,8 @@ namespace F.U.E.L
                 player.speed += SPEEDBOOST;
                 currentBoostInterval = BOOSTTIME;
                 interval = 0;
-                //soundEffect.Play();
+                playSound(position, cameraTarget);
+                soundEffect.Play();
             }
         }
     }

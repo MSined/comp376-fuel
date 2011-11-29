@@ -51,6 +51,10 @@ namespace F.U.E.L
         MainMenu mainMenu;
         MainMenu characterMenu;
 
+        protected Song bgm;
+
+        private bool playing = false;
+
         private bool EscapeKeyDown = false;
         private bool EnterKeyDown = false;
 
@@ -136,6 +140,8 @@ namespace F.U.E.L
             treeModel = Content.Load<Model>(@"Models\treeModel");
             telePadModel = Content.Load<Model>(@"Models\telePadModel");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
+
+            bgm = Content.Load<Song>(@"Sounds\bgm");
 
             string menuBG = @"ScreenManagerAssets\Textures\MainMenuBG";
             string menuBGSound = @"ScreenManagerAssets\Sounds\MainMenuBGM";
@@ -395,6 +401,14 @@ namespace F.U.E.L
             if (menuManager.ActiveMenu == null) //Encapsulation to "Pause" game
             {
                 #region Update Game Components
+                // Background music
+                if (!playing)
+                {
+                    MediaPlayer.IsRepeating = true;
+                    MediaPlayer.Play(bgm);
+                    playing = true;
+                }
+
                 List<Object> colliders = new List<Object>();
                 GameComponent[] gcc = new GameComponent[Components.Count];
                 Components.CopyTo(gcc, 0);
