@@ -31,6 +31,7 @@ namespace F.U.E.L
                         Player p = (Player)o;
                         p.hp = p.hp - this.damage;
                         p.position += direction * pushBackDist;
+                        if (p.hp < 0) p.isAlive = false;
                         continue;
                     }
                     if (o is Enemy && !this.shotByEnemy)
@@ -39,6 +40,7 @@ namespace F.U.E.L
                         Enemy e = (Enemy)o;
                         e.hp = e.hp - this.damage;
                         e.position += direction * pushBackDist;
+                        if (e.hp < 0) e.isAlive = false;
                         continue;
                     }
                     if (o is Tower && this.shotByEnemy)//same as player, but tower
@@ -46,6 +48,7 @@ namespace F.U.E.L
                         this.isAlive = false;
                         Tower t = (Tower)o;
                         t.hp = t.hp - this.damage;
+                        if (t.hp < 0) t.isAlive = false;
                         continue;
                     }
                     if (o is Building)// && bounds.FloatIntersects(o.bounds))

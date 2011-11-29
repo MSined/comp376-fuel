@@ -13,26 +13,22 @@ namespace F.U.E.L
     {
         private const float RANGE = 7;
         private const int DAMAGE = 1;
-        private const int FIRERATE = (int)(1 / 20.0 * 10000000);
-
-        private SoundEffect soundEffect;
+        private const int FIREDELAY = (int)(1 / 20.0 * 1000);
 
         private Random random = new Random();
         private const int maxSpread = 10;
 
         public MiniGun(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/minigun");
             
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 float shotAngle = (float)Math.Asin(direction.X) + MathHelper.ToRadians(180);
                 if (direction.Z > 0)
@@ -43,16 +39,12 @@ namespace F.U.E.L
                 float a = -MathHelper.ToRadians(maxSpread)/2 + MathHelper.ToRadians(maxSpread) * (float) random.NextDouble();
                 Matrix m = Matrix.CreateRotationY(a);
                 game.Components.Add(new Bullet(game, this.bulletModelComponents, position, Vector3.Transform(direction, m), range, damage, shotByEnemy));
-                lastShot = nowTick;
-                soundEffect.Play();
+                interval = 0;
+                playSound(position, cameraTarget);
             }
         }
 
         public override void Draw(Camera camera)
-        {
-
-        }
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
 
         }

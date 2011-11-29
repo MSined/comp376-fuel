@@ -13,20 +13,19 @@ namespace F.U.E.L
     {
         private const float RANGE = 0;
         private const int DAMAGE = 0;
-        private const int FIRERATE = 10 * 10000000;
+        private const int FIREDELAY = 10 * 1000;
 
         private const float SPEEDBOOST = 0.04f;
-        private const int BOOSTTIME = 3 * 10000000;
-        private const int CHECKRATE = (int)(1/2.0 * 10000000);
-        private long currentBoostTime = 0;
-        private long lastCheck = 0;
+        private const int BOOSTTIME = 3 * 1000;
+        private const int CHECKDELAY = (int)(1 / 2.0 * 1000);
+        private float currentBoostInterval = 0;
+        private float checkInterval = 0;
 
         Player player;
-        //private SoundEffect soundEffect;
 
         public Stimpack(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
-            : base(game, modelComponents, position, RANGE, DAMAGE, FIRERATE)
+            : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY)
         {
             //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/assaultrifle");
             player = p;
@@ -39,27 +38,25 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (currentBoostTime > 0 && lastCheck + CHECKRATE < nowTick)
+            interval += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            checkInterval += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (currentBoostInterval > 0 && checkInterval > CHECKDELAY)
             {
-                currentBoostTime -= CHECKRATE;
-                lastCheck = nowTick;
-                if (currentBoostTime < 0)
+                currentBoostInterval -= CHECKDELAY;
+                checkInterval = 0;
+                if (currentBoostInterval < 0)
                     player.speed -= SPEEDBOOST;
                 //soundEffect.Play();
             }
         }
 
-        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, Vector3 cameraTarget)
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
         {
-            long nowTick = DateTime.Now.Ticks;
-
-            if (lastShot + fireRate < nowTick)
+            if (interval > fireDelay)
             {
                 player.speed += SPEEDBOOST;
-                currentBoostTime = BOOSTTIME;
-                lastShot = nowTick;
+                currentBoostInterval = BOOSTTIME;
+                interval = 0;
                 //soundEffect.Play();
             }
         }

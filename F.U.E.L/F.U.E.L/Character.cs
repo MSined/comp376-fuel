@@ -67,6 +67,13 @@ namespace F.U.E.L
             //check collisions after moved
             CheckCollisions(colliders);
 
+            checkIfDead();
+
+            base.Update(gameTime, colliders, cameraTarget);
+        }
+
+        public void checkIfDead()
+        {
             if (hp <= 0)
             {
                 // If current character is the player and it died
@@ -80,7 +87,8 @@ namespace F.U.E.L
                 else if (this is Enemy)//if enemy got killed, the target's attackerNum -1
                 {
                     Enemy e = (Enemy)this;
-                    if (e.target is Player) { 
+                    if (e.target is Player)
+                    {
                         Player p = (Player)e.target;
                         --p.attackerNum;
                     }
@@ -102,8 +110,6 @@ namespace F.U.E.L
                 else
                     isAlive = false;
             }
-
-            base.Update(gameTime, colliders, cameraTarget);
         }
 
         public override void Draw(Camera camera)

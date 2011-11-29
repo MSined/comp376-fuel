@@ -94,10 +94,10 @@ namespace F.U.E.L
                     speed = 0.08f;
                     break;
                 case Class.Tank:
-                    weapons[0] = new Punch(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[1] = new GroundPound(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[2] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[3] = new Grenade(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[1] = new Grenade(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[2] = new SpeedBoost(game, modelComponents, new Vector3(0, 0, 0), this);
+                    weapons[3] = new GroundPound(game, modelComponents, new Vector3(0, 0, 0));
                     topHP = 650;
                     hp = topHP;
                     topSP = 100;
@@ -113,11 +113,11 @@ namespace F.U.E.L
         {
             #region Keyboard Controls
             //Hack to get it working on a computer
-            KeyboardControls(gameTime, colliders, cameraTarget);
+            //KeyboardControls(gameTime, colliders, cameraTarget);
             #endregion
 
             #region Gamepad Support
-            //GamePadControls(gameTime, colliders, Vector3 cameraTarget);
+            GamePadControls(gameTime, colliders, cameraTarget);
             #endregion
             
             foreach (Weapon w in weapons)
@@ -174,7 +174,7 @@ namespace F.U.E.L
                     }
                     else if (k.IsKeyDown(Keys.Space))
                     {
-                        weapons[selectedWeapon].shoot(position, lookDirection, false, cameraTarget);
+                        weapons[selectedWeapon].shoot(position, lookDirection, false, gameTime, cameraTarget);
                     }
 
                     if (k.IsKeyDown(Keys.D1))
@@ -304,8 +304,8 @@ namespace F.U.E.L
                 else if (switching && gp.IsButtonUp(Buttons.LeftShoulder) && gp.IsButtonUp(Buttons.RightShoulder))
                 { switching = false; }
 
-                if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false, cameraTarget);
-                if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false, cameraTarget);
+                if (gp.Triggers.Left > 0) weapons[selectedWeapon].shoot(position, lookDirection, false, gameTime, cameraTarget);
+                if (gp.Triggers.Right > 0) weapons[0].shoot(position, lookDirection, false, gameTime, cameraTarget);
                 else if (gp.IsButtonDown(Buttons.A))//cannot repair if shooting
                 {
                     Building b = getUsableBuilding();

@@ -136,7 +136,7 @@ namespace F.U.E.L
                 if (targetDist < weapons[selectedWeapon].range)
                 {
                     velocity = Vector3.Zero;
-                    weapons[selectedWeapon].shoot(this.position, lookDirection, true, cameraTarget);
+                    weapons[selectedWeapon].shoot(this.position, lookDirection, true, gameTime, cameraTarget);
                     lookDirection = target.position - this.position;
                 }
                 else
