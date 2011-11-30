@@ -197,9 +197,9 @@ namespace F.U.E.L
             p[0] = new SuperModel(ref playerModel, shadingEffect);
             t = new SuperModel[1];
             t[0] = new SuperModel(ref checkBoxModel, shadingEffect);
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
-            /*players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
-            players.Add(new Player(this, p, map.spawnPoints[2], Player.Class.Gunner, PlayerIndex.Three));
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Gunner, PlayerIndex.One));
+            players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
+            /*players.Add(new Player(this, p, map.spawnPoints[2], Player.Class.Gunner, PlayerIndex.Three));
             players.Add(new Player(this, p, map.spawnPoints[3], Player.Class.Alchemist, PlayerIndex.Four));
             */
 			/*players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
@@ -209,10 +209,10 @@ namespace F.U.E.L
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);
-            /*players[1].checkBox = new BuildBox(this, t, players[1].position,
+            players[1].checkBox = new BuildBox(this, t, players[1].position,
                                                 new FloatRectangle((players[1].position + players[1].lookDirection).X, (players[1].position + players[1].lookDirection).Z, 1, 1),
                                                 players[1]);
-            players[2].checkBox = new BuildBox(this, t, players[2].position,
+            /*players[2].checkBox = new BuildBox(this, t, players[2].position,
                                                 new FloatRectangle((players[2].position + players[2].lookDirection).X, (players[2].position + players[2].lookDirection).Z, 1, 1),
                                                 players[2]);
             players[3].checkBox = new BuildBox(this, t, players[3].position,

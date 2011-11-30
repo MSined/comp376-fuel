@@ -147,6 +147,23 @@ namespace F.U.E.L
             }
 
             base.Update(gameTime, colliders, cameraTarget);
+
+            if (this.position.X > cameraTarget.X + 9)
+            {
+                position -= speed * Vector3.UnitX;
+            }
+            else if (this.position.X < cameraTarget.X - 9) //left
+            {
+                position += speed * Vector3.UnitX;
+            }
+            if (this.position.Z > cameraTarget.Z + 6)
+            {
+                position -= speed * Vector3.UnitZ;
+            }
+            else if (this.position.Z < cameraTarget.Z - 6) //up
+            {
+                position += speed * Vector3.UnitZ;
+            }
         }
 
         private void KeyboardControls(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget) 

@@ -23,8 +23,8 @@ namespace F.U.E.L
         public Vector3 cameraTarget;
 
         //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
-        public float top=-12;
-        public float bottom=6;
+        public float top=-10;
+        public float bottom=8;
         public float left=-18;
         public float right=18;
 
@@ -89,7 +89,7 @@ namespace F.U.E.L
             {
                 cameraTarget = new Vector3(-29, 0, 25);
             }
-            cameraPosition = cameraTarget + cameraDistFromPlayer;
+            cameraPosition = cameraTarget + (Vector3.UnitZ*2.2f) + cameraDistFromPlayer;
 
 
             // Check for scroll wheel zooming
