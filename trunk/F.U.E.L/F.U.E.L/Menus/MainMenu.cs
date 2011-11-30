@@ -21,8 +21,8 @@ namespace F.U.E.L
         public List<Button> buttons;
         //bool wKeyDown = false;
         //bool sKeyDown = false;
-        bool upButtonDown1 = false, upButtonDown2 = false, upButtonDown3 = false, upButtonDown4 = false, currentUpButtonDown = false;
-        bool downButtonDown1 = false, downButtonDown2 = false, downButtonDown3 = false, downButtonDown4 = false, currentDownButtonDown = false;
+        public bool upButtonDown1 = false, upButtonDown2 = false, upButtonDown3 = false, upButtonDown4 = false, currentUpButtonDown = false;
+        public bool downButtonDown1 = false, downButtonDown2 = false, downButtonDown3 = false, downButtonDown4 = false, currentDownButtonDown = false;
         public bool player1Chosen = false, player2Chosen = false, player3Chosen = false, player4Chosen = false;
         public bool allPlayersChose = false;
 
@@ -328,10 +328,7 @@ namespace F.U.E.L
             }
             #endregion
 
-            if ((player1Chosen) &&
-               (player2Chosen) &&
-               (player3Chosen) &&
-               (player4Chosen))
+            if ((player1Chosen) && (player2Chosen) && (player3Chosen) && (player4Chosen))
                 allPlayersChose = true;
 
             base.Update(keyboard, gamepad, playerIndex);

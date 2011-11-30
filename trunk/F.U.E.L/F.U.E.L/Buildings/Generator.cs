@@ -14,7 +14,7 @@ namespace F.U.E.L
         private const int topHP = 500;
         private const int repairSpeed = 20;
         private const int repairRate = 10000000;
-        private long lastRepair;
+        public long lastRepair;
 
         protected SoundEffect soundEffectPowerUp;
         protected SoundEffect soundEffectPowerDown;
@@ -77,7 +77,6 @@ namespace F.U.E.L
             float scaledVol = (vol >= 1 ? 0 : (1 - vol));
             soundEffectPowerDown.Play(scaledVol, 0.0f, 0.0f);
         }
-
 
         public void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
         {

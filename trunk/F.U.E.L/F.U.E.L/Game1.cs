@@ -270,6 +270,67 @@ namespace F.U.E.L
             // TODO: Unload any non ContentManager content here
         }
 
+        private void resetGame() 
+        {
+            players.Clear();
+            enemyList.Clear();
+            foreach (GameComponent gc in Components)
+            {
+                if (gc is Tower) 
+                {
+                    Tower t = (Tower)gc;
+                    t.isAlive = false;
+                }
+            }
+            foreach (Generator g in map.usableBuildings) 
+            {
+                g.functional = false;
+                g.hp = 50;
+                g.lastRepair = 0;
+            }
+
+            Player.credit = 500;
+            Player.respawnCost = 500;
+
+            mainMenu.upButtonDown1 = mainMenu.upButtonDown2 = mainMenu.upButtonDown3 = mainMenu.upButtonDown4 = mainMenu.currentUpButtonDown =false;
+            mainMenu.downButtonDown1 = mainMenu.downButtonDown2 = mainMenu.downButtonDown3 = mainMenu.downButtonDown4 = mainMenu.currentDownButtonDown =false;
+
+            pauseMenu.upButtonDown1 = pauseMenu.upButtonDown2 = pauseMenu.upButtonDown3 = pauseMenu.upButtonDown4 = pauseMenu.currentUpButtonDown =false;
+            pauseMenu.downButtonDown1 = pauseMenu.downButtonDown2 = pauseMenu.downButtonDown3 = pauseMenu.downButtonDown4 = pauseMenu.currentDownButtonDown =false;
+
+            characterMenu.upButtonDown1 = characterMenu.upButtonDown2 = characterMenu.upButtonDown3 = characterMenu.upButtonDown4 = characterMenu.currentUpButtonDown =false;
+            characterMenu.downButtonDown1 = characterMenu.downButtonDown2 = characterMenu.downButtonDown3 = characterMenu.downButtonDown4 = characterMenu.currentDownButtonDown =false;
+
+            characterMenu.player1Chosen = characterMenu.player2Chosen = characterMenu.player3Chosen = characterMenu.player4Chosen = false;
+            characterMenu.allPlayersChose = false;
+
+            playing = false;
+
+            EscapeKeyDown = false;
+            EnterKeyDown = false;
+
+            BackButtonDown1 = false;
+            StartButtonDown1 = false;
+            AButtonDown1 = false;
+
+            BackButtonDown2 = false;
+            StartButtonDown2 = false;
+            AButtonDown2 = false;
+
+            BackButtonDown3 = false;
+            StartButtonDown3 = false;
+            AButtonDown3 = false;
+
+            BackButtonDown4 = false;
+            StartButtonDown4 = false;
+            AButtonDown4 = false;
+
+            inPauseMenu = false;
+            inGame = false;
+            inMainMenu = false;
+            inCharacterMenu = false;
+        }
+
         protected override void Update(GameTime gameTime)
         {
             cameraTarget = camera.cameraTarget;
@@ -442,10 +503,11 @@ namespace F.U.E.L
             #region gamepad controls for menu
 
             #region GamePad 1 Controls
-            if (gamepad1.IsButtonDown(Buttons.A))
+            if (gamepad1.IsButtonDown(Buttons.A) && gamepad1.IsConnected)
             {
                 if (!AButtonDown1 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
                 {
+                    resetGame();//RESET GAME
                     menuManager.Exit();
                     menuManager.Show("Character Menu");
                     AButtonDown1 = true;
@@ -503,27 +565,27 @@ namespace F.U.E.L
                     BackButtonDown1 = false;
             }
 
-            if(gamepad1.IsButtonDown(Buttons.Start))
+            if (gamepad1.IsButtonDown(Buttons.Start))
             {
-                if (!StartButtonDown1 && menuManager.ActiveMenu == null && !inMainMenu && !inCharacterMenu)
+                if (!StartButtonDown1 && menuManager.ActiveMenu == null)
                 {
                     menuManager.Show("Pause Menu");
                     StartButtonDown1 = true;
                     inPauseMenu = true;
                 }
-                if (!StartButtonDown1 && menuManager.ActiveMenu != null && !inCharacterMenu)
+                if (!StartButtonDown1 && menuManager.ActiveMenu != null && !inCharacterMenu && !inMainMenu)
                 {
                     menuManager.Exit();
                     StartButtonDown1 = true;
                 }
-
-                if (StartButtonDown1)
-                    StartButtonDown1 = false;
             }
+            else if (gamepad1.IsButtonUp(Buttons.Start))
+                StartButtonDown1 = false;
+
             #endregion
 
             #region GamePad 2 Controls
-            if (gamepad2.IsButtonDown(Buttons.A))
+            if (gamepad2.IsButtonDown(Buttons.A) && gamepad2.IsConnected)
             {
                 if (!AButtonDown2 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
                 {
@@ -597,14 +659,14 @@ namespace F.U.E.L
                     menuManager.Exit();
                     StartButtonDown2 = true;
                 }
-
-                if (StartButtonDown2)
-                    StartButtonDown2 = false;
             }
+            else if (gamepad2.IsButtonUp(Buttons.Start))
+                StartButtonDown2 = false;
+
             #endregion
 
             #region GamePad 3 Controls
-            if (gamepad3.IsButtonDown(Buttons.A))
+            if (gamepad3.IsButtonDown(Buttons.A) && gamepad3.IsConnected)
             {
                 if (!AButtonDown3 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
                 {
@@ -678,14 +740,14 @@ namespace F.U.E.L
                     menuManager.Exit();
                     StartButtonDown3 = true;
                 }
-
-                if (StartButtonDown3)
-                    StartButtonDown3 = false;
             }
+
+            else if (gamepad3.IsButtonUp(Buttons.Start))
+                StartButtonDown3 = false;
             #endregion
 
             #region GamePad 4 Controls
-            if (gamepad4.IsButtonDown(Buttons.A))
+            if (gamepad4.IsButtonDown(Buttons.A) && gamepad4.IsConnected)
             {
                 if (!AButtonDown4 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
                 {
@@ -759,10 +821,10 @@ namespace F.U.E.L
                     menuManager.Exit();
                     StartButtonDown4 = true;
                 }
-
-                if (StartButtonDown4)
-                    StartButtonDown4 = false;
             }
+
+            else if (gamepad4.IsButtonUp(Buttons.Start))
+                StartButtonDown4 = false;
             #endregion
 
             #endregion

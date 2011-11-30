@@ -29,7 +29,8 @@ namespace F.U.E.L
         protected SoundEffect soundEffectWeaponSwitch;
 
         public static int credit = 99990;
-
+        public static int respawnCost = 500;
+        
         public bool placingTower = false, checkBoxCollision = false, switching = false;
         public BuildBox checkBox;
         public int attackerNum=0;
@@ -37,8 +38,6 @@ namespace F.U.E.L
         private PlayerIndex playerIndex;
         public int playerID;
         public int playerClass;//for skill icons
-
-        public int respawnCost = 500;
 
         private float spRecoverTimer = 0f;
         private float spRecoverInterval = 1000f;
@@ -151,7 +150,7 @@ namespace F.U.E.L
             if (this.position.X > cameraTarget.X + 9)
             {
                 position -= speed * Vector3.UnitX;
-        }
+            }
             else if (this.position.X < cameraTarget.X - 9) //left
             {
                 position += speed * Vector3.UnitX;
