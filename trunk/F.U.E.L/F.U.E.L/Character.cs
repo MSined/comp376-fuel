@@ -16,6 +16,7 @@ namespace F.U.E.L
         public int topSP;
         public int sp;// { get; protected set; }
 
+
         public SpawnPoint spawnPoint { get; private set; }
         public Weapon[] weapons { get; private set; }
         public int selectedWeapon { get; protected set; }
@@ -67,12 +68,12 @@ namespace F.U.E.L
             //check collisions after moved
             CheckCollisions(colliders);
 
-            checkIfDead();
+            checkIfDead(cameraTarget);
 
             base.Update(gameTime, colliders, cameraTarget);
         }
 
-        public void checkIfDead()
+        public void checkIfDead(Vector3 cameraTarget)
         {
             if (hp <= 0)
             {
@@ -104,6 +105,7 @@ namespace F.U.E.L
                 {
                     isAlive = false;
                     Tower t = (Tower)this;
+                    t.playSound(position, cameraTarget);
                     --Tower.numTowers;
                 }
                 // Otherwise kill it!

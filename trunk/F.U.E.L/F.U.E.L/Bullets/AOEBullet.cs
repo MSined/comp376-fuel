@@ -29,13 +29,13 @@ namespace F.U.E.L
             {
                 this.isAlive = false;
             }
-            
-            CheckCollisions(colliders);
+
+            CheckCollisions(colliders, cameraTarget);
 
             this.bounds = new FloatRectangle(this.position.X, this.position.Z, width, height);
         }
 
-        public override void CheckCollisions(List<Object> colliders)
+        public override void CheckCollisions(List<Object> colliders, Vector3 cameraTarget)
         {
             foreach (Object o in colliders)
             {

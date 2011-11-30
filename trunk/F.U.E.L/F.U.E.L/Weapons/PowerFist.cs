@@ -22,7 +22,17 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
-            //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/powerfist");
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/alienattack");
+        }
+
+        public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
+        {
+            if (interval > fireDelay)
+            {
+                game.Components.Add(new Bullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
+                interval = 0;
+                playSound(position, cameraTarget);
+            }
         }
 
         public override void Draw(Camera camera)
