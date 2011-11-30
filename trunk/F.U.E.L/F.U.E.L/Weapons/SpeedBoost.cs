@@ -45,7 +45,7 @@ namespace F.U.E.L
             {
                 currentBoostInterval -= CHECKDELAY;
                 checkInterval = 0;
-                if (currentBoostInterval < 0)
+                if (currentBoostInterval <= 0)
                     player.speed -= SPEEDBOOST;
                 
             }
