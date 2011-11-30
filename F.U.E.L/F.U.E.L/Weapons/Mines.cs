@@ -20,7 +20,7 @@ namespace F.U.E.L
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
-            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/mines");
+            //soundEffect = game.Content.Load<SoundEffect>(@"Sounds/mines");
         }
 
         public override void shoot(Vector3 position, Vector3 direction, Boolean shotByEnemy, GameTime gameTime, Vector3 cameraTarget)
@@ -29,7 +29,7 @@ namespace F.U.E.L
             {
                 game.Components.Add(new AOEBullet(game, this.bulletModelComponents, position, new Vector3(0,0,0), range, damage, shotByEnemy));
                 interval = 0;
-                playSound(position, cameraTarget);
+                //playSound(position, cameraTarget);
             }
         }
 

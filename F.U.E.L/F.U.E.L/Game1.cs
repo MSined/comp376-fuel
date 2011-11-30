@@ -196,7 +196,7 @@ namespace F.U.E.L
             p[0] = playerModel;
             t = new Model[1];
             t[0] = checkBoxModel;
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Sniper, PlayerIndex.One));
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
             /*players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
             players.Add(new Player(this, p, map.spawnPoints[2], Player.Class.Gunner, PlayerIndex.Three));
             players.Add(new Player(this, p, map.spawnPoints[3], Player.Class.Alchemist, PlayerIndex.Four));
