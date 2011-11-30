@@ -148,7 +148,7 @@ namespace F.U.E.L
             unitsTexture = Content.Load<Texture2D>(@"UITextures\unitsTexture");
             iconsTexture = Content.Load<Texture2D>(@"UITextures\icons");
 
-            planeModel = Content.Load<Model>(@"Models\planeModel");
+            planeModel = Content.Load<Model>(@"Models\floorModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
             buildingModel = Content.Load<Model>(@"Models\TestBuilding");
@@ -237,7 +237,7 @@ namespace F.U.E.L
             a[3] = buildingModel;
             a[4] = treeModel;
             a[5] = telePadModel;
-            map = new Map(this, a, -36, 36);
+            map = new Map(this, a, -36, 36, GraphicsDevice);
             Components.Add(map);
 
             // The first model will be of the player
@@ -246,11 +246,6 @@ namespace F.U.E.L
             p[0] = playerModel;
             t = new Model[4];
             t[0] = checkBoxModel;
-            //players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
-            //players[0].checkBox = new BuildBox(this, t, players[0].position,
-            //                                    new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
-            //                                    players[0]);
-            //foreach (Player ply in players) { Components.Add(ply); }
 
             // Create the grid with necessary information
             grid = new SpatialHashGrid(72, 72, 2, map.leftXPos / 2, map.bottomYPos / 2);
@@ -337,10 +332,12 @@ namespace F.U.E.L
 
             keyboard = Keyboard.GetState();
 
+            #region Update the menus for each player
+
             if (gamepad1.IsConnected)
             {
                 gamepad1 = GamePad.GetState(PlayerIndex.One);
-                menuManager.Update(keyboard, gamepad1, 1);
+                //menuManager.Update(keyboard, gamepad1, 1);
                 if (inPauseMenu)
                     pauseMenu.Update(keyboard, gamepad1, 1);
                 if (inMainMenu)
@@ -350,47 +347,46 @@ namespace F.U.E.L
             }
             else
                 characterMenu.player1Chosen = true;
+
             if (gamepad2.IsConnected)
             {
                 gamepad2 = GamePad.GetState(PlayerIndex.Two);
-                menuManager.Update(keyboard, gamepad2, 2);
+                //menuManager.Update(keyboard, gamepad2, 2);
                 if (inPauseMenu)
                     pauseMenu.Update(keyboard, gamepad2, 2);
-                //if (inMainMenu)
-                //    mainMenu.Update(keyboard, gamepad2, 2);
                 if (inCharacterMenu)
                     characterMenu.Update(keyboard, gamepad2, 2);
             }
             else
                 characterMenu.player2Chosen = true;
+
             if (gamepad3.IsConnected)
             {
                 gamepad3 = GamePad.GetState(PlayerIndex.Three);
-                menuManager.Update(keyboard, gamepad3, 3);
+                //menuManager.Update(keyboard, gamepad3, 3);
                 if (inPauseMenu)
                     pauseMenu.Update(keyboard, gamepad3, 3);
-                //if (inMainMenu)
-                //    mainMenu.Update(keyboard, gamepad3, 3);
                 if (inCharacterMenu)
                     characterMenu.Update(keyboard, gamepad3, 3);
             }
             else
                 characterMenu.player3Chosen = true;
+
             if (gamepad4.IsConnected)
             {
                 gamepad4 = GamePad.GetState(PlayerIndex.Four);
-                menuManager.Update(keyboard, gamepad4, 4);
+                //menuManager.Update(keyboard, gamepad4, 4);
                 if (inPauseMenu)
                     pauseMenu.Update(keyboard, gamepad4, 4);
-                //if (inMainMenu)
-                //    mainMenu.Update(keyboard, gamepad4, 4);
                 if (inCharacterMenu)
                     characterMenu.Update(keyboard, gamepad4, 4);
             }
             else
                 characterMenu.player4Chosen = true;
 
-            #region creating players
+            #endregion
+
+            #region Create Players
             if (characterMenu.allPlayersChose)
             {
                 int k = 0;
@@ -401,13 +397,25 @@ namespace F.U.E.L
                     if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Gunner"))
                     {
                         if (i >= 0 && i < 5)
+                        {
                             current = PlayerIndex.One;
+                            characterMenu.player1Chosen = false;
+                        }
                         else if (i >= 5 && i < 10)
+                        {
                             current = PlayerIndex.Two;
+                            characterMenu.player2Chosen = false;
+                        }
                         else if (i >= 10 && i < 15)
+                        {
                             current = PlayerIndex.Three;
+                            characterMenu.player3Chosen = false;
+                        }
                         else if (i >= 15 && i < 20)
+                        {
                             current = PlayerIndex.Four;
+                            characterMenu.player4Chosen = false;
+                        }
 
                         players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Gunner, current));
 
@@ -419,13 +427,25 @@ namespace F.U.E.L
                     else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Alchemist"))
                     {
                         if (i >= 0 && i < 5)
+                        {
                             current = PlayerIndex.One;
+                            characterMenu.player1Chosen = false;
+                        }
                         else if (i >= 5 && i < 10)
+                        {
                             current = PlayerIndex.Two;
+                            characterMenu.player2Chosen = false;
+                        }
                         else if (i >= 10 && i < 15)
+                        {
                             current = PlayerIndex.Three;
+                            characterMenu.player3Chosen = false;
+                        }
                         else if (i >= 15 && i < 20)
+                        {
                             current = PlayerIndex.Four;
+                            characterMenu.player4Chosen = false;
+                        }
 
                         players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Alchemist, current));
 
@@ -437,13 +457,25 @@ namespace F.U.E.L
                     else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Sniper"))
                     {
                         if (i >= 0 && i < 5)
+                        {
                             current = PlayerIndex.One;
+                            characterMenu.player1Chosen = false;
+                        }
                         else if (i >= 5 && i < 10)
+                        {
                             current = PlayerIndex.Two;
+                            characterMenu.player2Chosen = false;
+                        }
                         else if (i >= 10 && i < 15)
+                        {
                             current = PlayerIndex.Three;
+                            characterMenu.player3Chosen = false;
+                        }
                         else if (i >= 15 && i < 20)
+                        {
                             current = PlayerIndex.Four;
+                            characterMenu.player4Chosen = false;
+                        }
 
                         players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Sniper, current));
 
@@ -455,13 +487,25 @@ namespace F.U.E.L
                     else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Tank"))
                     {
                         if (i >= 0 && i < 5)
+                        {
                             current = PlayerIndex.One;
+                            characterMenu.player1Chosen = false;
+                        }
                         else if (i >= 5 && i < 10)
+                        {
                             current = PlayerIndex.Two;
+                            characterMenu.player2Chosen = false;
+                        }
                         else if (i >= 10 && i < 15)
+                        {
                             current = PlayerIndex.Three;
+                            characterMenu.player3Chosen = false;
+                        }
                         else if (i >= 15 && i < 20)
+                        {
                             current = PlayerIndex.Four;
+                            characterMenu.player4Chosen = false;
+                        }
 
                         players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Tank, current));
 
@@ -965,6 +1009,7 @@ namespace F.U.E.L
                         Object o = (Object)gc;
                         o.Draw(camera);
                     }
+
                     if (gc is Map)
                     {
                         Map m = (Map)gc;

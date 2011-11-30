@@ -27,7 +27,7 @@ namespace F.U.E.L
         public Generator(Game game, Model[] modelComponents, Vector3 position,
             float angle
             )
-            : base(game, modelComponents, position, 0.7f, 0.7f, angle)
+            : base(game, modelComponents, position, 0.7f, 0.7f, angle, false)
         {
             this.hp = 50;
             this.functional = false;

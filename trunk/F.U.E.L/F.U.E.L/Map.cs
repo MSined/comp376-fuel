@@ -20,7 +20,13 @@ namespace F.U.E.L
         public List<SpawnPoint> spawnPoints { get; protected set; }
         public List<Building> usableBuildings { get; protected set; }
 
-        public Map(Game game, Model[] modelComponents, float leftX, float bottomY)
+        RasterizerState originalState, transparentState;
+
+        DepthStencilState first, second, original;
+
+        GraphicsDevice graphics;
+
+        public Map(Game game, Model[] modelComponents, float leftX, float bottomY, GraphicsDevice graphics)
             : base(game)
         {
             // Set model attribute
@@ -88,6 +94,24 @@ namespace F.U.E.L
             addBuildings(game, building, buildings);
             leftXPos = leftX;
             bottomYPos = bottomY;
+
+            this.graphics = graphics;
+
+            originalState = new RasterizerState();
+            originalState.CullMode = CullMode.CullCounterClockwiseFace;
+
+            transparentState = new RasterizerState();
+            transparentState.CullMode = CullMode.None;
+
+            first = new DepthStencilState();
+            first.DepthBufferEnable = true;
+            first.DepthBufferWriteEnable = true;
+
+            second = new DepthStencilState();
+            second.DepthBufferEnable = true;
+            second.DepthBufferWriteEnable = false;
+
+            original = graphics.DepthStencilState;
         }
 
         private void addBuildings(Game game, Model[] model, List<Building> buildings) {
@@ -132,7 +156,7 @@ namespace F.U.E.L
             {
                 for (int j = 0; coordinate[i, j] != -1; j++)
                 {
-                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2f, 2f, 0f));
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2f, 2f, 0f, false));
                 }
             }
         }
@@ -174,7 +198,7 @@ namespace F.U.E.L
                 for (int j = 0; coordinate[i, j] != -1; j++)
                 {
                     // Changed hit box area for trees, they were too small for debugging, tree texture was building texture
-                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2f, 2f, 0f));
+                    this.buildings.Add(new Building(game, model, new Vector3((i * 2) - 36, 0, (2 * (coordinate[i, j])) - 36), 2f, 2f, 0f, true));
                 }
             }
         }
@@ -198,14 +222,6 @@ namespace F.U.E.L
                 mesh.Draw();
             }
 
-            foreach (Building b in buildings)
-            {
-                if (camera.onScreen((Object)b))
-                {
-                    b.Draw(camera);
-                }
-            }
-
             foreach (SpawnPoint s in spawnPoints)
             {
                 //if (camera.onScreen((Object)s))
@@ -221,6 +237,25 @@ namespace F.U.E.L
                     b.Draw(camera);
                 }
             }
+
+            foreach (Building b in buildings)
+            {
+                if (camera.onScreen((Object)b))
+                {
+                    if (b.isTree)
+                    {
+                        graphics.DepthStencilState = second;
+                        graphics.RasterizerState = transparentState;
+                    }
+                    b.Draw(camera);
+                    if (b.isTree)
+                    {
+                        graphics.RasterizerState = originalState;
+                        graphics.DepthStencilState = first;
+                    }
+                }
+            }
+            graphics.DepthStencilState = original;
         }
     }
 }
