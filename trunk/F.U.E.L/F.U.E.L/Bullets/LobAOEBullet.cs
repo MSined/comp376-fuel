@@ -15,7 +15,7 @@ namespace F.U.E.L
         private float hitHeight = 0.5f;
         private int explosionRange = 2;
 
-        public LobAOEBullet(Game game, Model[] modelComponents, Vector3 position,
+        public LobAOEBullet(Game game, SuperModel[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, direction, range, damage, shotByEnemy)
         {

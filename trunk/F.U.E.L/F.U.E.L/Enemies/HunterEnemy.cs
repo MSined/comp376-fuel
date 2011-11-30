@@ -16,7 +16,7 @@ namespace F.U.E.L
 
         // Removed position from this constructor as it will be taken from the spawnpoint when the enemy passes it to
         // the character constructor
-        public HunterEnemy(Game game, Model[] modelComponents,
+        public HunterEnemy(Game game, SuperModel[] modelComponents,
             SpawnPoint spawnPoint, Weapon[] weapons
             )
             : base(game, modelComponents, spawnPoint, weapons)

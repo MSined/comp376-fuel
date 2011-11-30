@@ -12,7 +12,7 @@ namespace F.U.E.L
     {
         Player boundPlayer;
 
-        public BuildBox(Game game, Model[] modelComponents, Vector3 position, FloatRectangle bounds, Player boundPlayer)
+        public BuildBox(Game game, SuperModel[] modelComponents, Vector3 position, FloatRectangle bounds, Player boundPlayer)
             : base(game, modelComponents, position, bounds, false)
         {
             this.boundPlayer = boundPlayer;
@@ -33,21 +33,7 @@ namespace F.U.E.L
 
         public override void Draw(Camera camera)
         {
-            Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
-            modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
-
-            foreach (ModelMesh mesh in modelComponents[0].Meshes)
-            {
-                foreach (BasicEffect be in mesh.Effects)
-                {
-                    be.EnableDefaultLighting();
-                    be.SpecularPower = 10f;
-                    be.Projection = camera.projection;
-                    be.View = camera.view;
-                    be.World = world * mesh.ParentBone.Transform;
-                }
-                mesh.Draw();
-            }
+            modelComponents[0].Draw(camera, world);
         }
     }
 }

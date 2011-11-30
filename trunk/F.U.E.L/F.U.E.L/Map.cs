@@ -10,7 +10,7 @@ namespace F.U.E.L
 {
     class Map : Microsoft.Xna.Framework.GameComponent
     {
-        public Model model { get; protected set; }
+        public SuperModel model { get; protected set; }
         protected Matrix world = Matrix.Identity;
         public List<Building> buildings { get; protected set; }
         public float leftXPos { get; protected set; }
@@ -19,27 +19,27 @@ namespace F.U.E.L
         public List<SpawnPoint> spawnPoints { get; protected set; }
         public List<Building> usableBuildings { get; protected set; }
 
-        public Map(Game game, Model[] modelComponents, float leftX, float bottomY)
+        public Map(Game game, SuperModel[] modelComponents, float leftX, float bottomY)
             : base(game)
         {
             // Set model attribute
             model = modelComponents[0];
 
             // Each object takes an array, need to create a new array
-            Model[] tower = new Model[1];
+            SuperModel[] tower = new SuperModel[1];
             // Load object into array
             tower[0] = modelComponents[1];
 
-            Model[] generator = new Model[1];
+            SuperModel[] generator = new SuperModel[1];
             generator[0] = modelComponents[2];
 
-            Model[] building = new Model[1];
+            SuperModel[] building = new SuperModel[1];
             building[0] = modelComponents[3];
 
-            Model[] trees = new Model[1];
+            SuperModel[] trees = new SuperModel[1];
             trees[0] = modelComponents[4];
 
-            Model[] telePad = new Model[1];
+            SuperModel[] telePad = new SuperModel[1];
             telePad[0] = modelComponents[5];
 
             // When adding buildings, specify the width and height of the bounding box (last two constructor parameters
@@ -74,7 +74,7 @@ namespace F.U.E.L
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(16, 0, 22), false));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(18, 0, 28), false));
 
-            Model[] m = new Model[1];
+            SuperModel[] m = new SuperModel[1];
             m[0] = modelComponents[2];
 
             usableBuildings.Add(new Generator(game, m, new Vector3(-26, 0, 24), 0f));
@@ -89,7 +89,7 @@ namespace F.U.E.L
             bottomYPos = bottomY;
         }
 
-        private void addBuildings(Game game, Model[] model, List<Building> buildings) {
+        private void addBuildings(Game game, SuperModel[] model, List<Building> buildings) {
             int[,] coordinate = { //[36][37]/ tile number
                                   { 0, 1, 2, 3, 4, 5, 6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},//0
                                   { 0, 6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},//1
@@ -136,7 +136,7 @@ namespace F.U.E.L
             }
         }
 
-        private void addTrees(Game game, Model[] model, List<Building> buildings)
+        private void addTrees(Game game, SuperModel[] model, List<Building> buildings)
         {
             int[,] coordinate = { //[29][27]
                                   {10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,-1},//0
@@ -180,22 +180,7 @@ namespace F.U.E.L
 
         public void Draw(Camera camera)
         {
-            Matrix[] transforms = new Matrix[model.Bones.Count];
-            model.CopyAbsoluteBoneTransformsTo(transforms);
-
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (BasicEffect be in mesh.Effects)
-                {
-                    be.EnableDefaultLighting();
-                    be.SpecularPower = 10f;
-                    be.Projection = camera.projection;
-                    be.View = camera.view;
-                    be.World = world * mesh.ParentBone.Transform;
-                }
-
-                mesh.Draw();
-            }
+            model.Draw(camera, world);
 
             foreach (Building b in buildings)
             {

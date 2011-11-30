@@ -24,7 +24,7 @@ namespace F.U.E.L
         public int attackerNum = 0;
         public static int numTowers = 0, towerCost = 100;
 
-        public Tower(Game game, Model[] modelComponents,
+        public Tower(Game game, SuperModel[] modelComponents,
             int topHP, int topSP, Vector3 position, SpawnPoint anySpawnPoint, Weapon[] weapons)
             : base(game, modelComponents, new Vector3(position.X + (float)(rand.NextDouble() / 6),
                                                       position.Y,

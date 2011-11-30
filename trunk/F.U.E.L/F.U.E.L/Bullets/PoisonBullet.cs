@@ -17,7 +17,7 @@ namespace F.U.E.L
         private long currentHitTime = 0;
         private long lastHit = 0;
 
-        public PoisonBullet(Game game, Model[] modelComponents, Vector3 position,
+        public PoisonBullet(Game game, SuperModel[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, direction, range, damage, shotByEnemy)
         {
@@ -113,24 +113,7 @@ namespace F.U.E.L
 
         public override void Draw(Camera camera)
         {
-            if (target == null)
-            {
-                Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
-                modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
-
-                foreach (ModelMesh mesh in modelComponents[0].Meshes)
-                {
-                    foreach (BasicEffect be in mesh.Effects)
-                    {
-                        be.EnableDefaultLighting();
-                        be.Projection = camera.projection;
-                        be.View = camera.view;
-                        be.World = world * mesh.ParentBone.Transform;
-                    }
-
-                    mesh.Draw();
-                }
-            }
+            modelComponents[0].Draw(camera, world);
         }
 
     }

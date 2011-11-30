@@ -40,10 +40,9 @@ namespace F.U.E.L
         
         public int respawnCost = 500;
 
-        private float spRecoverTimer = 0f;
+		private float spRecoverTimer = 0f;
         private float spRecoverInterval = 1000f;
-
-        public Player(Game game, Model[] modelComponents,
+        public Player(Game game, SuperModel[] modelComponents,
             SpawnPoint spawnPoint, Class c, PlayerIndex pIndex
             )
             : base(game, modelComponents, spawnPoint.position, 10, 10, 10, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
@@ -135,11 +134,11 @@ namespace F.U.E.L
 
             #region Keyboard Controls
             //Hack to get it working on a computer
-            //KeyboardControls(gameTime, colliders, cameraTarget);
+            KeyboardControls(gameTime, colliders, cameraTarget);
             #endregion
 
             #region Gamepad Support
-            GamePadControls(gameTime, colliders, cameraTarget);
+            //GamePadControls(gameTime, colliders, cameraTarget);
             #endregion
             
             foreach (Weapon w in weapons)

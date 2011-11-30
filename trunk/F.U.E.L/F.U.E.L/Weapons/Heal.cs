@@ -19,7 +19,7 @@ namespace F.U.E.L
 
         //private SoundEffect soundEffect;
 
-        public Heal(Game game, Model[] modelComponents, Vector3 position/*,
+        public Heal(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {

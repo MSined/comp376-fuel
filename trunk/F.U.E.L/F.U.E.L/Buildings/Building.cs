@@ -10,9 +10,9 @@ namespace F.U.E.L
 {
     class Building : Object
     {
-        public Model model { get; protected set; }
+        public SuperModel model { get; protected set; }
         
-        public Building(Game game, Model[] modelComponents, Vector3 position,
+        public Building(Game game, SuperModel[] modelComponents, Vector3 position,
             float width, float depth, float angle)
             : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
@@ -28,21 +28,7 @@ namespace F.U.E.L
 
         public override void Draw(Camera camera)
         {
-            Matrix[] transforms = new Matrix[model.Bones.Count];
-            model.CopyAbsoluteBoneTransformsTo(transforms);
-
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (BasicEffect be in mesh.Effects)
-                {
-                    be.EnableDefaultLighting();
-                    be.SpecularPower = 10f;
-                    be.Projection = camera.projection;
-                    be.View = camera.view;
-                    be.World = world * mesh.ParentBone.Transform;
-                }
-                mesh.Draw();
-            }
+            model.Draw(camera, world);
         }
 
         public virtual void use()

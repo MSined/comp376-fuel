@@ -24,7 +24,7 @@ namespace F.U.E.L
 
         Player player;
 
-        public Stimpack(Game game, Model[] modelComponents, Vector3 position/*,
+        public Stimpack(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
@@ -47,6 +47,7 @@ namespace F.U.E.L
                 checkInterval = 0;
                 if (currentBoostInterval < 0)
                     player.speed -= SPEEDBOOST;
+					
                 playSound(position, cameraTarget);
             }
         }
@@ -58,7 +59,6 @@ namespace F.U.E.L
                 player.speed += SPEEDBOOST;
                 currentBoostInterval = BOOSTTIME;
                 interval = 0;
-                //soundEffect.Play();
             }
         }
     }

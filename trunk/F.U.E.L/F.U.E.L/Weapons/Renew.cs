@@ -23,7 +23,7 @@ namespace F.U.E.L
         private float healInterval = 0;
         //private SoundEffect soundEffect;
 
-        public Renew(Game game, Model[] modelComponents, Vector3 position/*,
+        public Renew(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
@@ -63,7 +63,6 @@ namespace F.U.E.L
                 currentHealInterval = HEALINGTIME;
                 interval = 0;
                 playSound(position, cameraTarget);
-                //soundEffect.Play();
             }
         }
     }

@@ -18,7 +18,7 @@ namespace F.U.E.L
 
         //private SoundEffect soundEffect;
 
-        public PoisonRing(Game game, Model[] modelComponents, Vector3 position/*,
+        public PoisonRing(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {

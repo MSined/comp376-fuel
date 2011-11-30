@@ -10,7 +10,7 @@ namespace F.U.E.L
 {
     class SpawnPoint : Waypoint
     {
-        Model model;
+        SuperModel model;
         Matrix world = Matrix.Identity;
         float angle = 0;
         public float spawnTimer = 0, spawnTimeDelay = 1000;
@@ -18,7 +18,7 @@ namespace F.U.E.L
         public int spawnLimit = 2;
         public int spawnCounter = 0;
 
-        public SpawnPoint(Model model, Vector3 position, bool isPlayersSpawn)
+        public SpawnPoint(SuperModel model, Vector3 position, bool isPlayersSpawn)
             : base(position)
         {
             this.model = model;
@@ -47,21 +47,7 @@ namespace F.U.E.L
 
         public void Draw(Camera camera)
         {
-            Matrix[] transforms = new Matrix[model.Bones.Count];
-            model.CopyAbsoluteBoneTransformsTo(transforms);
-
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (BasicEffect be in mesh.Effects)
-                {
-                    be.EnableDefaultLighting();
-                    be.SpecularPower = 10f;
-                    be.Projection = camera.projection;
-                    be.View = camera.view;
-                    be.World = world * mesh.ParentBone.Transform;
-                }
-                mesh.Draw();
-            }
+            model.Draw(camera, world);
         }
     }
 }

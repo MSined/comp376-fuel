@@ -26,7 +26,7 @@ namespace F.U.E.L
         private Random random = new Random();
         private const int maxSpread = 50;
 
-        public FlameThrower(Game game, Model[] modelComponents, Vector3 position/*,
+        public FlameThrower(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
