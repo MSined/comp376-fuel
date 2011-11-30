@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -23,6 +24,9 @@ namespace F.U.E.L
         const float width = .5f;
         const float depth = .5f;
         const float useRange = 1f;
+
+        protected SoundEffect soundEffectTowerPlaced;
+        protected SoundEffect soundEffectWeaponSwitch;
 
         public static int credit = 99990;
 
@@ -44,6 +48,9 @@ namespace F.U.E.L
             )
             : base(game, modelComponents, spawnPoint.position, 10, 10, 10, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
+
+            soundEffectTowerPlaced = game.Content.Load<SoundEffect>(@"Sounds/towerplaced");
+            soundEffectWeaponSwitch = game.Content.Load<SoundEffect>(@"Sounds/weaponswitch");
 
             playerIndex = pIndex;
             switch (pIndex)
@@ -293,6 +300,7 @@ namespace F.U.E.L
                         w[0] = new Shotgun(game, modelComponents, Vector3.Zero);
                         credit -= Tower.towerCost;
                         game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                        playSoundTowerPlaced(position, cameraTarget);
                     }
                     placingTower = false;
                     checkBoxCollision = false;
@@ -306,6 +314,7 @@ namespace F.U.E.L
                     {
                         selectedWeapon = 3;// specials are 1-3
                     }
+                    playSoundWeaponSwitch(position, cameraTarget);
                 }
                 else if (gp.IsButtonDown(Buttons.RightShoulder) && !switching)
                 {
@@ -315,6 +324,7 @@ namespace F.U.E.L
                     {
                         selectedWeapon = 1;// specials are 1-3
                     }
+                    playSoundWeaponSwitch(position, cameraTarget);
                 }
                 else if (switching && gp.IsButtonUp(Buttons.LeftShoulder) && gp.IsButtonUp(Buttons.RightShoulder))
                 { switching = false; }
@@ -351,6 +361,22 @@ namespace F.U.E.L
                     this.attackerNum = 0;
                 }
             }
+        }
+
+        public void playSoundTowerPlaced(Vector3 position, Vector3 cameraTarget)
+        {
+            float dist = (cameraTarget - position).LengthSquared();
+            float vol = dist / 300;
+            float scaledVol = (vol >= 1 ? 0 : (1 - vol));
+            soundEffectTowerPlaced.Play(scaledVol, 0.0f, 0.0f);
+        }
+
+        public void playSoundWeaponSwitch(Vector3 position, Vector3 cameraTarget)
+        {
+            float dist = (cameraTarget - position).LengthSquared();
+            float vol = dist / 300;
+            float scaledVol = (vol >= 1 ? 0 : (1 - vol));
+            soundEffectWeaponSwitch.Play(scaledVol, 0.0f, 0.0f);
         }
 
         protected Building getUsableBuilding()

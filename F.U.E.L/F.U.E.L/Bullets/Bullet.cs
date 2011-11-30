@@ -40,7 +40,7 @@ namespace F.U.E.L
                 this.isAlive = false;
             }
 
-            CheckCollisions(colliders);
+            CheckCollisions(colliders, cameraTarget);
 
             this.bounds = new FloatRectangle(this.position.X, this.position.Z, width, height);
         }
@@ -64,7 +64,7 @@ namespace F.U.E.L
             }
         }
 
-        public virtual void CheckCollisions(List<Object> colliders)
+        public virtual void CheckCollisions(List<Object> colliders, Vector3 cameraTarget)
         {
             foreach (Object o in colliders)
             {
@@ -75,7 +75,7 @@ namespace F.U.E.L
                         this.isAlive = false;
                         Player p = (Player)o;
                         p.hp = p.hp - this.damage;
-                        p.checkIfDead();
+                        p.checkIfDead(cameraTarget);
                         continue;
                     }
                     if (o is Enemy && !this.shotByEnemy)
@@ -83,7 +83,7 @@ namespace F.U.E.L
                         this.isAlive = false;
                         Enemy e = (Enemy)o;
                         e.hp = e.hp - this.damage;
-                        e.checkIfDead();
+                        e.checkIfDead(cameraTarget);
                         continue;
                     }
                     if (o is Tower && this.shotByEnemy)//same as player, but tower
@@ -91,7 +91,7 @@ namespace F.U.E.L
                         this.isAlive = false;
                         Tower t = (Tower)o;
                         t.hp = t.hp - this.damage;
-                        t.checkIfDead();
+                        t.checkIfDead(cameraTarget);
                         continue;
                     }
                     if (o is Building)// && bounds.FloatIntersects(o.bounds))

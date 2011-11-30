@@ -512,7 +512,7 @@ namespace F.U.E.L
                     if (b is Generator)
                     {
                         Generator g = (Generator)b;
-                        g.Update(gameTime);
+                        g.Update(gameTime, cameraTarget);
                     }
                 }
 

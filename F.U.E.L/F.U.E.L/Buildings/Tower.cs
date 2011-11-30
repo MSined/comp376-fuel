@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -18,6 +19,8 @@ namespace F.U.E.L
         // Have two towers that overlap exactly, causing the game to act unexpectedly
         static Random rand = new Random();
 
+        protected SoundEffect soundEffect;
+
         public int attackerNum = 0;
         public static int numTowers = 0, towerCost = 100;
 
@@ -30,6 +33,8 @@ namespace F.U.E.L
         {
             towerCost = 100 + numTowers * 100;
             ++numTowers;
+
+            soundEffect = game.Content.Load<SoundEffect>(@"Sounds/buildingcollapse");
         }
 
         private void chooseTarget(List<Enemy> enemies)
@@ -47,6 +52,14 @@ namespace F.U.E.L
             {
                 target = null;
             }
+        }
+
+        public void playSound(Vector3 position, Vector3 cameraTarget)
+        {
+            float dist = (cameraTarget - position).LengthSquared();
+            float vol = dist / 300;
+            float scaledVol = (vol >= 1 ? 0 : (1 - vol));
+            soundEffect.Play(scaledVol, 0.0f, 0.0f);
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)

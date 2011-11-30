@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace F.U.E.L
 {
@@ -14,6 +15,9 @@ namespace F.U.E.L
         private const int repairSpeed = 20;
         private const int repairRate = 10000000;
         private long lastRepair;
+
+        protected SoundEffect soundEffectPowerUp;
+        protected SoundEffect soundEffectPowerDown;
 
         public int hp;
         public bool functional;
@@ -26,6 +30,9 @@ namespace F.U.E.L
             this.hp = 50;
             this.functional = false;
             this.lastRepair = 0;
+
+            soundEffectPowerUp = game.Content.Load<SoundEffect>(@"Sounds/powerup");
+            soundEffectPowerDown = game.Content.Load<SoundEffect>(@"Sounds/powerdown");
         }
 
         public override void use()
@@ -39,19 +46,38 @@ namespace F.U.E.L
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Vector3 cameraTarget)
         {
-            if (hp >= topHP)
+            if (hp >= topHP && !functional)
             {
                 hp = topHP;
                 functional = true;
+                playSoundAlive(position, cameraTarget);
             }
 
-            if (hp <= 0) {
+            if (hp <= 0 && functional) {
                 hp = 0;
                 functional = false;
+                playSoundDies(position, cameraTarget);
             }
         }
+
+        public void playSoundAlive(Vector3 position, Vector3 cameraTarget)
+        {
+            float dist = (cameraTarget - position).LengthSquared();
+            float vol = dist / 300;
+            float scaledVol = (vol >= 1 ? 0 : (1 - vol));
+            soundEffectPowerUp.Play(scaledVol, 0.0f, 0.0f);
+        }
+
+        public void playSoundDies(Vector3 position, Vector3 cameraTarget)
+        {
+            float dist = (cameraTarget - position).LengthSquared();
+            float vol = dist / 300;
+            float scaledVol = (vol >= 1 ? 0 : (1 - vol));
+            soundEffectPowerDown.Play(scaledVol, 0.0f, 0.0f);
+        }
+
 
         public void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
         {

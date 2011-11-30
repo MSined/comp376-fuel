@@ -17,7 +17,7 @@ namespace F.U.E.L
             
         }
 
-        public override void CheckCollisions(List<Object> colliders)
+        public override void CheckCollisions(List<Object> colliders, Vector3 cameraTarget)
         {
             foreach (Object o in colliders)
             {
