@@ -117,10 +117,8 @@ namespace F.U.E.L
                     downButtonDown1 = false;
                 }
 
-                if (gamepad.IsButtonDown(Buttons.Start))
-                {
+                if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
                     player1Chosen = true;
-                }
             }
             #endregion
 
@@ -187,7 +185,7 @@ namespace F.U.E.L
                     downButtonDown2 = false;
                 }
 
-                if (gamepad.IsButtonDown(Buttons.Start))
+                if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
                     player2Chosen = true;
             }
             #endregion
@@ -255,7 +253,7 @@ namespace F.U.E.L
                     downButtonDown3 = false;
                 }
 
-                if (gamepad.IsButtonDown(Buttons.Start))
+                if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
                     player3Chosen = true;
             }
             #endregion
@@ -323,7 +321,7 @@ namespace F.U.E.L
                     downButtonDown4 = false;
                 }
 
-                if (gamepad.IsButtonDown(Buttons.Start))
+                if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
                     player4Chosen = true;
             }
             #endregion

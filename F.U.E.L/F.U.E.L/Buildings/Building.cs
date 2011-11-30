@@ -11,14 +11,16 @@ namespace F.U.E.L
     class Building : Object
     {
         public Model model { get; protected set; }
+        public bool isTree;
         
         public Building(Game game, Model[] modelComponents, Vector3 position,
-            float width, float depth, float angle)
+            float width, float depth, float angle, bool isTree)
             : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
             model = modelComponents[0];
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);
             this.position = position;
+            this.isTree = isTree;
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget) 
