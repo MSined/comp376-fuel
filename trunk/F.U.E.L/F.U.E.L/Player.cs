@@ -135,11 +135,11 @@ namespace F.U.E.L
 
             #region Keyboard Controls
             //Hack to get it working on a computer
-            KeyboardControls(gameTime, colliders, cameraTarget);
+            //KeyboardControls(gameTime, colliders, cameraTarget);
             #endregion
 
             #region Gamepad Support
-            //GamePadControls(gameTime, colliders, cameraTarget);
+            GamePadControls(gameTime, colliders, cameraTarget);
             #endregion
             
             foreach (Weapon w in weapons)
@@ -148,6 +148,23 @@ namespace F.U.E.L
             }
 
             base.Update(gameTime, colliders, cameraTarget);
+
+            if (this.position.X > cameraTarget.X + 9)
+            {
+                position -= speed * Vector3.UnitX;
+            }
+            else if (this.position.X < cameraTarget.X - 9) //left
+            {
+                position += speed * Vector3.UnitX;
+            }
+            if (this.position.Z > cameraTarget.Z + 6)
+            {
+                position -= speed * Vector3.UnitZ;
+            }
+            else if (this.position.Z < cameraTarget.Z - 6) //up
+            {
+                position += speed * Vector3.UnitZ;
+            }
         }
 
         private void KeyboardControls(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget) 
@@ -266,18 +283,6 @@ namespace F.U.E.L
                     lookDirection.Normalize();
                 }
 
-                /*if (gp.IsButtonDown(Buttons.X))
-                {
-                    selectedWeapon = 1;
-                }
-                if (gp.IsButtonDown(Buttons.Y))
-                {
-                    selectedWeapon = 2;
-                }
-                if (gp.IsButtonDown(Buttons.B))
-                {
-                    selectedWeapon = 3;
-                }*/
                 if (gp.IsButtonDown(Buttons.X))
                 {
                     placingTower = true;
@@ -350,7 +355,11 @@ namespace F.U.E.L
             }
             else
             {
-                if (gp.IsButtonDown(Buttons.Y) && credit >= respawnCost)
+                if (gp.IsButtonDown(Buttons.Y) && credit >= respawnCost &&
+                    this.spawnPoint.position.X < cameraTarget.X + 9 &&
+                    this.spawnPoint.position.X > cameraTarget.X - 9 &&
+                    this.spawnPoint.position.Z < cameraTarget.Z + 6 &&
+                    this.spawnPoint.position.Z > cameraTarget.Z - 6)
                 {
                     credit -= respawnCost;
                     respawnCost *= 2;
