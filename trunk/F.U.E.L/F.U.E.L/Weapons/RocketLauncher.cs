@@ -12,14 +12,14 @@ namespace F.U.E.L
     class RocketLauncher : Weapon
     {
         private const float RANGE = 100;
-        private const int DAMAGE = 200;
+        private const int DAMAGE = 50;
         private const int FIREDELAY = (int)(10 * 1000);
         private const int SPCOST = 10;
 
         private const int angleDiff = 25;
         private const int numBullets = 3;
 
-        public RocketLauncher(Game game, SuperModel[] modelComponents, Vector3 position/*,
+        public RocketLauncher(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {

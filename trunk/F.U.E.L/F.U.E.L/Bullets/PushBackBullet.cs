@@ -12,7 +12,7 @@ namespace F.U.E.L
     {
         private float pushBackDist = 0.6f;
 
-        public PushBackBullet(Game game, SuperModel[] modelComponents, Vector3 position,
+        public PushBackBullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, direction, range, damage, shotByEnemy)
         {
@@ -31,7 +31,7 @@ namespace F.U.E.L
                         Player p = (Player)o;
                         p.hp = p.hp - this.damage;
                         p.position += direction * pushBackDist;
-                        p.checkIfDead(cameraTarget);
+                        if (p.hp < 0) p.isAlive = false;
                         continue;
                     }
                     if (o is Enemy && !this.shotByEnemy)
@@ -40,7 +40,7 @@ namespace F.U.E.L
                         Enemy e = (Enemy)o;
                         e.hp = e.hp - this.damage;
                         e.position += direction * pushBackDist;
-                        e.checkIfDead(cameraTarget);
+                        if (e.hp < 0) e.isAlive = false;
                         continue;
                     }
                     if (o is Tower && this.shotByEnemy)//same as player, but tower
@@ -48,7 +48,7 @@ namespace F.U.E.L
                         this.isAlive = false;
                         Tower t = (Tower)o;
                         t.hp = t.hp - this.damage;
-                        t.checkIfDead(cameraTarget);
+                        if (t.hp < 0) t.isAlive = false;
                         continue;
                     }
                     if (o is Building)// && bounds.FloatIntersects(o.bounds))

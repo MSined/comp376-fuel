@@ -19,7 +19,7 @@ namespace F.U.E.L
 
         public float speed = 0.2f;
 
-        public Bullet(Game game, SuperModel[] modelComponents, Vector3 position,
+        public Bullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, new FloatRectangle(position.X, position.Y, width, height), true)
         {
@@ -47,7 +47,21 @@ namespace F.U.E.L
 
         public override void Draw(Camera camera)
         {
-            modelComponents[0].Draw(camera, world);
+            Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
+            modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
+
+            foreach (ModelMesh mesh in modelComponents[0].Meshes)
+            {
+                foreach (BasicEffect be in mesh.Effects)
+                {
+                    be.EnableDefaultLighting();
+                    be.Projection = camera.projection;
+                    be.View = camera.view;
+                    be.World = world * mesh.ParentBone.Transform;
+                }
+
+                mesh.Draw();
+            }
         }
 
         public virtual void CheckCollisions(List<Object> colliders, Vector3 cameraTarget)

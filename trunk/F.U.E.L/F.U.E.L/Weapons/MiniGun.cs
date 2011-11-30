@@ -19,7 +19,7 @@ namespace F.U.E.L
         private Random random = new Random();
         private const int maxSpread = 10;
 
-        public MiniGun(Game game, SuperModel[] modelComponents, Vector3 position/*,
+        public MiniGun(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
