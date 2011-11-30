@@ -11,6 +11,8 @@ namespace F.U.E.L
 {
     class Generator : Building
     {
+        public static int functionalGeneratorNum = 0; 
+
         private const int topHP = 500;
         private const int repairSpeed = 20;
         private const int repairRate = 10000000;
@@ -52,12 +54,14 @@ namespace F.U.E.L
             {
                 hp = topHP;
                 functional = true;
+                ++functionalGeneratorNum;
                 playSoundAlive(position, cameraTarget);
             }
 
             if (hp <= 0 && functional) {
                 hp = 0;
                 functional = false;
+                --functionalGeneratorNum;
                 playSoundDies(position, cameraTarget);
             }
         }
