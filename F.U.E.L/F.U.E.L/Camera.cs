@@ -23,10 +23,10 @@ namespace F.U.E.L
         public Vector3 cameraTarget;
 
         //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
-        public float top=-12;
-        public float bottom=6;
-        public float left=-18;
-        public float right=18;
+        public float top=-11;
+        public float bottom=8;
+        public float left=-17;
+        public float right=17;
 
         // Current scroll wheel value. It stores the cumulative scroll value since start of game
         // Also used to verify against new scroll values to determine if zoom in or out
@@ -89,7 +89,7 @@ namespace F.U.E.L
             {
                 cameraTarget = new Vector3(-29, 0, 25);
             }
-            cameraPosition = cameraTarget + cameraDistFromPlayer;
+            cameraPosition = cameraTarget + (Vector3.UnitZ * 2.2f) + cameraDistFromPlayer;
 
 
             // Check for scroll wheel zooming
