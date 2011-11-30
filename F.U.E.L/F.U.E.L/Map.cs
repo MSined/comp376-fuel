@@ -10,6 +10,7 @@ namespace F.U.E.L
 {
     class Map : Microsoft.Xna.Framework.GameComponent
     {
+
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
         public List<Building> buildings { get; protected set; }

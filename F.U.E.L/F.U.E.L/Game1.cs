@@ -390,6 +390,7 @@ namespace F.U.E.L
             else
                 characterMenu.player4Chosen = true;
 
+            #region creating players
             if (characterMenu.allPlayersChose)
             {
                 int k = 0;
@@ -481,6 +482,7 @@ namespace F.U.E.L
                 inPauseMenu = false;
                 inMainMenu = false;
             }
+            #endregion
 
             if (menuManager != null)
             {
@@ -831,6 +833,21 @@ namespace F.U.E.L
 
             if (menuManager.ActiveMenu == null) //Encapsulation to "Pause" game
             {
+                int aliveCount=0;
+                foreach(Player p in players)
+                {
+                    if (p.isAlive) { ++aliveCount; }
+                }
+                if (aliveCount == 0 && Player.credit < Player.respawnCost) 
+                {
+                    //GAMEOVER
+                }
+
+                if (Generator.functionalGeneratorNum == 5) 
+                { 
+                    //WIN
+                }
+
                 #region Update Game Components
                 // Background music
                 if (!playing)
