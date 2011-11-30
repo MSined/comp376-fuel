@@ -30,7 +30,7 @@ namespace F.U.E.L
         public int burningStacks = 0;
 
         // Characters initial position is defined by the spawnpoint ther are associated with
-        public Character(Game game, SuperModel[] modelComponents, Vector3 position,
+        public Character(Game game, Model[] modelComponents, Vector3 position,
             int topHP, int topSP, float speed, SpawnPoint spawnPoint, Weapon[] weapons, FloatRectangle bounds, bool isAlive)
             : base(game, modelComponents, position, bounds, isAlive)
         {
@@ -116,7 +116,36 @@ namespace F.U.E.L
 
         public override void Draw(Camera camera)
         {
-            modelComponents[0].Draw(camera, world);
+            // Required to stop drawing players that are dead and should not be drawn
+            if (this.isAlive)
+            {
+                Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
+                modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
+
+                foreach (ModelMesh mesh in modelComponents[0].Meshes)
+                {
+                    foreach (BasicEffect be in mesh.Effects)
+                    {
+                        be.EnableDefaultLighting();
+                        be.SpecularPower = 10f;
+                        be.Projection = camera.projection;
+                        be.View = camera.view;
+                        be.World = world * mesh.ParentBone.Transform;
+                    }
+                    /*
+                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    {
+                        part.Effect = effect;
+                        effect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
+                        effect.Parameters["View"].SetValue(camera.view);
+                        effect.Parameters["Projection"].SetValue(camera.projection);
+                        effect.Parameters["AmbientColor"].SetValue(Color.Green.ToVector4());
+                        effect.Parameters["AmbientIntensity"].SetValue(0.5f);
+                    }
+                    */
+                    mesh.Draw();
+                }
+            }
         }
 
         public override void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)

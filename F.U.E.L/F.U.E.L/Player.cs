@@ -40,9 +40,10 @@ namespace F.U.E.L
         
         public int respawnCost = 500;
 
-		private float spRecoverTimer = 0f;
+        private float spRecoverTimer = 0f;
         private float spRecoverInterval = 1000f;
-        public Player(Game game, SuperModel[] modelComponents,
+
+        public Player(Game game, Model[] modelComponents,
             SpawnPoint spawnPoint, Class c, PlayerIndex pIndex
             )
             : base(game, modelComponents, spawnPoint.position, 10, 10, 10, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
@@ -147,23 +148,6 @@ namespace F.U.E.L
             }
 
             base.Update(gameTime, colliders, cameraTarget);
-
-            if (this.position.X > cameraTarget.X + 9)
-            {
-                position -= speed * Vector3.UnitX;
-            }
-            else if (this.position.X < cameraTarget.X - 9) //left
-            {
-                position += speed * Vector3.UnitX;
-            }
-            if (this.position.Z > cameraTarget.Z + 6)
-            {
-                position -= speed * Vector3.UnitZ;
-            }
-            else if (this.position.Z < cameraTarget.Z - 6) //up
-            {
-                position += speed * Vector3.UnitZ;
-            }
         }
 
         private void KeyboardControls(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget) 

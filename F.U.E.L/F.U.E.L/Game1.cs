@@ -31,9 +31,9 @@ namespace F.U.E.L
         //Enemy[] enemy = new Enemy[10];
         List<Enemy> enemyList = new List<Enemy>();
         SpatialHashGrid grid;
-        SuperModel[] em = new SuperModel[1];
-        SuperModel[] p;
-        SuperModel[] t;
+        Model[] em = new Model[1];
+        Model[] p;
+        Model[] t;
 
         MouseState mouse;
         KeyboardState keyboard;
@@ -43,7 +43,7 @@ namespace F.U.E.L
 
         List<Object> removeList = new List<Object>();
 
-        public Effect redEffect, greenEffect, shadingEffect;
+        public Effect redEffect, greenEffect;
 
         FrameRateCounter fpsCounter;
 
@@ -179,40 +179,35 @@ namespace F.U.E.L
 
             //redEffect = Content.Load<Effect>(@"Effects\Red");
             //greenEffect = Content.Load<Effect>(@"Effects\Green");
-            shadingEffect = Content.Load<Effect>(@"Effects\Shader");
 
-            SuperModel[] a = new SuperModel[6];
-            a[0] = new SuperModel(ref planeModel, shadingEffect);
-            a[1] = new SuperModel(ref towerModel, shadingEffect);
-            a[2] = new SuperModel(ref generatorModel, shadingEffect);
-            a[3] = new SuperModel(ref buildingModel, shadingEffect);
-            a[4] = new SuperModel(ref treeModel, shadingEffect);
-            a[5] = new SuperModel(ref telePadModel, shadingEffect);
+            Model[] a = new Model[6];
+            a[0] = planeModel;
+            a[1] = towerModel;
+            a[2] = generatorModel;
+            a[3] = buildingModel;
+            a[4] = treeModel;
+            a[5] = telePadModel;
             map = new Map(this, a, -36, 36);
             Components.Add(map);
 
             // The first model will be of the player
             // The LAST model (always last) will be the checkBox model
-            p = new SuperModel[1];
-            p[0] = new SuperModel(ref playerModel, shadingEffect);
-            t = new SuperModel[1];
-            t[0] = new SuperModel(ref checkBoxModel, shadingEffect);
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Gunner, PlayerIndex.One));
-            players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
-            /*players.Add(new Player(this, p, map.spawnPoints[2], Player.Class.Gunner, PlayerIndex.Three));
-            players.Add(new Player(this, p, map.spawnPoints[3], Player.Class.Alchemist, PlayerIndex.Four));
-            */
-			/*players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
+            p = new Model[1];
+            p[0] = playerModel;
+            t = new Model[1];
+            t[0] = checkBoxModel;
+            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Sniper, PlayerIndex.One));
+            /*players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
             players.Add(new Player(this, p, map.spawnPoints[2], Player.Class.Gunner, PlayerIndex.Three));
             players.Add(new Player(this, p, map.spawnPoints[3], Player.Class.Alchemist, PlayerIndex.Four));
             */
             players[0].checkBox = new BuildBox(this, t, players[0].position,
                                                 new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
                                                 players[0]);
-            players[1].checkBox = new BuildBox(this, t, players[1].position,
+            /*players[1].checkBox = new BuildBox(this, t, players[1].position,
                                                 new FloatRectangle((players[1].position + players[1].lookDirection).X, (players[1].position + players[1].lookDirection).Z, 1, 1),
                                                 players[1]);
-            /*players[2].checkBox = new BuildBox(this, t, players[2].position,
+            players[2].checkBox = new BuildBox(this, t, players[2].position,
                                                 new FloatRectangle((players[2].position + players[2].lookDirection).X, (players[2].position + players[2].lookDirection).Z, 1, 1),
                                                 players[2]);
             players[3].checkBox = new BuildBox(this, t, players[3].position,
@@ -500,11 +495,11 @@ namespace F.U.E.L
                         */
 
                         Weapon[] w = new Weapon[1];
-                        SuperModel[] shotModel = new SuperModel[1];
-                        shotModel[0] = new SuperModel(ref playerModel, shadingEffect);
+                        Model[] shotModel = new Model[1];
+                        shotModel[0] = playerModel;
                         w[0] = new PowerFist(this, shotModel, Vector3.Zero);
-                        SuperModel[] em = new SuperModel[1];
-                        em[0] = new SuperModel(ref enemyModel, shadingEffect);
+                        Model[] em = new Model[1];
+                        em[0] = enemyModel;
 
                         enemyList.Add(new Enemy(this, em, s, w));
                         Components.Add(enemyList[enemyList.Count - 1]);// Add the newest enemy in the enemyList to Components (last indexed enemy)

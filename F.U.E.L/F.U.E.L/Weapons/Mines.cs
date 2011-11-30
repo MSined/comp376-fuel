@@ -16,7 +16,7 @@ namespace F.U.E.L
         private const int FIREDELAY = 5 * 1000;
         private const int SPCOST = 10;
 
-        public Mines(Game game, SuperModel[] modelComponents, Vector3 position/*,
+        public Mines(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {

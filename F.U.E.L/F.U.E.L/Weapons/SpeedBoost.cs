@@ -24,7 +24,7 @@ namespace F.U.E.L
 
         Player player;
 
-        public SpeedBoost(Game game, SuperModel[] modelComponents, Vector3 position/*,
+        public SpeedBoost(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
@@ -59,6 +59,7 @@ namespace F.U.E.L
                 currentBoostInterval = BOOSTTIME;
                 interval = 0;
                 playSound(position, cameraTarget);
+                soundEffect.Play();
             }
         }
     }

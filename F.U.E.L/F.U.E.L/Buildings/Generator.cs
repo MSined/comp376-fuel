@@ -21,8 +21,8 @@ namespace F.U.E.L
 
         public int hp;
         public bool functional;
-
-        public Generator(Game game, SuperModel[] modelComponents, Vector3 position,
+ 
+        public Generator(Game game, Model[] modelComponents, Vector3 position,
             float angle
             )
             : base(game, modelComponents, position, 0.7f, 0.7f, angle)
