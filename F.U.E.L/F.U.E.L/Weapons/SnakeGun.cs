@@ -27,7 +27,7 @@ namespace F.U.E.L
         private int currentAngle = (int)(30/2.0f);
         private int sweepDir = 1;
 
-        public SnakeGun(Game game, Model[] modelComponents, Vector3 position/*,
+        public SnakeGun(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/, Player p)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {

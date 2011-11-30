@@ -24,7 +24,7 @@ namespace F.U.E.L
         static Random rand = new Random();
 
         // Removed position from this constructor as it will be taken from the spawnpoint
-        public Enemy(Game game, Model[] modelComponents,
+        public Enemy(Game game, SuperModel[] modelComponents,
             SpawnPoint spawnPoint, Weapon[] weapons
             )
             : base(game, modelComponents, new Vector3(spawnPoint.position.X +(float)rand.NextDouble()/2, 

@@ -15,7 +15,7 @@ namespace F.U.E.L
         private const int FIREDELAY = (int)(1 / 2.0 * 1000);
         private const int SPCOST = 10;
 
-        public Punch(Game game, Model[] modelComponents, Vector3 position/*,
+        public Punch(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {

@@ -10,7 +10,7 @@ namespace F.U.E.L
 {
     class PiercingBullet : Bullet
     {
-        public PiercingBullet(Game game, Model[] modelComponents, Vector3 position,
+        public PiercingBullet(Game game, SuperModel[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, direction, range, damage, shotByEnemy)
         {
@@ -28,7 +28,7 @@ namespace F.U.E.L
                         //this.isAlive = false;
                         Player p = (Player)o;
                         p.hp = p.hp - this.damage;
-                        if (p.hp < 0) p.isAlive = false;
+                        p.checkIfDead(cameraTarget);
                         continue;
                     }
                     if (o is Enemy && !this.shotByEnemy)
@@ -36,7 +36,7 @@ namespace F.U.E.L
                         //this.isAlive = false;
                         Enemy e = (Enemy)o;
                         e.hp = e.hp - this.damage;
-                        if (e.hp < 0) e.isAlive = false;
+                        e.checkIfDead(cameraTarget);
                         continue;
                     }
                     if (o is Tower && this.shotByEnemy)//same as player, but tower
@@ -44,7 +44,7 @@ namespace F.U.E.L
                         //this.isAlive = false;
                         Tower t = (Tower)o;
                         t.hp = t.hp - this.damage;
-                        if (t.hp < 0) t.isAlive = false;
+                        t.checkIfDead(cameraTarget);
                         continue;
                     }
                     if (o is Building)// && bounds.FloatIntersects(o.bounds))

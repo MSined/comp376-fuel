@@ -12,7 +12,7 @@ namespace F.U.E.L
     {
         public Game1 game { get; private set; }
         protected Matrix world = Matrix.Identity;
-        protected Model[] modelComponents { get; private set; }
+        protected SuperModel[] modelComponents { get; private set; }
         public Vector3 position; //{ get; protected set; }
         static int objectIDCounter = 0;
         public int objectID = objectIDCounter++;
@@ -21,7 +21,7 @@ namespace F.U.E.L
         public FloatRectangle bounds { get; protected set; }
         public bool isAlive;
 
-        public Object(Game game, Model[] modelComponents, Vector3 position, FloatRectangle bounds, bool isAlive)
+        public Object(Game game, SuperModel[] modelComponents, Vector3 position, FloatRectangle bounds, bool isAlive)
             : base(game)
         {
             this.game = (Game1) game;

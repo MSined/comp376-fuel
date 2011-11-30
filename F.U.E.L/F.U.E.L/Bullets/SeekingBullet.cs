@@ -15,7 +15,7 @@ namespace F.U.E.L
         private float turnAngle = MathHelper.ToRadians(50);
         private float minTravelDist = 2;
 
-        public SeekingBullet(Game game, Model[] modelComponents, Vector3 position,
+        public SeekingBullet(Game game, SuperModel[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, direction, range, damage, shotByEnemy)
         {

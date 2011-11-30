@@ -119,6 +119,7 @@
     <Compile Include="Bullets\BurningBullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="SuperModel.cs" />
     <Compile Include="Enemies\HunterEnemy.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="Buildings\Factory.cs" />

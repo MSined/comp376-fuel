@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{53656a8d-3330-4cf9-9e09-e4e57f1c8250}</ProjectGuid>
+    <ProjectGuid>{A8A4B908-4627-4A7B-8FE8-1F7FFC2DE91D}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
@@ -84,6 +84,7 @@
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
+    <Compile Include="SuperModel.cs" />
     <Compile Include="Weapons\AirStrike.cs" />
     <Compile Include="Weapons\SpeedBoost.cs" />
     <Compile Include="Weapons\GroundPound.cs" />

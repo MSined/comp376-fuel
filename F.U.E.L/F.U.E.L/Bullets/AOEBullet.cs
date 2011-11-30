@@ -13,7 +13,7 @@ namespace F.U.E.L
         private Vector3 explosionDirection = new Vector3(1, 0, 0);
         private int explosionRange = 2;
 
-        public AOEBullet(Game game, Model[] modelComponents, Vector3 position,
+        public AOEBullet(Game game, SuperModel[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
             : base(game, modelComponents, position, direction, range, damage, shotByEnemy)
         {

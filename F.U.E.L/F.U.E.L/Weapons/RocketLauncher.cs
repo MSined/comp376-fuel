@@ -19,7 +19,7 @@ namespace F.U.E.L
         private const int angleDiff = 25;
         private const int numBullets = 3;
 
-        public RocketLauncher(Game game, Model[] modelComponents, Vector3 position/*,
+        public RocketLauncher(Game game, SuperModel[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)
             : base(game, modelComponents, position, RANGE, DAMAGE, FIREDELAY, SPCOST)
         {
