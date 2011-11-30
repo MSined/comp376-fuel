@@ -18,11 +18,15 @@ namespace F.U.E.L
 {
     class MainMenu : Menu
     {
-        List<Button> buttons;
-        bool wKeyDown = false;
-        bool sKeyDown = false;
-        bool upButtonDown = false;
-        bool downButtonDown = false;
+        public List<Button> buttons;
+        //bool wKeyDown = false;
+        //bool sKeyDown = false;
+        bool upButtonDown1 = false, upButtonDown2 = false, upButtonDown3 = false, upButtonDown4 = false, currentUpButtonDown = false;
+        bool downButtonDown1 = false, downButtonDown2 = false, downButtonDown3 = false, downButtonDown4 = false, currentDownButtonDown = false;
+        public bool player1Chosen = false, player2Chosen = false, player3Chosen = false, player4Chosen = false;
+        public bool allPlayersChose = false;
+
+        int buttonLowerLimit = 0, buttonUpperLimit = 4;
 
         public MainMenu(string title)
             : base(title)
@@ -30,144 +34,307 @@ namespace F.U.E.L
             buttons = new List<Button>();
         }
 
-        public void LoadButtons(ContentManager Content, int[] id, List<Rectangle> bounds, List<string> text)
+        public void LoadButtons(ContentManager content, int[] id, List<Rectangle> bounds, List<string> text)
         {
             for (int i = 0; i < id.Count(); i++)
             {
                 this.buttons.Add(new Button(id[i], bounds[i], text[i]));
                 if (i == 0)
                     buttons[i].setSelected(true);
-                buttons[i].Load(Content);
+                buttons[i].Load(content);
             }
         }
 
-        public override void Update(KeyboardState keyboard, GamePadState gamepad)
+        public override void Update(KeyboardState keyboard, GamePadState gamepad, int playerIndex)
         {
-                #region Gamepad Support
-                if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown))
+            if (this.title.Equals("Character Menu"))
+            {
+                buttonLowerLimit = playerIndex * 5 - 5;
+                buttonUpperLimit = buttonLowerLimit + 5;
+            }
+            else
+            {
+                buttonLowerLimit = 0;
+                buttonUpperLimit = buttons.Count;
+            }
+
+            #region Gamepad 1 Support
+            if (playerIndex == 1 && !player1Chosen)
+            {
+                if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown1))
                 {
                     int temp = 0;
-                    upButtonDown = true;
-                    for (int i = 0; i < buttons.Count; i++)
+                    upButtonDown1 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getSelected())
                         {
                             buttons[i].setSelected(false);
-                            int position = Math.Abs((((i - 1) % buttons.Count) + buttons.Count) % buttons.Count);
+                            int position = Math.Abs((((i - 1) % buttonUpperLimit) + buttonUpperLimit) % buttonUpperLimit);
                             temp = buttons[position].getID();
                         }
                     }
 
-                    for (int i = 0; i < buttons.Count; i++)
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getID() == temp)
                         {
                             buttons[i].setSelected(true);
-
                         }
                     }
-
                 }
 
-                if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown))
+                if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown1))
                 {
-                    upButtonDown = false;
+                    upButtonDown1 = false;
                 }
 
-                if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown))
+                if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown1))
                 {
                     int temp = 0;
-                    downButtonDown = true;
-                    for (int i = 0; i < buttons.Count; i++)
+                    downButtonDown1 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getSelected())
                         {
                             buttons[i].setSelected(false);
-                            int position = Math.Abs((i + 1) % buttons.Count);
+                            int position = Math.Abs((i + 1) % buttonUpperLimit);
                             temp = buttons[position].getID();
                         }
                     }
 
-                    for (int i = 0; i < buttons.Count; i++)
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getID() == temp)
                         {
                             buttons[i].setSelected(true);
-
                         }
                     }
                 }
 
-                if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown))
+                if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown1))
                 {
-                    downButtonDown = false;
+                    downButtonDown1 = false;
                 }
-                #endregion
 
-                #region Keyboard Controls
-                if ((keyboard.IsKeyDown(Keys.W) && !wKeyDown))
+                if (gamepad.IsButtonDown(Buttons.Start))
                 {
-                    int temp = 0;
-                    wKeyDown = true;
+                    player1Chosen = true;
+                }
+            }
+            #endregion
 
-                    for (int i = 0; i < buttons.Count; i++)
+            #region Gamepad 2 Support
+            if (playerIndex == 2 && !player2Chosen)
+            {
+                if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown2))
+                {
+                    int temp = 5;
+                    upButtonDown2 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getSelected())
                         {
                             buttons[i].setSelected(false);
-                            int position = Math.Abs((((i - 1) % buttons.Count) + buttons.Count) % buttons.Count);
+                            int position = Math.Abs((((i - 1) % buttonUpperLimit) + buttonUpperLimit) % buttonUpperLimit);
+                            if (position == 4)
+                                position = 9;
                             temp = buttons[position].getID();
                         }
                     }
 
-                    for (int i = 0; i < buttons.Count; i++)
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getID() == temp)
                         {
                             buttons[i].setSelected(true);
-
                         }
                     }
-
                 }
 
-                if (keyboard.IsKeyUp(Keys.W) && wKeyDown)
+                if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown2))
                 {
-                    wKeyDown = false;
+                    upButtonDown2 = false;
                 }
 
-                if ((keyboard.IsKeyDown(Keys.S) && !sKeyDown))
+                if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown2))
                 {
-                    int temp = 0;
-                    sKeyDown = true;
-                    for (int i = 0; i < buttons.Count; i++)
+                    int temp = 5;
+                    downButtonDown2 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getSelected())
                         {
                             buttons[i].setSelected(false);
-                            int position = Math.Abs((i + 1) % buttons.Count);
+                            int position = Math.Abs((i + 1) % buttonUpperLimit);
+                            if (position == 0)
+                                position = 5;
                             temp = buttons[position].getID();
                         }
                     }
 
-                    for (int i = 0; i < buttons.Count; i++)
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
                     {
                         if (buttons[i].getID() == temp)
                         {
                             buttons[i].setSelected(true);
-
                         }
                     }
                 }
 
-                if (keyboard.IsKeyUp(Keys.S) && sKeyDown)
+                if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown2))
                 {
-                    sKeyDown = false;
+                    downButtonDown2 = false;
                 }
 
-                #endregion
-            base.Update(keyboard, gamepad);
+                if (gamepad.IsButtonDown(Buttons.Start))
+                    player2Chosen = true;
+            }
+            #endregion
 
+            #region Gamepad 3 Support
+            if (playerIndex == 3 && !player3Chosen)
+            {
+                if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown3))
+                {
+                    int temp = 10;
+                    upButtonDown3 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((((i - 1) % buttonUpperLimit) + buttonUpperLimit) % buttonUpperLimit);
+                            if (position == 9)
+                                position = 14;
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+                        }
+                    }
+                }
+
+                if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown3))
+                {
+                    upButtonDown3 = false;
+                }
+
+                if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown3))
+                {
+                    int temp = 10;
+                    downButtonDown3 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((i + 1) % buttonUpperLimit);
+                            if (position == 0)
+                                position = 10;
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+                        }
+                    }
+                }
+
+                if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown3))
+                {
+                    downButtonDown3 = false;
+                }
+
+                if (gamepad.IsButtonDown(Buttons.Start))
+                    player3Chosen = true;
+            }
+            #endregion
+
+            #region Gamepad 4 Support
+            if (playerIndex == 4 && !player4Chosen)
+            {
+                if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown4))
+                {
+                    int temp = 15;
+                    upButtonDown4 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((((i - 1) % buttonUpperLimit) + buttonUpperLimit) % buttonUpperLimit);
+                            if (position == 14)
+                                position = 19;
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+                        }
+                    }
+                }
+
+                if ((gamepad.IsButtonUp(Buttons.DPadUp) && upButtonDown4))
+                {
+                    upButtonDown4 = false;
+                }
+
+                if ((gamepad.IsButtonDown(Buttons.DPadDown) && !downButtonDown4))
+                {
+                    int temp = 15;
+                    downButtonDown4 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((i + 1) % buttonUpperLimit);
+                            if (position == 0)
+                                position = 15;
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+                        }
+                    }
+                }
+
+                if ((gamepad.IsButtonUp(Buttons.DPadDown) && downButtonDown4))
+                {
+                    downButtonDown4 = false;
+                }
+
+                if (gamepad.IsButtonDown(Buttons.Start))
+                    player4Chosen = true;
+            }
+            #endregion
+
+            if ((player1Chosen) &&
+               (player2Chosen) &&
+               (player3Chosen) &&
+               (player4Chosen))
+                allPlayersChose = true;
+
+            base.Update(keyboard, gamepad, playerIndex);
         }
 
         public string selected()

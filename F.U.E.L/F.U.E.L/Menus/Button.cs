@@ -54,9 +54,9 @@ namespace F.U.E.L
             return dimensions;
         }
 
-        public void Load(ContentManager Content)
+        public void Load(ContentManager content)
         {
-            texture = Content.Load<Texture2D>(@"ScreenManagerAssets\Textures\Button");
+            this.texture = content.Load<Texture2D>(@"ScreenManagerAssets/Textures/Button");
         }
 
         public string getText()
@@ -71,7 +71,13 @@ namespace F.U.E.L
 
             spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y) - new Vector2(texture.Width / 2, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.25f);
             if (isSelected)
+            {
                 spriteBatch.DrawString(spriteFont, label, position, Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
+            //if (isSelectedFinal)
+            //{
+            //    spriteBatch.DrawString(spriteFont, label, position, Color.Yellow, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            //}
             else
                 spriteBatch.DrawString(spriteFont, label, position, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }

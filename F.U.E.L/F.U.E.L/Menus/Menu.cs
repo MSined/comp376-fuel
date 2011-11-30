@@ -66,7 +66,7 @@ namespace F.U.E.L
             menuClose = Content.Load<SoundEffect>(menuClosePath);
         }
 
-        public virtual void Update(KeyboardState keyboard, GamePadState gamepad)
+        public virtual void Update(KeyboardState keyboard, GamePadState gamepad, int playerIndex)
         {
             //inputHandle.Update();
         }
@@ -76,7 +76,11 @@ namespace F.U.E.L
             spriteBatch.Draw(backgroundImage, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.5f);
 
             Vector2 titlePosition = new Vector2(width / 2 - (titleFont.MeasureString(title).X / 2), 50);
+            Vector2 titlePosition2 = new Vector2(width / 3 - (titleFont.MeasureString(title).X / 2) - 40, 130);
             spriteBatch.DrawString(titleFont, title, titlePosition, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            if (this.title.Equals("Character Menu"))
+                spriteBatch.DrawString(titleFont, "Press Start To Choose Your Class", titlePosition2, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
         }
 
         /// <summary>
