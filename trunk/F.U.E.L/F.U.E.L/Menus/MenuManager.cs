@@ -43,10 +43,10 @@ namespace F.U.E.L
             this.keyboard = keyboard;
         }
 
-        public void Update(KeyboardState k, GamePadState g)
+        public void Update(KeyboardState k, GamePadState g, int playerIndex)
         {
             if (activeMenu != null)
-                activeMenu.Update(k, g);
+                activeMenu.Update(k, g, playerIndex);
 
             GetButtonEvent();
         }
@@ -96,7 +96,6 @@ namespace F.U.E.L
                     activeMenu = Menus[name];
                     activeMenu.Open(true);
                 }
-
             }
             else
                 return;

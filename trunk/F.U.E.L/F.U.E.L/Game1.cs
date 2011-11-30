@@ -21,7 +21,7 @@ namespace F.U.E.L
 
         MenuManager menuManager;
 
-        Texture2D healthTexture, UITexture, minimapTexture, unitsTexture, iconsTexture;
+        Texture2D healthTexture, UITexture, minimapTexture, unitsTexture, iconsTexture, buttonTexture;
 
         Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel, checkBoxModel;
 
@@ -37,7 +37,7 @@ namespace F.U.E.L
 
         MouseState mouse;
         KeyboardState keyboard;
-        GamePadState gamepad1;
+        GamePadState gamepad1, gamepad2, gamepad3, gamepad4;
 
         UI userInterface;
 
@@ -58,10 +58,23 @@ namespace F.U.E.L
         private bool EscapeKeyDown = false;
         private bool EnterKeyDown = false;
 
-        private bool BackButtonDown = false;
-        private bool StartButtonDown = false;
-        private bool AButtonDown = false;
+        private bool BackButtonDown1 = false;
+        private bool StartButtonDown1 = false;
+        private bool AButtonDown1 = false;
 
+        private bool BackButtonDown2 = false;
+        private bool StartButtonDown2 = false;
+        private bool AButtonDown2 = false;
+
+        private bool BackButtonDown3 = false;
+        private bool StartButtonDown3 = false;
+        private bool AButtonDown3 = false;
+
+        private bool BackButtonDown4 = false;
+        private bool StartButtonDown4 = false;
+        private bool AButtonDown4 = false;
+
+        private bool inPauseMenu = false;
         private bool inGame = false;
         private bool inMainMenu = false;
         private bool inCharacterMenu = false;
@@ -112,6 +125,9 @@ namespace F.U.E.L
             mouse = Mouse.GetState();
             keyboard = Keyboard.GetState();
             gamepad1 = GamePad.GetState(PlayerIndex.One);
+            gamepad2 = GamePad.GetState(PlayerIndex.Two);
+            gamepad3 = GamePad.GetState(PlayerIndex.Three);
+            gamepad4 = GamePad.GetState(PlayerIndex.Four);
 
             menuManager = new MenuManager(mouse, ref keyboard);
 
@@ -152,23 +168,57 @@ namespace F.U.E.L
             pauseMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             pauseMenu.LoadButtons(Content,
                 new int[] { 1, 2 },
-                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), 
+                                        new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
                 new List<string>() { "Continue", "Quit" }
                 );
             mainMenu = new MainMenu("Main Menu"); // main menu
             mainMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             mainMenu.LoadButtons(Content,
                 new int[] { 1, 2 },
-                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), 
+                                        new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
                 new List<string>() { "New Game", "Quit" }
                 );
             characterMenu = new MainMenu("Character Menu"); // main menu
             characterMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             characterMenu.LoadButtons(Content,
-                new int[] { 1, 2, 3, 4 },
-                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 90, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50), new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 90, 150, 50) },
-                new List<string>() { "Gunner", "Alchemist", "Sniper", "Tank" }
-                );
+                        new int[] {  0,  1,  2,  3,  4, 
+                                     5,  6,  7,  8,  9, 
+                                    10, 11, 12, 13, 14,
+                                    15, 16, 17, 18, 19 },
+                        new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 5, graphics.PreferredBackBufferHeight / 2 - 90, 150, 50),
+                                                new Rectangle(graphics.PreferredBackBufferWidth / 5, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), 
+                                                new Rectangle(graphics.PreferredBackBufferWidth / 5, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50), 
+                                                new Rectangle(graphics.PreferredBackBufferWidth / 5, graphics.PreferredBackBufferHeight / 2 + 90, 150, 50), 
+                                                new Rectangle(graphics.PreferredBackBufferWidth / 5, graphics.PreferredBackBufferHeight / 2 + 150, 150, 50),
+
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 2, graphics.PreferredBackBufferHeight / 2 - 90, 150, 50),
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 2, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 2, graphics.PreferredBackBufferHeight / 2 + 90, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 2, graphics.PreferredBackBufferHeight / 2 + 150, 150, 50),
+                                                                                                    
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 3, graphics.PreferredBackBufferHeight / 2 - 90, 150, 50),
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 3, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 3, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 3, graphics.PreferredBackBufferHeight / 2 + 90, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 3, graphics.PreferredBackBufferHeight / 2 + 150, 150, 50),
+                                                                                                    
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 4, graphics.PreferredBackBufferHeight / 2 - 90, 150, 50),
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 4, graphics.PreferredBackBufferHeight / 2 - 30, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 4, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 4, graphics.PreferredBackBufferHeight / 2 + 90, 150, 50), 
+                                                new Rectangle((graphics.PreferredBackBufferWidth / 5) * 4, graphics.PreferredBackBufferHeight / 2 + 150, 150, 50)},
+                        new List<string>() { "None", "Gunner", "Alchemist", "Sniper", "Tank", 
+                                             "None", "Gunner", "Alchemist", "Sniper", "Tank", 
+                                             "None", "Gunner", "Alchemist", "Sniper", "Tank", 
+                                             "None", "Gunner", "Alchemist", "Sniper", "Tank" }
+                        );
+            characterMenu.buttons[0].setSelected(true);
+            characterMenu.buttons[5].setSelected(true);
+            characterMenu.buttons[10].setSelected(true);
+            characterMenu.buttons[15].setSelected(true);
 
             // Initiate menus
             menuManager.AddMenu("Main Menu", mainMenu);
@@ -194,27 +244,13 @@ namespace F.U.E.L
             // The LAST model (always last) will be the checkBox model
             p = new Model[1];
             p[0] = playerModel;
-            t = new Model[1];
+            t = new Model[4];
             t[0] = checkBoxModel;
-            players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
-            players.Add(new Player(this, p, map.spawnPoints[1], Player.Class.Sniper, PlayerIndex.Two));
-            /*players.Add(new Player(this, p, map.spawnPoints[2], Player.Class.Gunner, PlayerIndex.Three));
-            players.Add(new Player(this, p, map.spawnPoints[3], Player.Class.Alchemist, PlayerIndex.Four));
-            */
-            players[0].checkBox = new BuildBox(this, t, players[0].position,
-                                                new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
-                                                players[0]);
-            players[1].checkBox = new BuildBox(this, t, players[1].position,
-                                                new FloatRectangle((players[1].position + players[1].lookDirection).X, (players[1].position + players[1].lookDirection).Z, 1, 1),
-                                                players[1]);
-            /*players[2].checkBox = new BuildBox(this, t, players[2].position,
-                                                new FloatRectangle((players[2].position + players[2].lookDirection).X, (players[2].position + players[2].lookDirection).Z, 1, 1),
-                                                players[2]);
-            players[3].checkBox = new BuildBox(this, t, players[3].position,
-                                                new FloatRectangle((players[3].position + players[3].lookDirection).X, (players[3].position + players[3].lookDirection).Z, 1, 1),
-                                                players[3]);
-            */
-            foreach (Player ply in players) { Components.Add(ply); }
+            //players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
+            //players[0].checkBox = new BuildBox(this, t, players[0].position,
+            //                                    new FloatRectangle((players[0].position + players[0].lookDirection).X, (players[0].position + players[0].lookDirection).Z, 1, 1),
+            //                                    players[0]);
+            //foreach (Player ply in players) { Components.Add(ply); }
 
             // Create the grid with necessary information
             grid = new SpatialHashGrid(72, 72, 2, map.leftXPos / 2, map.bottomYPos / 2);
@@ -227,19 +263,6 @@ namespace F.U.E.L
             enemyModel = Content.Load<Model>(@"Models\alien788_60");
             Model[] em = new Model[1];
             em[0] = enemyModel;
-            /*
-            for (int i = 0; i < enemy.Length; ++i)
-            {
-                w = new Weapon[1];
-                w[0] = new PowerFist(this, p, new Vector3(0, 0, 0));
-                enemy[i] = new HunterEnemy(this, em, map.spawnPoints[1], w);
-            }
-            */
-            /*
-            foreach (Enemy e in enemy)
-            {
-                Components.Add(e);
-            }*/
         }
 
         protected override void UnloadContent()
@@ -249,18 +272,154 @@ namespace F.U.E.L
 
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-            //    this.Exit();
-
             cameraTarget = camera.cameraTarget;
 
             keyboard = Keyboard.GetState();
-            gamepad1 = GamePad.GetState(PlayerIndex.One);
 
-            menuManager.Update(keyboard, gamepad1);
-            pauseMenu.Update(keyboard, gamepad1);
-            mainMenu.Update(keyboard, gamepad1);
+            if (gamepad1.IsConnected)
+            {
+                gamepad1 = GamePad.GetState(PlayerIndex.One);
+                menuManager.Update(keyboard, gamepad1, 1);
+                if (inPauseMenu)
+                    pauseMenu.Update(keyboard, gamepad1, 1);
+                if (inMainMenu)
+                    mainMenu.Update(keyboard, gamepad1, 1);
+                if (inCharacterMenu)
+                    characterMenu.Update(keyboard, gamepad1, 1);
+            }
+            else
+                characterMenu.player1Chosen = true;
+            if (gamepad2.IsConnected)
+            {
+                gamepad2 = GamePad.GetState(PlayerIndex.Two);
+                menuManager.Update(keyboard, gamepad2, 2);
+                if (inPauseMenu)
+                    pauseMenu.Update(keyboard, gamepad2, 2);
+                //if (inMainMenu)
+                //    mainMenu.Update(keyboard, gamepad2, 2);
+                if (inCharacterMenu)
+                    characterMenu.Update(keyboard, gamepad2, 2);
+            }
+            else
+                characterMenu.player2Chosen = true;
+            if (gamepad3.IsConnected)
+            {
+                gamepad3 = GamePad.GetState(PlayerIndex.Three);
+                menuManager.Update(keyboard, gamepad3, 3);
+                if (inPauseMenu)
+                    pauseMenu.Update(keyboard, gamepad3, 3);
+                //if (inMainMenu)
+                //    mainMenu.Update(keyboard, gamepad3, 3);
+                if (inCharacterMenu)
+                    characterMenu.Update(keyboard, gamepad3, 3);
+            }
+            else
+                characterMenu.player3Chosen = true;
+            if (gamepad4.IsConnected)
+            {
+                gamepad4 = GamePad.GetState(PlayerIndex.Four);
+                menuManager.Update(keyboard, gamepad4, 4);
+                if (inPauseMenu)
+                    pauseMenu.Update(keyboard, gamepad4, 4);
+                //if (inMainMenu)
+                //    mainMenu.Update(keyboard, gamepad4, 4);
+                if (inCharacterMenu)
+                    characterMenu.Update(keyboard, gamepad4, 4);
+            }
+            else
+                characterMenu.player4Chosen = true;
+
+            if (characterMenu.allPlayersChose)
+            {
+                int k = 0;
+                // Just as a default player index, changes in each one
+                PlayerIndex current = PlayerIndex.One;
+                for (int i = 0; i < characterMenu.buttons.Count; ++i)
+                {
+                    if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Gunner"))
+                    {
+                        if (i >= 0 && i < 5)
+                            current = PlayerIndex.One;
+                        else if (i >= 5 && i < 10)
+                            current = PlayerIndex.Two;
+                        else if (i >= 10 && i < 15)
+                            current = PlayerIndex.Three;
+                        else if (i >= 15 && i < 20)
+                            current = PlayerIndex.Four;
+
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Gunner, current));
+
+                        players[k].checkBox = new BuildBox(this, t, players[k].position,
+                                                            new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
+                                                            players[k]);
+                        ++k;
+                    }
+                    else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Alchemist"))
+                    {
+                        if (i >= 0 && i < 5)
+                            current = PlayerIndex.One;
+                        else if (i >= 5 && i < 10)
+                            current = PlayerIndex.Two;
+                        else if (i >= 10 && i < 15)
+                            current = PlayerIndex.Three;
+                        else if (i >= 15 && i < 20)
+                            current = PlayerIndex.Four;
+
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Alchemist, current));
+
+                        players[k].checkBox = new BuildBox(this, t, players[k].position,
+                                                            new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
+                                                            players[k]);
+                        ++k;
+                    }
+                    else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Sniper"))
+                    {
+                        if (i >= 0 && i < 5)
+                            current = PlayerIndex.One;
+                        else if (i >= 5 && i < 10)
+                            current = PlayerIndex.Two;
+                        else if (i >= 10 && i < 15)
+                            current = PlayerIndex.Three;
+                        else if (i >= 15 && i < 20)
+                            current = PlayerIndex.Four;
+
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Sniper, current));
+
+                        players[k].checkBox = new BuildBox(this, t, players[k].position,
+                                                            new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
+                                                            players[k]);
+                        ++k;
+                    }
+                    else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("Tank"))
+                    {
+                        if (i >= 0 && i < 5)
+                            current = PlayerIndex.One;
+                        else if (i >= 5 && i < 10)
+                            current = PlayerIndex.Two;
+                        else if (i >= 10 && i < 15)
+                            current = PlayerIndex.Three;
+                        else if (i >= 15 && i < 20)
+                            current = PlayerIndex.Four;
+
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Tank, current));
+
+                        players[k].checkBox = new BuildBox(this, t, players[k].position,
+                                                            new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
+                                                            players[k]);
+                        ++k;
+                    }
+                    else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("None")) 
+                    {
+                        //++k;
+                    }
+                }
+                foreach (Player ply in players) { Components.Add(ply); }
+                characterMenu.allPlayersChose = false;
+                inCharacterMenu = false;
+                inGame = true;
+                inPauseMenu = false;
+                inMainMenu = false;
+            }
 
             if (menuManager != null)
             {
@@ -274,142 +433,338 @@ namespace F.U.E.L
                 }
             }
 
-            if (!inGame && !inMainMenu && !inCharacterMenu)
+            if (!inGame && !inMainMenu && !inCharacterMenu && !inPauseMenu)
             {
                 menuManager.Show("Main Menu");
                 inMainMenu = true;
             }
-
-            #region Keyboard Controls for menu
-            // Enter in main
-            if (keyboard.IsKeyDown(Keys.Enter) &&
-                !EnterKeyDown &&
-                menuManager.ActiveMenu != null &&
-                inMainMenu &&
-                (mainMenu.selected() == "New Game"))
-            {
-                menuManager.Exit();
-                menuManager.Show("Character Menu");
-                EnterKeyDown = true;
-                inCharacterMenu = true;
-                inMainMenu = false;
-                //inGame = true;
-            }
-
-            if (keyboard.IsKeyDown(Keys.Enter) &&
-                !EnterKeyDown &&
-                menuManager.ActiveMenu != null &&
-                inMainMenu &&
-                (mainMenu.selected() == "Quit"))
-            {
-                menuManager.Exit();
-                this.Exit();
-            }
-
-            //if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && inCharacterMenu && (characterMenu.selected() == "Gunner"))
-            //{
-            //    //players.Add(new Player(this, p, map.spawnPoints[0], Player.Class.Tank, PlayerIndex.One));
-            //    inGame = true;
-            //    inCharacterMenu = false;
-            //}
-
-            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Continue"))
-            {
-                menuManager.Exit();
-                EnterKeyDown = true;
-                inGame = true;
-            }
-
-            if (keyboard.IsKeyDown(Keys.Enter) && !EnterKeyDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
-            {
-                menuManager.Exit();
-                menuManager.Show("Main Menu");
-                EnterKeyDown = true;
-                inGame = false;
-                inMainMenu = true;
-            }
-
-            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu != null && inMainMenu)
-            {
-                menuManager.Exit();
-                this.Exit();
-            }
-
-            if ((keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu == null && !inMainMenu))
-            {
-                menuManager.Show("Pause Menu");
-                EscapeKeyDown = true;
-            }
-            if (keyboard.IsKeyDown(Keys.Escape) && !EscapeKeyDown && menuManager.ActiveMenu != null)
-            {
-                menuManager.Exit();
-                EscapeKeyDown = true;
-            }
-
-            if ((keyboard.IsKeyUp(Keys.Escape) && EscapeKeyDown))
-                EscapeKeyDown = false;
-
-            if (keyboard.IsKeyUp(Keys.Enter) && EnterKeyDown)
-                EnterKeyDown = false;
-            #endregion
 
             #region gamepad controls for menu
-            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+
+            #region GamePad 1 Controls
+            if (gamepad1.IsButtonDown(Buttons.A))
             {
-                menuManager.Exit();
-                AButtonDown = true;
-                inMainMenu = false;
-                inGame = true;
+                if (!AButtonDown1 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Character Menu");
+                    AButtonDown1 = true;
+                    inCharacterMenu = true;
+                    inMainMenu = false;
+                    inPauseMenu = false;
+                }
+
+                if (!AButtonDown1 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && (mainMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
+
+                if (!AButtonDown1 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Continue"))
+                {
+                    menuManager.Exit();
+                    AButtonDown1 = true;
+                    inGame = true;
+                }
+
+                if (!AButtonDown1 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    AButtonDown1 = true;
+                    inGame = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
+                
+                if (AButtonDown1)
+                    AButtonDown1 = false;
             }
 
-            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "Quit"))
+            if(gamepad1.IsButtonDown(Buttons.Back))
             {
-                menuManager.Exit();
-                this.Exit();
+                if (!BackButtonDown1 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
+
+                if (!BackButtonDown1 && menuManager.ActiveMenu != null && inCharacterMenu && !inPauseMenu && !inMainMenu)
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    BackButtonDown1 = true;
+                    inCharacterMenu = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
+                
+                if (BackButtonDown1)
+                    BackButtonDown1 = false;
             }
 
-            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Continue"))
+            if(gamepad1.IsButtonDown(Buttons.Start))
             {
-                menuManager.Exit();
-                AButtonDown = true;
-                inGame = true;
+                if (!StartButtonDown1 && menuManager.ActiveMenu == null && !inMainMenu && !inCharacterMenu)
+                {
+                    menuManager.Show("Pause Menu");
+                    StartButtonDown1 = true;
+                    inPauseMenu = true;
+                }
+                if (!StartButtonDown1 && menuManager.ActiveMenu != null && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    StartButtonDown1 = true;
+                }
+
+                if (StartButtonDown1)
+                    StartButtonDown1 = false;
+            }
+            #endregion
+
+            #region GamePad 2 Controls
+            if (gamepad2.IsButtonDown(Buttons.A))
+            {
+                if (!AButtonDown2 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Character Menu");
+                    AButtonDown2 = true;
+                    inCharacterMenu = true;
+                    inMainMenu = false;
+                    inPauseMenu = false;
+                }
+
+                if (!AButtonDown2 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && (mainMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
+
+                if (!AButtonDown2 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Continue"))
+                {
+                    menuManager.Exit();
+                    AButtonDown2 = true;
+                    inGame = true;
+                }
+
+                if (!AButtonDown2 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    AButtonDown2 = true;
+                    inGame = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
+
+                if (AButtonDown2)
+                    AButtonDown2 = false;
             }
 
-            if (gamepad1.IsButtonDown(Buttons.A) && !AButtonDown && menuManager.ActiveMenu != null && !inMainMenu && (pauseMenu.selected() == "Quit"))
+            if (gamepad2.IsButtonDown(Buttons.Back))
             {
-                menuManager.Exit();
-                menuManager.Show("Main Menu");
-                AButtonDown = true;
-                inGame = false;
-                inMainMenu = true;
+                if (!BackButtonDown2 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
+
+                if (!BackButtonDown2 && menuManager.ActiveMenu != null && inCharacterMenu && !inPauseMenu && !inMainMenu)
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    BackButtonDown2 = true;
+                    inCharacterMenu = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
+
+                if (BackButtonDown2)
+                    BackButtonDown2 = false;
             }
 
-            if (gamepad1.IsButtonDown(Buttons.Back) && !BackButtonDown && menuManager.ActiveMenu != null && inMainMenu)
+            if (gamepad2.IsButtonDown(Buttons.Start))
             {
-                menuManager.Exit();
-                this.Exit();
+                if (!StartButtonDown2 && menuManager.ActiveMenu == null && !inMainMenu && !inCharacterMenu)
+                {
+                    menuManager.Show("Pause Menu");
+                    StartButtonDown2 = true;
+                    inPauseMenu = true;
+                }
+                if (!StartButtonDown2 && menuManager.ActiveMenu != null && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    StartButtonDown2 = true;
+                }
+
+                if (StartButtonDown2)
+                    StartButtonDown2 = false;
+            }
+            #endregion
+
+            #region GamePad 3 Controls
+            if (gamepad3.IsButtonDown(Buttons.A))
+            {
+                if (!AButtonDown3 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Character Menu");
+                    AButtonDown3 = true;
+                    inCharacterMenu = true;
+                    inMainMenu = false;
+                    inPauseMenu = false;
+                }
+
+                if (!AButtonDown3 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && (mainMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
+
+                if (!AButtonDown3 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Continue"))
+                {
+                    menuManager.Exit();
+                    AButtonDown3 = true;
+                    inGame = true;
+                }
+
+                if (!AButtonDown3 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    AButtonDown3 = true;
+                    inGame = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
+
+                if (AButtonDown3)
+                    AButtonDown3 = false;
             }
 
-
-            if ((gamepad1.IsButtonDown(Buttons.Start) && !StartButtonDown && menuManager.ActiveMenu == null && !inMainMenu))
+            if (gamepad3.IsButtonDown(Buttons.Back))
             {
-                menuManager.Show("Pause Menu");
-                StartButtonDown = true;
+                if (!BackButtonDown3 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
+
+                if (!BackButtonDown3 && menuManager.ActiveMenu != null && inCharacterMenu && !inPauseMenu && !inMainMenu)
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    BackButtonDown3 = true;
+                    inCharacterMenu = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
+
+                if (BackButtonDown3)
+                    BackButtonDown3 = false;
             }
-            if (gamepad1.IsButtonDown(Buttons.Start) && !StartButtonDown && menuManager.ActiveMenu != null)
+
+            if (gamepad3.IsButtonDown(Buttons.Start))
             {
-                menuManager.Exit();
-                StartButtonDown = true;
+                if (!StartButtonDown3 && menuManager.ActiveMenu == null && !inMainMenu && !inCharacterMenu)
+                {
+                    menuManager.Show("Pause Menu");
+                    StartButtonDown3 = true;
+                    inPauseMenu = true;
+                }
+                if (!StartButtonDown3 && menuManager.ActiveMenu != null && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    StartButtonDown3 = true;
+                }
+
+                if (StartButtonDown3)
+                    StartButtonDown3 = false;
+            }
+            #endregion
+
+            #region GamePad 4 Controls
+            if (gamepad4.IsButtonDown(Buttons.A))
+            {
+                if (!AButtonDown4 && menuManager.ActiveMenu != null && inMainMenu && (mainMenu.selected() == "New Game"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Character Menu");
+                    AButtonDown4 = true;
+                    inCharacterMenu = true;
+                    inMainMenu = false;
+                    inPauseMenu = false;
+                }
+
+                if (!AButtonDown4 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && (mainMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
+
+                if (!AButtonDown4 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Continue"))
+                {
+                    menuManager.Exit();
+                    AButtonDown4 = true;
+                    inGame = true;
+                }
+
+                if (!AButtonDown4 && menuManager.ActiveMenu != null && !inMainMenu && inPauseMenu && (pauseMenu.selected() == "Quit"))
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    AButtonDown4 = true;
+                    inGame = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
+
+                if (AButtonDown4)
+                    AButtonDown4 = false;
             }
 
-            if (gamepad1.IsButtonUp(Buttons.Start) && StartButtonDown)
-                StartButtonDown = false;
+            if (gamepad4.IsButtonDown(Buttons.Back))
+            {
+                if (!BackButtonDown4 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    this.Exit();
+                }
 
-            if (gamepad1.IsButtonUp(Buttons.Back) && BackButtonDown)
-                BackButtonDown = false;
+                if (!BackButtonDown4 && menuManager.ActiveMenu != null && inCharacterMenu && !inPauseMenu && !inMainMenu)
+                {
+                    menuManager.Exit();
+                    menuManager.Show("Main Menu");
+                    BackButtonDown4 = true;
+                    inCharacterMenu = false;
+                    inMainMenu = true;
+                    inPauseMenu = false;
+                }
 
-            if (gamepad1.IsButtonUp(Buttons.A) && AButtonDown)
-                AButtonDown = false;
+                if (BackButtonDown4)
+                    BackButtonDown4 = false;
+            }
+
+            if (gamepad4.IsButtonDown(Buttons.Start))
+            {
+                if (!StartButtonDown4 && menuManager.ActiveMenu == null && !inMainMenu && !inCharacterMenu)
+                {
+                    menuManager.Show("Pause Menu");
+                    StartButtonDown4 = true;
+                    inPauseMenu = true;
+                }
+                if (!StartButtonDown4 && menuManager.ActiveMenu != null && !inCharacterMenu)
+                {
+                    menuManager.Exit();
+                    StartButtonDown4 = true;
+                }
+
+                if (StartButtonDown4)
+                    StartButtonDown4 = false;
+            }
+            #endregion
+
             #endregion
 
             if (menuManager.ActiveMenu == null) //Encapsulation to "Pause" game
@@ -446,12 +801,6 @@ namespace F.U.E.L
                         {
                             if (o is Enemy)
                             {
-                                /*int i = 0;
-                                while (enemy[i] != null && enemy[i].objectID != o.objectID)
-                                {
-                                    ++i;
-                                }
-                                enemy[i] = null;*/
                                 Enemy e = (Enemy)o;
                                 --e.spawnPoint.spawnCounter;
                                 enemyList.Remove(e);

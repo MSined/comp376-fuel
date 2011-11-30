@@ -37,7 +37,7 @@ namespace F.U.E.L
         private PlayerIndex playerIndex;
         public int playerID;
         public int playerClass;//for skill icons
-        
+
         public int respawnCost = 500;
 
         private float spRecoverTimer = 0f;
@@ -48,7 +48,6 @@ namespace F.U.E.L
             )
             : base(game, modelComponents, spawnPoint.position, 10, 10, 10, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
-
             soundEffectTowerPlaced = game.Content.Load<SoundEffect>(@"Sounds/towerplaced");
             soundEffectWeaponSwitch = game.Content.Load<SoundEffect>(@"Sounds/weaponswitch");
 
@@ -152,7 +151,7 @@ namespace F.U.E.L
             if (this.position.X > cameraTarget.X + 9)
             {
                 position -= speed * Vector3.UnitX;
-            }
+        }
             else if (this.position.X < cameraTarget.X - 9) //left
             {
                 position += speed * Vector3.UnitX;
