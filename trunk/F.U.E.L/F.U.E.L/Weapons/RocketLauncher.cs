@@ -12,7 +12,7 @@ namespace F.U.E.L
     class RocketLauncher : Weapon
     {
         private const float RANGE = 100;
-        private const int DAMAGE = 50;
+        private const int DAMAGE = 200;
         private const int FIREDELAY = (int)(10 * 1000);
         private const int SPCOST = 10;
 
