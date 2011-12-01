@@ -89,6 +89,8 @@ namespace F.U.E.L
 
         public Vector3 cameraTarget { get; private set; }
 
+        List<GameComponent> removeFromComponents = new List<GameComponent>();
+
         public Game1()
         {
             fpsCounter = new FrameRateCounter(this);
@@ -157,10 +159,10 @@ namespace F.U.E.L
             iconsTexture = Content.Load<Texture2D>(@"UITextures\icons");
 
             planeModel = Content.Load<Model>(@"Models\floorModel");
-            towerModel = Content.Load<Model>(@"Models\towerModel");
+            towerModel = Content.Load<Model>(@"Models\tower");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
             buildingModel = Content.Load<Model>(@"Models\buildingModel");
-            playerModel = Content.Load<Model>(@"Models\playerModel");
+            playerModel = Content.Load<Model>(@"Models\NewPlayer1");
             treeModel = Content.Load<Model>(@"Models\treeModel");
             playerSpawnModel = Content.Load<Model>(@"Models\playerSpawn");
             enemySpawnModel = Content.Load<Model>(@"Models\enemySpawn");
@@ -308,7 +310,13 @@ namespace F.U.E.L
                     Tower t = (Tower)gc;
                     t.isAlive = false;
                 }
+                else if (gc is Character || gc is Tower)
+                    removeFromComponents.Add(gc);
             }
+
+            foreach (GameComponent c in removeFromComponents)
+                Components.Remove(c);
+
             foreach (Generator g in map.usableBuildings) 
             {
                 g.functional = false;
