@@ -82,7 +82,7 @@ namespace F.U.E.L
             soundEffectPowerDown.Play(scaledVol, 0.0f, 0.0f);
         }
 
-        public void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
+        public override void drawHealth(Camera camera, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, Texture2D healthTexture)
         {
             int healthBarWidth = 40;
             int healthBarHeight = 5;

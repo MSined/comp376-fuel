@@ -16,7 +16,6 @@ namespace F.U.E.L
         public int topSP;
         public int sp;// { get; protected set; }
 
-
         public SpawnPoint spawnPoint { get; private set; }
         public Weapon[] weapons { get; private set; }
         public int selectedWeapon { get; protected set; }

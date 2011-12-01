@@ -14,7 +14,7 @@ namespace F.U.E.L
         private const float RANGE = 7;
         private const int DAMAGE = 5;
         private const int FIREDELAY = (int)(1 / 20.0 * 1000);
-        private const int SPCOST = 10;
+        private const int SPCOST = 0;
 
         private Random random = new Random();
         private const int maxSpread = 10;

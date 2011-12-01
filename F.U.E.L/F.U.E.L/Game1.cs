@@ -89,11 +89,11 @@ namespace F.U.E.L
             Content.RootDirectory = "Content";
             //graphics.IsFullScreen = true;
             // The following code removes the XNA fixed timestep (framerate limiter)
-            IsFixedTimeStep = false;
+            //IsFixedTimeStep = false;
             // Because the above is an artificial but necessary step, this one sets the timestep to 1ms
-            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            //TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             // This removes the synchronization with the screen to allow a faster framerate
-            graphics.SynchronizeWithVerticalRetrace = false;
+            //graphics.SynchronizeWithVerticalRetrace = false;
 
             //***************Multiple Resolutions for debugging purposes************************
             //graphics.PreferredBackBufferWidth = 1024;
@@ -151,10 +151,10 @@ namespace F.U.E.L
             planeModel = Content.Load<Model>(@"Models\floorModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
-            buildingModel = Content.Load<Model>(@"Models\TestBuilding");
+            buildingModel = Content.Load<Model>(@"Models\buildingModel");
             playerModel = Content.Load<Model>(@"Models\playerModel");
             treeModel = Content.Load<Model>(@"Models\treeModel");
-            telePadModel = Content.Load<Model>(@"Models\telePadModel");
+            telePadModel = Content.Load<Model>(@"Models\enemySpawn");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
 
             bgm = Content.Load<Song>(@"Sounds\bgm");
@@ -242,8 +242,9 @@ namespace F.U.E.L
 
             // The first model will be of the player
             // The LAST model (always last) will be the checkBox model
-            p = new Model[1];
+            p = new Model[2];
             p[0] = playerModel;
+            p[1] = towerModel;
             t = new Model[4];
             t[0] = checkBoxModel;
 
@@ -417,6 +418,7 @@ namespace F.U.E.L
                             characterMenu.player4Chosen = false;
                         }
 
+                        p[1] = towerModel;
                         players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Gunner, current));
 
                         players[k].checkBox = new BuildBox(this, t, players[k].position,

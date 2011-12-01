@@ -13,7 +13,7 @@ namespace F.U.E.L
         private Vector3 impulse = new Vector3(0, 2, 0);
         private Vector3 gravity = new Vector3(0, -0.2f, 0);
         private float hitHeight = 0.5f;
-        private int explosionRange = 2;
+        private int explosionRange = 3;
 
         public LobAOEBullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
