@@ -157,12 +157,12 @@ namespace F.U.E.L
             iconsTexture = Content.Load<Texture2D>(@"UITextures\icons");
 
             planeModel = Content.Load<Model>(@"Models\floorModel");
-            towerModel = Content.Load<Model>(@"Models\tower");
+            towerModel = Content.Load<Model>(@"Models\towerModel");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
             buildingModel = Content.Load<Model>(@"Models\buildingModel");
             playerModel = Content.Load<Model>(@"Models\playerModel");
             treeModel = Content.Load<Model>(@"Models\treeModel");
-            playerSpawnModel = Content.Load<Model>(@"Models\PlayerSpawn");
+            playerSpawnModel = Content.Load<Model>(@"Models\playerSpawn");
             enemySpawnModel = Content.Load<Model>(@"Models\enemySpawn");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
 
