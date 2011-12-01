@@ -36,17 +36,15 @@ namespace F.U.E.L
             Model[] tower = new Model[1];
             tower[0] = modelComponents[1];
 
-            Model[] generator = new Model[1];
+            Model[] generator = new Model[2];
             generator[0] = modelComponents[2];
+            generator[1] = modelComponents[7];
 
             Model[] building = new Model[1];
             building[0] = modelComponents[3];
 
             Model[] trees = new Model[1];
             trees[0] = modelComponents[4];
-
-            Model[] telePad = new Model[1];
-            telePad[0] = modelComponents[5];
 
             // When adding buildings, specify the width and height of the bounding box (last two constructor parameters
             // If you want to refer to the model size to determine the bounding box:
@@ -78,14 +76,11 @@ namespace F.U.E.L
             spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(16, 0.0f, 22), false));
             spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(18, 0.0f, 28), false));
 
-            Model[] m = new Model[1];
-            m[0] = modelComponents[2];
-
-            usableBuildings.Add(new Generator(game, m, new Vector3(-26, 0, 24), 0f));
-            usableBuildings.Add(new Generator(game, m, new Vector3(28, 0, 28), 0f));
-            usableBuildings.Add(new Generator(game, m, new Vector3(-2, 0, 2), 0f));
-            usableBuildings.Add(new Generator(game, m, new Vector3(-30, 0, -30), 0f));
-            usableBuildings.Add(new Generator(game, m, new Vector3(28, 0, -30), 0f));
+            usableBuildings.Add(new Generator(game, generator, new Vector3(-26, 0, 24), 0f));
+            usableBuildings.Add(new Generator(game, generator, new Vector3(28, 0, 28), 0f));
+            usableBuildings.Add(new Generator(game, generator, new Vector3(-2, 0, 2), 0f));
+            usableBuildings.Add(new Generator(game, generator, new Vector3(-30, 0, -30), 0f));
+            usableBuildings.Add(new Generator(game, generator, new Vector3(28, 0, -30), 0f));
 
             addTrees(game, trees, buildings);
             addBuildings(game, building, buildings);

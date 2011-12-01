@@ -23,7 +23,8 @@ namespace F.U.E.L
 
         Texture2D healthTexture, UITexture, minimapTexture, unitsTexture, iconsTexture, buttonTexture;
 
-        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, bulletModel, fireBulletModel, poisonBulletModel, bigBulletModel, mineBulletModel, buildingModel, treeModel, playerSpawnModel, checkBoxModel, enemySpawnModel;
+        Model planeModel, towerModel, generatorPoweredModel, generatorUnPoweredModel, enemyModel, bulletModel, fireBulletModel, poisonBulletModel, bigBulletModel, mineBulletModel, buildingModel, treeModel, playerSpawnModel, checkBoxModel, enemySpawnModel;
+        Model[] playerModel = new Model[4];
 
         Camera camera;
         Map map;
@@ -90,6 +91,7 @@ namespace F.U.E.L
         public Vector3 cameraTarget { get; private set; }
 
         List<GameComponent> removeFromComponents = new List<GameComponent>();
+        Texture2D[] playerTextures = new Texture2D[4];
 
         public Game1()
         {
@@ -165,13 +167,22 @@ namespace F.U.E.L
             bigBulletModel = Content.Load<Model>(@"Models\bigBulletModel");
             mineBulletModel = Content.Load<Model>(@"Models\mineModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
-            generatorModel = Content.Load<Model>(@"Models\generatorModel");
+            generatorPoweredModel = Content.Load<Model>(@"Models\generatorPoweredModel");
+            generatorUnPoweredModel = Content.Load<Model>(@"Models\generatorUnPoweredModel");
             buildingModel = Content.Load<Model>(@"Models\buildingModel");
-            playerModel = Content.Load<Model>(@"Models\NewPlayer1");
+            playerModel[0] = Content.Load<Model>(@"Models\player1Model");
+            playerModel[1] = Content.Load<Model>(@"Models\player2Model");
+            playerModel[2] = Content.Load<Model>(@"Models\player3Model");
+            playerModel[3] = Content.Load<Model>(@"Models\player4Model");
             treeModel = Content.Load<Model>(@"Models\treeModel");
             playerSpawnModel = Content.Load<Model>(@"Models\playerSpawn");
             enemySpawnModel = Content.Load<Model>(@"Models\enemySpawn");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
+
+            playerTextures[0] = Content.Load<Texture2D>(@"Textures/player1Texture");
+            playerTextures[1] = Content.Load<Texture2D>(@"Textures/player2Texture");
+            playerTextures[2] = Content.Load<Texture2D>(@"Textures/player3Texture");
+            playerTextures[3] = Content.Load<Texture2D>(@"Textures/player4Texture");
 
             bgm = Content.Load<Song>(@"Sounds\bgm");
 
@@ -269,28 +280,28 @@ namespace F.U.E.L
             //redEffect = Content.Load<Effect>(@"Effects\Red");
             //greenEffect = Content.Load<Effect>(@"Effects\Green");
 
-            Model[] a = new Model[7];
+            Model[] a = new Model[8];
             a[0] = planeModel;
             a[1] = towerModel;
-            a[2] = generatorModel;
+            a[2] = generatorPoweredModel;
             a[3] = buildingModel;
             a[4] = treeModel;
             a[5] = playerSpawnModel;
             a[6] = enemySpawnModel;
+            a[7] = generatorUnPoweredModel;
             map = new Map(this, a, -36, 36, GraphicsDevice);
             Components.Add(map);
 
             // The first model will be of the player
             // The LAST model (always last) will be the checkBox model
             p = new Model[7];
-            p[0] = playerModel;
+            p[0] = playerModel[0];
             p[1] = towerModel;
             p[2] = bulletModel;
             p[3] = fireBulletModel;
             p[4] = poisonBulletModel;
             p[5] = bigBulletModel;
             p[6] = mineBulletModel;
-            //p[2] = bulletModel;
             t = new Model[4];
             t[0] = checkBoxModel;
 
@@ -312,25 +323,33 @@ namespace F.U.E.L
             // TODO: Unload any non ContentManager content here
         }
 
-        private void resetGame() 
+        private void resetGame()
         {
             players.Clear();
             enemyList.Clear();
             foreach (GameComponent gc in Components)
             {
-                if (gc is Tower) 
+                if (gc is Tower)
                 {
                     Tower t = (Tower)gc;
                     t.isAlive = false;
                 }
                 else if (gc is Character || gc is Tower)
                     removeFromComponents.Add(gc);
+
+                if (gc is Object)
+                {
+                    Object temp = (Object)gc;
+                    grid.removeDynamicObject(temp);
+                }
             }
+
+            camera.resetCamera();
 
             foreach (GameComponent c in removeFromComponents)
                 Components.Remove(c);
 
-            foreach (Generator g in map.usableBuildings) 
+            foreach (Generator g in map.usableBuildings)
             {
                 g.functional = false;
                 g.hp = 50;
@@ -340,14 +359,14 @@ namespace F.U.E.L
             Player.credit = 500;
             Player.respawnCost = 500;
 
-            mainMenu.upButtonDown1 = mainMenu.upButtonDown2 = mainMenu.upButtonDown3 = mainMenu.upButtonDown4 = mainMenu.currentUpButtonDown =false;
-            mainMenu.downButtonDown1 = mainMenu.downButtonDown2 = mainMenu.downButtonDown3 = mainMenu.downButtonDown4 = mainMenu.currentDownButtonDown =false;
+            mainMenu.upButtonDown1 = mainMenu.upButtonDown2 = mainMenu.upButtonDown3 = mainMenu.upButtonDown4 = mainMenu.currentUpButtonDown = false;
+            mainMenu.downButtonDown1 = mainMenu.downButtonDown2 = mainMenu.downButtonDown3 = mainMenu.downButtonDown4 = mainMenu.currentDownButtonDown = false;
 
-            pauseMenu.upButtonDown1 = pauseMenu.upButtonDown2 = pauseMenu.upButtonDown3 = pauseMenu.upButtonDown4 = pauseMenu.currentUpButtonDown =false;
-            pauseMenu.downButtonDown1 = pauseMenu.downButtonDown2 = pauseMenu.downButtonDown3 = pauseMenu.downButtonDown4 = pauseMenu.currentDownButtonDown =false;
+            pauseMenu.upButtonDown1 = pauseMenu.upButtonDown2 = pauseMenu.upButtonDown3 = pauseMenu.upButtonDown4 = pauseMenu.currentUpButtonDown = false;
+            pauseMenu.downButtonDown1 = pauseMenu.downButtonDown2 = pauseMenu.downButtonDown3 = pauseMenu.downButtonDown4 = pauseMenu.currentDownButtonDown = false;
 
-            characterMenu.upButtonDown1 = characterMenu.upButtonDown2 = characterMenu.upButtonDown3 = characterMenu.upButtonDown4 = characterMenu.currentUpButtonDown =false;
-            characterMenu.downButtonDown1 = characterMenu.downButtonDown2 = characterMenu.downButtonDown3 = characterMenu.downButtonDown4 = characterMenu.currentDownButtonDown =false;
+            characterMenu.upButtonDown1 = characterMenu.upButtonDown2 = characterMenu.upButtonDown3 = characterMenu.upButtonDown4 = characterMenu.currentUpButtonDown = false;
+            characterMenu.downButtonDown1 = characterMenu.downButtonDown2 = characterMenu.downButtonDown3 = characterMenu.downButtonDown4 = characterMenu.currentDownButtonDown = false;
 
             characterMenu.player1Chosen = characterMenu.player2Chosen = characterMenu.player3Chosen = characterMenu.player4Chosen = false;
             characterMenu.allPlayersChose = false;
@@ -438,10 +457,15 @@ namespace F.U.E.L
                 characterMenu.player4Chosen = true;
 
             #endregion
-
+            /*
+             * Nico:
+             * Try to remove all the if statements that check for the range that i is contained in
+             * should be able to remove them so there is only one set and not 4
+             */
             #region Create Players
             if (characterMenu.allPlayersChose)
             {
+                int skippingPlayers = 0;
                 int k = 0;
                 // Just as a default player index, changes in each one
                 PlayerIndex current = PlayerIndex.One;
@@ -471,7 +495,7 @@ namespace F.U.E.L
                         }
 
                         p[1] = towerModel;
-                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Gunner, current));
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Gunner, current, playerTextures[k]));
 
                         players[k].checkBox = new BuildBox(this, t, players[k].position,
                                                             new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
@@ -501,7 +525,7 @@ namespace F.U.E.L
                             characterMenu.player4Chosen = false;
                         }
 
-                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Alchemist, current));
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Alchemist, current, playerTextures[k]));
 
                         players[k].checkBox = new BuildBox(this, t, players[k].position,
                                                             new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
@@ -531,7 +555,7 @@ namespace F.U.E.L
                             characterMenu.player4Chosen = false;
                         }
 
-                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Sniper, current));
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Sniper, current, playerTextures[k]));
 
                         players[k].checkBox = new BuildBox(this, t, players[k].position,
                                                             new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
@@ -561,24 +585,39 @@ namespace F.U.E.L
                             characterMenu.player4Chosen = false;
                         }
 
-                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Tank, current));
+                        players.Add(new Player(this, p, map.spawnPoints[k], Player.Class.Tank, current, playerTextures[k]));
 
                         players[k].checkBox = new BuildBox(this, t, players[k].position,
                                                             new FloatRectangle((players[k].position + players[k].lookDirection).X, (players[k].position + players[k].lookDirection).Z, 1, 1),
                                                             players[k]);
                         ++k;
                     }
-                    else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("None")) 
+                    else if (characterMenu.buttons[i].getSelected() && characterMenu.buttons[i].getText().Equals("None"))
                     {
-                        //++k;
+                        ++skippingPlayers;
                     }
                 }
-                foreach (Player ply in players) { Components.Add(ply); }
-                characterMenu.allPlayersChose = false;
-                inCharacterMenu = false;
-                inGame = true;
-                inPauseMenu = false;
-                inMainMenu = false;
+                if (skippingPlayers >= 4)
+                {
+                    characterMenu.allPlayersChose = false;
+                    characterMenu.player1Chosen = false;
+                    characterMenu.player2Chosen = false;
+                    characterMenu.player3Chosen = false;
+                    characterMenu.player4Chosen = false;
+                    inCharacterMenu = false;
+                    inGame = false;
+                    inPauseMenu = false;
+                    inMainMenu = true;
+                }
+                else
+                {
+                    foreach (Player ply in players) { Components.Add(ply); }
+                    characterMenu.allPlayersChose = false;
+                    inCharacterMenu = false;
+                    inGame = true;
+                    inPauseMenu = false;
+                    inMainMenu = false;
+                }
             }
             #endregion
 
@@ -622,7 +661,6 @@ namespace F.U.E.L
             }
             #endregion
 
-            #region gamepad controls for menu
 
             #region GamePad 1 Controls
             if (gamepad1.IsButtonDown(Buttons.A) && gamepad1.IsConnected)
@@ -671,12 +709,11 @@ namespace F.U.E.L
                     inWinMenu = false;
                     inLoseMenu = false;
                 }
-                
-                if (AButtonDown1)
-                    AButtonDown1 = false;
             }
+            else if (gamepad1.IsButtonUp(Buttons.A) && gamepad1.IsConnected)
+                AButtonDown1 = false;
 
-            if(gamepad1.IsButtonDown(Buttons.Back))
+            if (gamepad1.IsButtonDown(Buttons.Back))
             {
                 if (!BackButtonDown1 && menuManager.ActiveMenu != null && inMainMenu && !inPauseMenu && !inCharacterMenu)
                 {
@@ -693,7 +730,7 @@ namespace F.U.E.L
                     inMainMenu = true;
                     inPauseMenu = false;
                 }
-                
+
                 if (BackButtonDown1)
                     BackButtonDown1 = false;
             }
@@ -763,10 +800,9 @@ namespace F.U.E.L
                     inWinMenu = false;
                     inLoseMenu = false;
                 }
-
-                if (AButtonDown2)
-                    AButtonDown2 = false;
             }
+            else if (gamepad2.IsButtonUp(Buttons.A) && gamepad2.IsConnected)
+                AButtonDown2 = false;
 
             if (gamepad2.IsButtonDown(Buttons.Back))
             {
@@ -855,10 +891,9 @@ namespace F.U.E.L
                     inWinMenu = false;
                     inLoseMenu = false;
                 }
-
-                if (AButtonDown3)
-                    AButtonDown3 = false;
             }
+            else if (gamepad3.IsButtonUp(Buttons.A) && gamepad3.IsConnected)
+                AButtonDown3 = false;
 
             if (gamepad3.IsButtonDown(Buttons.Back))
             {
@@ -947,10 +982,9 @@ namespace F.U.E.L
                     inWinMenu = false;
                     inLoseMenu = false;
                 }
-
-                if (AButtonDown4)
-                    AButtonDown4 = false;
             }
+            else if (gamepad4.IsButtonUp(Buttons.A) && gamepad4.IsConnected)
+                AButtonDown4 = false;
 
             if (gamepad4.IsButtonDown(Buttons.Back))
             {
@@ -991,8 +1025,6 @@ namespace F.U.E.L
 
             else if (gamepad4.IsButtonUp(Buttons.Start))
                 StartButtonDown4 = false;
-            #endregion
-
             #endregion
 
             if (menuManager.ActiveMenu == null) //Encapsulation to "Pause" game
@@ -1090,7 +1122,7 @@ namespace F.U.E.L
 
                         Weapon[] w = new Weapon[1];
                         Model[] shotModel = new Model[1];
-                        shotModel[0] = playerModel;
+                        shotModel[0] = bulletModel;
                         w[0] = new PowerFist(this, shotModel, Vector3.Zero);
                         Model[] em = new Model[1];
                         em[0] = enemyModel;
