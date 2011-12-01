@@ -126,6 +126,18 @@
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
+    <Compile Include="Menus\Button.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menus\MainMenu.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menus\Menu.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Menus\MenuManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Weapons\AirStrike.cs" />
     <Compile Include="Weapons\SpeedBoost.cs" />
     <Compile Include="Weapons\GroundPound.cs" />
@@ -136,10 +148,6 @@
     <Compile Include="Weapons\Stimpack.cs" />
     <Compile Include="Weapons\Heal.cs" />
     <Compile Include="Map.cs" />
-    <Compile Include="Menus\MainMenu.cs" />
-    <Compile Include="Menus\Button.cs" />
-    <Compile Include="Menus\Menu.cs" />
-    <Compile Include="Menus\MenuManager.cs" />
     <Compile Include="Objects.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Bullets\PoisonBullet.cs" />
