@@ -79,10 +79,16 @@ namespace F.U.E.L
             spriteBatch.Draw(backgroundImage, new Rectangle(0, 0, width, height), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
 
             Vector2 titlePosition = new Vector2(width / 2 - (titleFont.MeasureString(title).X / 2), 50);
+            Vector2 titlePositionOffset = new Vector2(3 + width / 2 - (titleFont.MeasureString(title).X / 2), 50 + 3);
             Vector2 titlePosition2 = new Vector2(width / 2 - (subTitleFont.MeasureString("Press Start To Choose Your Class").X / 2), 130);
-            spriteBatch.DrawString(titleFont, title, titlePosition, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Vector2 titlePosition2Offset = new Vector2(3 + width / 2 - (subTitleFont.MeasureString("Press Start To Choose Your Class").X / 2), 130 + 3);
+            spriteBatch.DrawString(titleFont, title, titlePosition, Color.RoyalBlue, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.1f);
+            spriteBatch.DrawString(titleFont, title, titlePositionOffset, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             if (this.title.Equals("Character Menu"))
-                spriteBatch.DrawString(subTitleFont, "Press Start To Choose Your Class", titlePosition2, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            {
+                spriteBatch.DrawString(subTitleFont, "Press Start To Choose Your Class", titlePosition2, Color.RoyalBlue, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.1f);
+                spriteBatch.DrawString(subTitleFont, "Press Start To Choose Your Class", titlePosition2Offset, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
 
         }
 

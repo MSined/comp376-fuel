@@ -210,6 +210,7 @@ namespace F.U.E.L
                                         new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
                 new List<string>() { "New Game", "Quit" }
                 );
+
             characterMenu = new MainMenu("Character Menu"); // main menu
             characterMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             characterMenu.LoadButtons(Content,
@@ -245,6 +246,7 @@ namespace F.U.E.L
                                              "None", "Gunner", "Alchemist", "Sniper", "Tank", 
                                              "None", "Gunner", "Alchemist", "Sniper", "Tank" }
                         );
+
             characterMenu.buttons[0].setSelected(true);
             characterMenu.buttons[5].setSelected(true);
             characterMenu.buttons[10].setSelected(true);
@@ -569,6 +571,7 @@ namespace F.U.E.L
             }
             #endregion
 
+            #region Update Menus
             if (menuManager != null)
             {
                 switch (menuManager.MenuEvent)
@@ -606,8 +609,7 @@ namespace F.U.E.L
                 enterLoseMenu = false;
                 inLoseMenu = true;
             }
-
-
+            #endregion
 
             #region gamepad controls for menu
 
