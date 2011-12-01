@@ -23,7 +23,7 @@ namespace F.U.E.L
 
         Texture2D healthTexture, UITexture, minimapTexture, unitsTexture, iconsTexture, buttonTexture;
 
-        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, telePadModel, checkBoxModel;
+        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, playerSpawnModel, checkBoxModel, enemySpawnModel;
 
         Camera camera;
         Map map;
@@ -154,7 +154,8 @@ namespace F.U.E.L
             buildingModel = Content.Load<Model>(@"Models\buildingModel");
             playerModel = Content.Load<Model>(@"Models\playerModel");
             treeModel = Content.Load<Model>(@"Models\treeModel");
-            telePadModel = Content.Load<Model>(@"Models\enemySpawn");
+            playerSpawnModel = Content.Load<Model>(@"Models\PlayerSpawn");
+            enemySpawnModel = Content.Load<Model>(@"Models\enemySpawn");
             checkBoxModel = Content.Load<Model>(@"Models\checkBoxModel");
 
             bgm = Content.Load<Song>(@"Sounds\bgm");
@@ -230,13 +231,14 @@ namespace F.U.E.L
             //redEffect = Content.Load<Effect>(@"Effects\Red");
             //greenEffect = Content.Load<Effect>(@"Effects\Green");
 
-            Model[] a = new Model[6];
+            Model[] a = new Model[7];
             a[0] = planeModel;
             a[1] = towerModel;
             a[2] = generatorModel;
             a[3] = buildingModel;
             a[4] = treeModel;
-            a[5] = telePadModel;
+            a[5] = playerSpawnModel;
+            a[6] = enemySpawnModel;
             map = new Map(this, a, -36, 36, GraphicsDevice);
             Components.Add(map);
 
