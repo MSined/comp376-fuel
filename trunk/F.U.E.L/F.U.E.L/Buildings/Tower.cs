@@ -31,7 +31,7 @@ namespace F.U.E.L
                                                       position.Z + (float)(rand.NextDouble() / 6)),
                    topHP, topSP, 0.1f, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
         {
-            towerCost = 100 + numTowers * 100;
+            towerCost = 100 + numTowers * 50;
             ++numTowers;
 
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/buildingcollapse");

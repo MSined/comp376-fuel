@@ -297,7 +297,7 @@ namespace F.U.E.L
                         credit -= Tower.towerCost;
                         Weapon[] towerWeapon = new Weapon[1];
                         towerWeapon[0] = new AssaultRifle(game, modelComponents, new Vector3(0, 0, 0));
-                        game.Components.Add(new Tower(game, towerModel, 200, 0, position + lookDirection, spawnPoint, towerWeapon));
+                        game.Components.Add(new Tower(game, towerModel, 300, 0, position + lookDirection, spawnPoint, towerWeapon));
                         playSoundTowerPlaced(position, cameraTarget);
                     }
                     placingTower = false;

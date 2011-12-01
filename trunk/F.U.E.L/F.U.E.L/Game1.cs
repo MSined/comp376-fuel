@@ -97,11 +97,11 @@ namespace F.U.E.L
             Content.RootDirectory = "Content";
             //graphics.IsFullScreen = true;
             // The following code removes the XNA fixed timestep (framerate limiter)
-            //IsFixedTimeStep = false;
+            IsFixedTimeStep = false;
             //// Because the above is an artificial but necessary step, this one sets the timestep to 1ms
-            //TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             //// This removes the synchronization with the screen to allow a faster framerate
-            //graphics.SynchronizeWithVerticalRetrace = false;
+            graphics.SynchronizeWithVerticalRetrace = false;
 
             //***************Multiple Resolutions for debugging purposes************************
             //graphics.PreferredBackBufferWidth = 1024;
