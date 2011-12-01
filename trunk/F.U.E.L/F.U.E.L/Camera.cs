@@ -23,10 +23,10 @@ namespace F.U.E.L
         public Vector3 cameraTarget;
 
         //Vector3 onScreenAdjust = new Vector3(0, 0, -7f);
-        public float top=-11;
-        public float bottom=8;
-        public float left=-17;
-        public float right=17;
+        public float top = -11;
+        public float bottom = 8;
+        public float left = -17;
+        public float right = 17;
 
         // Current scroll wheel value. It stores the cumulative scroll value since start of game
         // Also used to verify against new scroll values to determine if zoom in or out
@@ -48,9 +48,9 @@ namespace F.U.E.L
             cameraDirection.Normalize();
             cameraUp = up;
             CreateLookAt();
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 
-                                                             (float)Game.Window.ClientBounds.Width / 
-                                                             (float)Game.Window.ClientBounds.Height, 
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
+                                                             (float)Game.Window.ClientBounds.Width /
+                                                             (float)Game.Window.ClientBounds.Height,
                                                              1, 1000);
         }
 
@@ -61,7 +61,7 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime)
         {
-            if (players.Count == 0) 
+            if (players.Count == 0)
             {
                 foreach (GameComponent p in game.Components)
                 {
@@ -73,9 +73,9 @@ namespace F.U.E.L
             }
             int i = 0;//to count alive players 
             cameraTarget = Vector3.Zero;
-            foreach (Player p in players) 
+            foreach (Player p in players)
             {
-                if (p.isAlive) 
+                if (p.isAlive)
                 {
                     ++i;
                     cameraTarget += p.position;
@@ -83,9 +83,9 @@ namespace F.U.E.L
             }
             if (i != 0)
             {
-                cameraTarget/=i;
+                cameraTarget /= i;
             }
-            else 
+            else
             {
                 cameraTarget = new Vector3(-29, 0, 25);
             }
@@ -116,7 +116,7 @@ namespace F.U.E.L
             view = Matrix.CreateLookAt(cameraPosition, cameraPosition + cameraDirection, cameraUp);
         }
 
-        public bool onScreen(Object o) 
+        public bool onScreen(Object o)
         {
             //if (Math.Abs((o.position - (player.position+onScreenAdjust)).Length()) < 17) { return true; }
             if (o.position.Z > cameraTarget.Z + top &&
@@ -125,6 +125,11 @@ namespace F.U.E.L
                 o.position.X < cameraTarget.X + right) { return true; }
 
             else { return false; }
+        }
+
+        public void resetCamera()
+        {
+            players.Clear();
         }
     }
 }
