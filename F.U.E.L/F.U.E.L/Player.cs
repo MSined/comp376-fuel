@@ -66,13 +66,32 @@ namespace F.U.E.L
                     break;
             }
 
+            Model[] bulletModelComponent = new Model[1];
+            bulletModelComponent[0] = modelComponents[2];
+
+            Model[] fireBulletModelComponent = new Model[1];
+            fireBulletModelComponent[0] = modelComponents[3];
+
+            Model[] poisonBulletModelComponent = new Model[1];
+            poisonBulletModelComponent[0] = modelComponents[4];
+
+            Model[] bigBulletModelComponent = new Model[1];
+            bigBulletModelComponent[0] = modelComponents[5];
+
+            Model[] mineBulletModelComponent = new Model[1];
+            mineBulletModelComponent[0] = modelComponents[6];
+
+            Model[] grenadeBulletModelComponent = new Model[2];
+            grenadeBulletModelComponent[0] = modelComponents[6];
+            grenadeBulletModelComponent[1] = modelComponents[3];
+
             switch (c)
             {
                 case Class.Alchemist:
-                    weapons[0] = new Pistol(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[1] = new Heal(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[2] = new Renew(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[3] = new PoisonRing(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[0] = new Pistol(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[1] = new Heal(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[2] = new Renew(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[3] = new PoisonRing(game, poisonBulletModelComponent, new Vector3(0, 0, 0));
                     topHP = 350;
                     hp = topHP;
                     topSP = 250;
@@ -81,10 +100,10 @@ namespace F.U.E.L
                     playerClass = 1;
                     break;
                 case Class.Gunner:
-                    weapons[0] = new MiniGun(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[1] = new FlameThrower(game, modelComponents, new Vector3(0, 0, 0), this);
-                    weapons[2] = new Mines(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[3] = new RocketLauncher(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[0] = new MiniGun(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[1] = new FlameThrower(game, fireBulletModelComponent, new Vector3(0, 0, 0), this);
+                    weapons[2] = new Mines(game, mineBulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[3] = new RocketLauncher(game, bigBulletModelComponent, new Vector3(0, 0, 0));
                     topHP = 500;
                     hp = topHP;
                     topSP = 200;
@@ -93,10 +112,10 @@ namespace F.U.E.L
                     playerClass = 2;
                     break;
                 case Class.Sniper:
-                    weapons[0] = new Sniper(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[1] = new HeadShot(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[2] = new PiercingShot(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[3] = new AirStrike(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[0] = new Sniper(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[1] = new HeadShot(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[2] = new PiercingShot(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[3] = new AirStrike(game, fireBulletModelComponent, new Vector3(0, 0, 0));
                     topHP = 400;
                     hp = topHP;
                     topSP = 200;
@@ -105,10 +124,10 @@ namespace F.U.E.L
                     playerClass = 3;
                     break;
                 case Class.Tank:
-                    weapons[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[1] = new Grenade(game, modelComponents, new Vector3(0, 0, 0));
-                    weapons[2] = new SpeedBoost(game, modelComponents, new Vector3(0, 0, 0), this);
-                    weapons[3] = new GroundPound(game, modelComponents, new Vector3(0, 0, 0));
+                    weapons[0] = new Shotgun(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[1] = new Grenade(game, grenadeBulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[2] = new SpeedBoost(game, bulletModelComponent, new Vector3(0, 0, 0), this);
+                    weapons[3] = new GroundPound(game, bigBulletModelComponent, new Vector3(0, 0, 0));
                     topHP = 650;
                     hp = topHP;
                     topSP = 150;

@@ -23,7 +23,7 @@ namespace F.U.E.L
 
         Texture2D healthTexture, UITexture, minimapTexture, unitsTexture, iconsTexture, buttonTexture;
 
-        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, buildingModel, treeModel, playerSpawnModel, checkBoxModel, enemySpawnModel;
+        Model planeModel, towerModel, generatorModel, enemyModel, playerModel, bulletModel, fireBulletModel, poisonBulletModel, bigBulletModel, mineBulletModel, buildingModel, treeModel, playerSpawnModel, checkBoxModel, enemySpawnModel;
 
         Camera camera;
         Map map;
@@ -99,11 +99,11 @@ namespace F.U.E.L
             Content.RootDirectory = "Content";
             //graphics.IsFullScreen = true;
             // The following code removes the XNA fixed timestep (framerate limiter)
-            IsFixedTimeStep = false;
+            //IsFixedTimeStep = false;
             //// Because the above is an artificial but necessary step, this one sets the timestep to 1ms
-            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
+            //TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
             //// This removes the synchronization with the screen to allow a faster framerate
-            graphics.SynchronizeWithVerticalRetrace = false;
+            //graphics.SynchronizeWithVerticalRetrace = false;
 
             //***************Multiple Resolutions for debugging purposes************************
             //graphics.PreferredBackBufferWidth = 1024;
@@ -159,6 +159,11 @@ namespace F.U.E.L
             iconsTexture = Content.Load<Texture2D>(@"UITextures\icons");
 
             planeModel = Content.Load<Model>(@"Models\floorModel");
+            bulletModel = Content.Load<Model>(@"Models\bulletModel");
+            fireBulletModel = Content.Load<Model>(@"Models\fireBulletModel");
+            poisonBulletModel = Content.Load<Model>(@"Models\poisonBulletModel");
+            bigBulletModel = Content.Load<Model>(@"Models\bigBulletModel");
+            mineBulletModel = Content.Load<Model>(@"Models\mineModel");
             towerModel = Content.Load<Model>(@"Models\towerModel");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
             buildingModel = Content.Load<Model>(@"Models\buildingModel");
@@ -277,9 +282,15 @@ namespace F.U.E.L
 
             // The first model will be of the player
             // The LAST model (always last) will be the checkBox model
-            p = new Model[2];
+            p = new Model[7];
             p[0] = playerModel;
             p[1] = towerModel;
+            p[2] = bulletModel;
+            p[3] = fireBulletModel;
+            p[4] = poisonBulletModel;
+            p[5] = bigBulletModel;
+            p[6] = mineBulletModel;
+            //p[2] = bulletModel;
             t = new Model[4];
             t[0] = checkBoxModel;
 

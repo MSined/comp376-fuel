@@ -27,7 +27,7 @@ namespace F.U.E.L
         {
             if (interval > fireDelay)
             {
-                game.Components.Add(new LobAOEBullet(game, this.bulletModelComponents, position, direction, range, damage, shotByEnemy));
+                game.Components.Add(new LobAOEBullet(game, modelComponents, position, direction, range, damage, shotByEnemy));
                 interval = 0;
 
                 playSound(position, cameraTarget);
