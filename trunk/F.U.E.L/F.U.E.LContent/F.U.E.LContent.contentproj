@@ -436,8 +436,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\playerSpawnModel.png">
-      <Name>playerSpawnModel</Name>
+    <Compile Include="ScreenManagerAssets\MenuFonts\menuFontSubTitle.spritefont">
+      <Name>menuFontSubTitle</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\tower.x">
+      <Name>tower</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ScreenManagerAssets\Textures\towerTexture.png">
+      <Name>towerTexture</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -31,6 +31,7 @@ namespace F.U.E.L
 
         //protected Input inputHandle;                //Handle inputs
         protected SpriteFont titleFont;             //larger font to draw titles
+        protected SpriteFont subTitleFont;             //larger font to draw titles
         protected SpriteFont textFont;              //Font to draw menu text
 
         protected Texture2D backgroundImage;        //The image to show on background of menu
@@ -58,6 +59,7 @@ namespace F.U.E.L
         public virtual void Load(ContentManager Content, string bgTexturePath, string bgmPath, string menuOpenPath, string menuClosePath)
         {
             titleFont = Content.Load<SpriteFont>(@"ScreenManagerAssets\MenuFonts\menuFontTitle");
+            subTitleFont = Content.Load<SpriteFont>(@"ScreenManagerAssets\MenuFonts\menuFontSubTitle");
             textFont = Content.Load<SpriteFont>(@"ScreenManagerAssets\MenuFonts\menuFont");
             //Load in our image and audio files
             backgroundImage = Content.Load<Texture2D>(bgTexturePath);
@@ -73,13 +75,14 @@ namespace F.U.E.L
 
         public virtual void Draw(SpriteBatch spriteBatch, int height, int width)
         {
-            spriteBatch.Draw(backgroundImage, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.5f);
+            //spriteBatch.Draw(backgroundImage, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(backgroundImage, new Rectangle(0, 0, width, height), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.5f);
 
             Vector2 titlePosition = new Vector2(width / 2 - (titleFont.MeasureString(title).X / 2), 50);
-            Vector2 titlePosition2 = new Vector2(width / 3 - (titleFont.MeasureString(title).X / 2) - 40, 130);
+            Vector2 titlePosition2 = new Vector2(width / 2 - (subTitleFont.MeasureString("Press Start To Choose Your Class").X / 2), 130);
             spriteBatch.DrawString(titleFont, title, titlePosition, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             if (this.title.Equals("Character Menu"))
-                spriteBatch.DrawString(titleFont, "Press Start To Choose Your Class", titlePosition2, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(subTitleFont, "Press Start To Choose Your Class", titlePosition2, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         }
 

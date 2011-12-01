@@ -12,7 +12,7 @@ namespace F.U.E.L
     class MiniGun : Weapon
     {
         private const float RANGE = 7;
-        private const int DAMAGE = 5;
+        private const int DAMAGE = 3;
         private const int FIREDELAY = (int)(1 / 20.0 * 1000);
         private const int SPCOST = 0;
 

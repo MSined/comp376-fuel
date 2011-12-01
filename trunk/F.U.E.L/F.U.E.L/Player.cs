@@ -39,9 +39,6 @@ namespace F.U.E.L
         public int playerID;
         public int playerClass;//for skill icons
 
-        private float spRecoverTimer = 0f;
-        private float spRecoverInterval = 1000f;
-
         Model[] towerModel = new Model[1];
         
         public Player(Game game, Model[] modelComponents,
@@ -114,7 +111,7 @@ namespace F.U.E.L
                     weapons[3] = new GroundPound(game, modelComponents, new Vector3(0, 0, 0));
                     topHP = 650;
                     hp = topHP;
-                    topSP = 100;
+                    topSP = 150;
                     sp = topSP;
                     speed = 0.08f;
                     playerClass = 4;
@@ -128,13 +125,7 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
-            spRecoverTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (sp < topSP && spRecoverTimer > spRecoverInterval) 
-            {
-                ++sp;
-                spRecoverTimer = 0;
-            }
-
+            
             #region Keyboard Controls
             //Hack to get it working on a computer
             //KeyboardControls(gameTime, colliders, cameraTarget);
