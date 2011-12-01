@@ -14,10 +14,10 @@ namespace F.U.E.L
         public int damage { get; protected set; }
         public float distanceTraveled { get; protected set; }
         public Vector3 direction { get; protected set; }
-        public const float width = 0.5f, height = 0.5f;
+        public const float width = 0.2f, height = 0.2f;
         public Boolean shotByEnemy { get; protected set; }
 
-        public float speed = 0.2f;
+        public float speed = 0.3f;
 
         public Bullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)

@@ -14,6 +14,7 @@ namespace F.U.E.L
         private Vector3 gravity = new Vector3(0, -0.2f, 0);
         private float hitHeight = 0.5f;
         private int explosionRange = 3;
+        Model[] explosionModelComponents = new Model[1];
 
         public LobAOEBullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
@@ -21,6 +22,7 @@ namespace F.U.E.L
         {
             this.direction.Normalize();
             this.direction += impulse;
+            explosionModelComponents[0] = modelComponents[1];
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
@@ -63,7 +65,7 @@ namespace F.U.E.L
             for (float i = 0; i < 2 * Math.PI; i += 0.2f)
             {
                 Matrix m = Matrix.CreateRotationY(i);
-                game.Components.Add(new Bullet(game, modelComponents, new Vector3(position.X, hitHeight, position.Z), Vector3.Transform(direction, m), explosionRange, damage, shotByEnemy));
+                game.Components.Add(new Bullet(game, explosionModelComponents, new Vector3(position.X, hitHeight, position.Z), Vector3.Transform(direction, m), explosionRange, damage, shotByEnemy));
             }
         }
     }

@@ -12,7 +12,7 @@ namespace F.U.E.L
     class AirStrike : Weapon
     {
         private const float RANGE = 10;
-        private const int DAMAGE = 8;
+        private const int DAMAGE = 10;
         private const int FIREDELAY = (int)(15 * 1000);
         private const int SPCOST = 10;
 
@@ -38,7 +38,7 @@ namespace F.U.E.L
             launchInterval += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (launchInterval > LAUNCHDELAY && bulletsLeft > 0)
             {
-                for (float i = 0; i < 2 * Math.PI; i += 0.3f)
+                for (float i = 0; i < 2 * Math.PI; i += 0.2f)
                 {
                     Matrix m = Matrix.CreateRotationY(i);
                     game.Components.Add(new Bullet(game, this.bulletModelComponents, launchPosition + direction * (NUMEXPLOSIONS - bulletsLeft + 1) * (range / NUMEXPLOSIONS), Vector3.Transform(direction, m), EXPLOSIONRANGE, damage, shotByEnemy));                    
