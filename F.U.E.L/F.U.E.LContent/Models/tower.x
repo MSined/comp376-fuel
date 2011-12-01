@@ -11,7 +11,7 @@ xof 0303txt 0064
 		1.0;
 			1.0; 1.0; 1.0;;
 			0.0; 0.0; 0.0;;
-			TextureFilename { "c:/Users/Nicholas/Desktop/ObjModels/Tower/towerTexture.png"; }
+			TextureFilename { "../textures/towerTexture.png"; }
 		}
 Frame cube3 {
 	Mesh {

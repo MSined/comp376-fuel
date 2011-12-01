@@ -50,8 +50,12 @@ namespace F.U.E.L
         MainMenu pauseMenu;
         MainMenu mainMenu;
         MainMenu characterMenu;
+        MainMenu winMenu;
+        MainMenu loseMenu;
 
         protected Song bgm;
+
+        public static bool fpsCounterOn = false;
 
         private bool playing = false;
 
@@ -78,6 +82,10 @@ namespace F.U.E.L
         private bool inGame = false;
         private bool inMainMenu = false;
         private bool inCharacterMenu = false;
+        private bool inWinMenu = false;
+        private bool inLoseMenu = false;
+        private bool enterWinMenu = false;
+        private bool enterLoseMenu = false;
 
         public Vector3 cameraTarget { get; private set; }
 
@@ -90,9 +98,9 @@ namespace F.U.E.L
             //graphics.IsFullScreen = true;
             // The following code removes the XNA fixed timestep (framerate limiter)
             //IsFixedTimeStep = false;
-            // Because the above is an artificial but necessary step, this one sets the timestep to 1ms
+            //// Because the above is an artificial but necessary step, this one sets the timestep to 1ms
             //TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 1);
-            // This removes the synchronization with the screen to allow a faster framerate
+            //// This removes the synchronization with the screen to allow a faster framerate
             //graphics.SynchronizeWithVerticalRetrace = false;
 
             //***************Multiple Resolutions for debugging purposes************************
@@ -149,7 +157,7 @@ namespace F.U.E.L
             iconsTexture = Content.Load<Texture2D>(@"UITextures\icons");
 
             planeModel = Content.Load<Model>(@"Models\floorModel");
-            towerModel = Content.Load<Model>(@"Models\towerModel");
+            towerModel = Content.Load<Model>(@"Models\tower");
             generatorModel = Content.Load<Model>(@"Models\generatorModel");
             buildingModel = Content.Load<Model>(@"Models\buildingModel");
             playerModel = Content.Load<Model>(@"Models\playerModel");
@@ -173,6 +181,25 @@ namespace F.U.E.L
                                         new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + 30, 150, 50) },
                 new List<string>() { "Continue", "Quit" }
                 );
+
+            winMenu = new MainMenu("Win!"); // pause menu
+            winMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
+            winMenu.LoadButtons(Content,
+                new int[] { 1 },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 , 150, 50), 
+                                        new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 , 150, 50) },
+                new List<string>() { "Okay" }
+                );
+
+            loseMenu = new MainMenu("Lose!"); // pause menu
+            loseMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
+            loseMenu.LoadButtons(Content,
+                new int[] { 1 },
+                new List<Rectangle>() { new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 , 150, 50), 
+                                        new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 , 150, 50) },
+                new List<string>() { "Okay" }
+                );
+
             mainMenu = new MainMenu("Main Menu"); // main menu
             mainMenu.Load(Content, menuBG, menuBGSound, menuOpenPath, menuClosePath);
             mainMenu.LoadButtons(Content,
@@ -225,6 +252,8 @@ namespace F.U.E.L
             menuManager.AddMenu("Main Menu", mainMenu);
             menuManager.AddMenu("Character Menu", characterMenu);
             menuManager.AddMenu("Pause Menu", pauseMenu);
+            menuManager.AddMenu("Win!", winMenu);
+            menuManager.AddMenu("Lose!", loseMenu);
 
             userInterface = new UI(spriteBatch, GraphicsDevice, UITexture, healthTexture, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferWidth, minimapTexture, unitsTexture);
 
@@ -544,11 +573,33 @@ namespace F.U.E.L
                 }
             }
 
+            if (menuManager.ActiveMenu != null)
+            {
+                playing = false;
+                fpsCounterOn = false;
+            }
+
             if (!inGame && !inMainMenu && !inCharacterMenu && !inPauseMenu)
             {
                 menuManager.Show("Main Menu");
                 inMainMenu = true;
             }
+
+            if (inGame && !inMainMenu && !inCharacterMenu && !inPauseMenu && enterWinMenu)
+            {
+                menuManager.Show("Win!");
+                enterWinMenu = false;
+                inWinMenu = true;
+            }
+
+            if (inGame && !inMainMenu && !inCharacterMenu && !inPauseMenu && enterLoseMenu)
+            {
+                menuManager.Show("Lose!");
+                enterLoseMenu = false;
+                inLoseMenu = true;
+            }
+
+
 
             #region gamepad controls for menu
 
@@ -586,6 +637,15 @@ namespace F.U.E.L
                     AButtonDown1 = true;
                     inGame = false;
                     inMainMenu = true;
+                    inPauseMenu = false;
+                }
+
+                if ((inWinMenu || inLoseMenu))
+                {
+                    AButtonDown1 = true;
+                    inGame = false;
+                    inMainMenu = false;
+                    inCharacterMenu = false;
                     inPauseMenu = false;
                 }
                 
@@ -670,6 +730,15 @@ namespace F.U.E.L
                     inPauseMenu = false;
                 }
 
+                if ((inWinMenu || inLoseMenu))
+                {
+                    AButtonDown2 = true;
+                    inGame = false;
+                    inMainMenu = false;
+                    inCharacterMenu = false;
+                    inPauseMenu = false;
+                }
+
                 if (AButtonDown2)
                     AButtonDown2 = false;
             }
@@ -748,6 +817,15 @@ namespace F.U.E.L
                     AButtonDown3 = true;
                     inGame = false;
                     inMainMenu = true;
+                    inPauseMenu = false;
+                }
+
+                if ((inWinMenu || inLoseMenu))
+                {
+                    AButtonDown3 = true;
+                    inGame = false;
+                    inMainMenu = false;
+                    inCharacterMenu = false;
                     inPauseMenu = false;
                 }
 
@@ -832,6 +910,15 @@ namespace F.U.E.L
                     inPauseMenu = false;
                 }
 
+                if ((inWinMenu || inLoseMenu))
+                {
+                    AButtonDown4 = true;
+                    inGame = false;
+                    inMainMenu = false;
+                    inCharacterMenu = false;
+                    inPauseMenu = false;
+                }
+
                 if (AButtonDown4)
                     AButtonDown4 = false;
             }
@@ -881,6 +968,7 @@ namespace F.U.E.L
 
             if (menuManager.ActiveMenu == null) //Encapsulation to "Pause" game
             {
+                fpsCounterOn = true;
                 int aliveCount=0;
                 foreach(Player p in players)
                 {
@@ -888,16 +976,17 @@ namespace F.U.E.L
                 }
                 if (aliveCount == 0 && Player.credit < Player.respawnCost) 
                 {
-                    //GAMEOVER
+                    enterLoseMenu = true;
                 }
 
                 if (Generator.functionalGeneratorNum == 5) 
-                { 
-                    //WIN
+                {
+                    enterWinMenu = true;
                 }
 
                 #region Update Game Components
                 // Background music
+
                 if (!playing)
                 {
                     MediaPlayer.IsRepeating = true;
@@ -1008,7 +1097,7 @@ namespace F.U.E.L
                 //List<Building> buildings = map.buildings;
                 foreach (GameComponent gc in Components)
                 {
-                    if (gc is Object && camera.onScreen((Object)gc))
+                    if (gc is Object && camera.onScreen((Object)gc) && !(gc is FrameRateCounter))
                     {
                         Object o = (Object)gc;
                         o.Draw(camera);

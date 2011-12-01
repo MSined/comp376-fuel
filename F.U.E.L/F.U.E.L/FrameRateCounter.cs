@@ -17,6 +17,7 @@ namespace F.U.E.L
 
         int frameRate = 0;
         int frameCounter = 0;
+
         TimeSpan elapsedTime = TimeSpan.Zero;
 
         public FrameRateCounter(Game game)
@@ -58,10 +59,22 @@ namespace F.U.E.L
             spriteBatch.Begin();
 
             // Draw framerate
-            spriteBatch.DrawString(spriteFont, fps, new Vector2(33, 33), Color.Black);
-            spriteBatch.DrawString(spriteFont, fps, new Vector2(32, 32), Color.White);
-            spriteBatch.DrawString(spriteFont, Player.credit.ToString(), new Vector2(33, 53), Color.Black);
-            spriteBatch.DrawString(spriteFont, Player.credit.ToString(), new Vector2(32, 52), Color.White);
+            if (Game1.fpsCounterOn)
+            {
+                string credits = string.Format("Credits: " + Player.credit.ToString());
+                string towerCostString = string.Format("Tower Cost: " + Tower.towerCost);
+                string reviveCostString = string.Format("Revive: " + Player.respawnCost);
+                spriteBatch.DrawString(spriteFont, fps, new Vector2(30, 102), Color.Black);
+                spriteBatch.DrawString(spriteFont, fps, new Vector2(28, 100), Color.White);
+                spriteBatch.DrawString(spriteFont, credits, new Vector2(30, 30), Color.Black);
+                spriteBatch.DrawString(spriteFont, credits, new Vector2(28, 28), Color.White);
+                spriteBatch.DrawString(spriteFont, towerCostString, new Vector2(30, 54), Color.Black);
+                spriteBatch.DrawString(spriteFont, towerCostString, new Vector2(28, 52), Color.White);
+                spriteBatch.DrawString(spriteFont, reviveCostString, new Vector2(30, 78), Color.Black);
+                spriteBatch.DrawString(spriteFont, reviveCostString, new Vector2(28, 76), Color.White);
+            }
+
+
 
             spriteBatch.End();
         }

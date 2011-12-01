@@ -16,6 +16,10 @@ namespace F.U.E.L
         public int topSP;
         public int sp;// { get; protected set; }
 
+        private float spRecoverTimer = 0f;
+        private float spRecoverInterval = 1000f;
+        private int spRecoverRate = 5;
+
         public SpawnPoint spawnPoint { get; private set; }
         public Weapon[] weapons { get; private set; }
         public int selectedWeapon { get; protected set; }
@@ -56,7 +60,10 @@ namespace F.U.E.L
                 angle = MathHelper.ToRadians(180) - angle;
             }
 
+            if (this is Tower) angle += MathHelper.ToRadians(90);
+
             world = Matrix.CreateRotationY(-angle) * Matrix.CreateTranslation(position);
+            
 
             if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0))
             {
@@ -68,6 +75,13 @@ namespace F.U.E.L
             CheckCollisions(colliders);
 
             checkIfDead(cameraTarget);
+
+            spRecoverTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (sp < topSP && spRecoverTimer > spRecoverInterval)
+            {
+                sp += spRecoverRate;
+                spRecoverTimer = 0;
+            }
 
             base.Update(gameTime, colliders, cameraTarget);
         }
