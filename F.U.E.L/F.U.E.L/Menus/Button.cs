@@ -72,7 +72,7 @@ namespace F.U.E.L
             spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y) - new Vector2(texture.Width / 2, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.25f);
             if (isSelected)
             {
-                spriteBatch.DrawString(spriteFont, label, position, Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(spriteFont, label, position, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             //if (isSelectedFinal)
             //{

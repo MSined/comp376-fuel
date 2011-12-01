@@ -61,22 +61,22 @@ namespace F.U.E.L
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 26), true));
             spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-28, 0, 26), true));
 
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(24, 0, -34), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(32, 0, -34), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-26, 0, -18), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-16, 0, -22), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-8, 0, -14), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-2, 0, -18), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(4, 0, -16), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(12, 0, -12), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-22, 0, -6), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-12, 0, 2), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(12, 0, 2), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-6, 0, 18), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(8, 0, 16), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(16, 0, 16), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(16, 0, 22), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(18, 0, 28), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(24, 0.0f, -34), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(32, 0.0f, -34), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-26, 0.0f, -18), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-16, 0.0f, -22), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-8, 0.0f, -14), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-2, 0.0f, -18), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(4, 0.0f, -16), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(12, 0.0f, -12), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-22, 0.0f, -6), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-12, 0.0f, 2), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(12, 0.0f, 2), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-6, 0.0f, 18), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(8, 0.0f, 16), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(16, 0.0f, 16), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(16, 0.0f, 22), false));
+            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(18, 0.0f, 28), false));
 
             Model[] m = new Model[1];
             m[0] = modelComponents[2];
