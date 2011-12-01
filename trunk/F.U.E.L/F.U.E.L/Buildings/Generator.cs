@@ -21,6 +21,8 @@ namespace F.U.E.L
         protected SoundEffect soundEffectPowerUp;
         protected SoundEffect soundEffectPowerDown;
 
+        Model modelPoweredUp, modelPoweredDown;
+
         public int hp;
         public bool functional;
  
@@ -32,6 +34,10 @@ namespace F.U.E.L
             this.hp = 50;
             this.functional = false;
             this.lastRepair = 0;
+
+            modelPoweredUp = modelComponents[0];
+            modelPoweredDown = modelComponents[1];
+            model = modelPoweredDown;
 
             soundEffectPowerUp = game.Content.Load<SoundEffect>(@"Sounds/powerup");
             soundEffectPowerDown = game.Content.Load<SoundEffect>(@"Sounds/powerdown");
@@ -68,6 +74,7 @@ namespace F.U.E.L
 
         public void playSoundAlive(Vector3 position, Vector3 cameraTarget)
         {
+            model = modelPoweredUp;
             float dist = (cameraTarget - position).LengthSquared();
             float vol = dist / 300;
             float scaledVol = (vol >= 1 ? 0 : (1 - vol));
@@ -76,6 +83,7 @@ namespace F.U.E.L
 
         public void playSoundDies(Vector3 position, Vector3 cameraTarget)
         {
+            model = modelPoweredDown;
             float dist = (cameraTarget - position).LengthSquared();
             float vol = dist / 300;
             float scaledVol = (vol >= 1 ? 0 : (1 - vol));
