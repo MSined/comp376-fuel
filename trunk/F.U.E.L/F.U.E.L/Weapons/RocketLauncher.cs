@@ -17,7 +17,7 @@ namespace F.U.E.L
         private const int SPCOST = 10;
 
         private const int angleDiff = 25;
-        private const int numBullets = 10;
+        private const int numBullets = 3;
 
         public RocketLauncher(Game game, Model[] modelComponents, Vector3 position/*,
             ALREADY SET -> int range, int damage, int fireRate*/)

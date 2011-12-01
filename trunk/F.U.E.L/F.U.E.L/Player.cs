@@ -42,6 +42,8 @@ namespace F.U.E.L
         private float spRecoverTimer = 0f;
         private float spRecoverInterval = 1000f;
 
+        Model[] towerModel = new Model[1];
+        
         public Player(Game game, Model[] modelComponents,
             SpawnPoint spawnPoint, Class c, PlayerIndex pIndex
             )
@@ -120,6 +122,8 @@ namespace F.U.E.L
             }
             
             selectedWeapon = 1;
+
+            towerModel[0] = modelComponents[1];
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
@@ -245,10 +249,10 @@ namespace F.U.E.L
                     {
                         if (!checkBoxCollision && credit >= Tower.towerCost)
                         {
-                            Weapon[] w = new Weapon[1];
-                            w[0] = new Shotgun(game, modelComponents, new Vector3(0, 0, 0));
                             credit -= Tower.towerCost;
-                            game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                            Weapon[] towerWeapon = new Weapon[1];
+                            towerWeapon[0] = new AssaultRifle(game, modelComponents, new Vector3(0, 0, 0));
+                            game.Components.Add(new Tower(game, towerModel, 200, 0, position + lookDirection, spawnPoint, towerWeapon));
                         }
                         placingTower = false;
                         checkBoxCollision = false;
@@ -299,10 +303,10 @@ namespace F.U.E.L
                 {
                     if (!checkBoxCollision && credit >= Tower.towerCost)
                     {
-                        Weapon[] w = new Weapon[1];
-                        w[0] = new Shotgun(game, modelComponents, Vector3.Zero);
                         credit -= Tower.towerCost;
-                        game.Components.Add(new Tower(game, modelComponents, 200, 0, position + lookDirection, spawnPoint, w));
+                        Weapon[] towerWeapon = new Weapon[1];
+                        towerWeapon[0] = new AssaultRifle(game, modelComponents, new Vector3(0, 0, 0));
+                        game.Components.Add(new Tower(game, towerModel, 200, 0, position + lookDirection, spawnPoint, towerWeapon));
                         playSoundTowerPlaced(position, cameraTarget);
                     }
                     placingTower = false;

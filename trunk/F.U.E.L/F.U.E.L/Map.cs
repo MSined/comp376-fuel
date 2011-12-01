@@ -34,7 +34,6 @@ namespace F.U.E.L
 
             // Each object takes an array, need to create a new array
             Model[] tower = new Model[1];
-            // Load object into array
             tower[0] = modelComponents[1];
 
             Model[] generator = new Model[1];

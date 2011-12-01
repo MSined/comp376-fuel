@@ -12,8 +12,8 @@ namespace F.U.E.L
     class AssaultRifle : Weapon
     {
         private const float RANGE = 5;
-        private const int DAMAGE = 5;
-        private const int FIREDELAY = (int)(1 / 10.0 * 1000);
+        private const int DAMAGE = 10;
+        private const int FIREDELAY = (int)(1 / 2.0 * 1000);
         private const int SPCOST = 10;
 
         public AssaultRifle(Game game, Model[] modelComponents, Vector3 position/*,

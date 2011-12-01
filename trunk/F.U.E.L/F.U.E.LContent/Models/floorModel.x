@@ -5,7 +5,7 @@ xof 0303txt 0064
 		1.0;
 			1.0; 1.0; 1.0;;
 			0.0; 0.0; 0.0;;
-			TextureFilename { "floorTexture.png"; }
+			TextureFilename { "../Textures/floorTexture.png"; }
 		}
 Frame Regular_Plane1 {
 	Mesh {
