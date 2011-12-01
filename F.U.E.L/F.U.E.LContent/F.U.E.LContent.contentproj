@@ -387,13 +387,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\tower.x">
-      <Name>tower</Name>
-      <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="ScreenManagerAssets\MenuFonts\menuFontSubTitle.spritefont">
       <Name>menuFontSubTitle</Name>
       <Importer>FontDescriptionImporter</Importer>

@@ -45,26 +45,7 @@ Global
 		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Release|Windows Phone.ActiveCfg = Release|x86
 		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Release|x86.ActiveCfg = Release|x86
 		{ED508A72-E7BC-401E-97DC-899C29BBE7A4}.Release|Xbox 360.ActiveCfg = Release|x86
-<<<<<<< .mine
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Debug|Mixed Platforms.ActiveCfg = Debug|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Debug|Windows Phone.ActiveCfg = Debug|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Debug|x86.ActiveCfg = Debug|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Debug|Xbox 360.Deploy.0 = Debug|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|Mixed Platforms.ActiveCfg = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|Mixed Platforms.Build.0 = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|Mixed Platforms.Deploy.0 = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|Windows Phone.ActiveCfg = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|x86.ActiveCfg = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|x86.Build.0 = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|Xbox 360.Build.0 = Release|Xbox 360
-		{4C16CD37-E539-4424-8210-DCAB44A5FA2E}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
-=======
 		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Debug|Mixed Platforms.ActiveCfg = Debug|Xbox 360
-		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Debug|Mixed Platforms.Build.0 = Debug|Xbox 360
-		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Debug|Mixed Platforms.Deploy.0 = Debug|Xbox 360
 		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Debug|Windows Phone.ActiveCfg = Debug|Xbox 360
 		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Debug|Windows Phone.Build.0 = Debug|Xbox 360
 		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Debug|x86.ActiveCfg = Debug|Xbox 360
@@ -82,7 +63,6 @@ Global
 		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
 		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Release|Xbox 360.Build.0 = Release|Xbox 360
 		{FE9796FD-03B6-4459-BA96-BC97A6EBF48E}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
->>>>>>> .r132
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
