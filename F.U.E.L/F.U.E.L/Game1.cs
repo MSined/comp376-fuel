@@ -644,9 +644,11 @@ namespace F.U.E.L
                 {
                     AButtonDown1 = true;
                     inGame = false;
-                    inMainMenu = false;
+                    inMainMenu = true;
                     inCharacterMenu = false;
                     inPauseMenu = false;
+                    inWinMenu = false;
+                    inLoseMenu = false;
                 }
                 
                 if (AButtonDown1)
@@ -734,9 +736,11 @@ namespace F.U.E.L
                 {
                     AButtonDown2 = true;
                     inGame = false;
-                    inMainMenu = false;
+                    inMainMenu = true;
                     inCharacterMenu = false;
                     inPauseMenu = false;
+                    inWinMenu = false;
+                    inLoseMenu = false;
                 }
 
                 if (AButtonDown2)
@@ -824,9 +828,11 @@ namespace F.U.E.L
                 {
                     AButtonDown3 = true;
                     inGame = false;
-                    inMainMenu = false;
+                    inMainMenu = true;
                     inCharacterMenu = false;
                     inPauseMenu = false;
+                    inWinMenu = false;
+                    inLoseMenu = false;
                 }
 
                 if (AButtonDown3)
@@ -914,9 +920,11 @@ namespace F.U.E.L
                 {
                     AButtonDown4 = true;
                     inGame = false;
-                    inMainMenu = false;
+                    inMainMenu = true;
                     inCharacterMenu = false;
                     inPauseMenu = false;
+                    inWinMenu = false;
+                    inLoseMenu = false;
                 }
 
                 if (AButtonDown4)
