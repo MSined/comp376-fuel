@@ -40,9 +40,10 @@ namespace F.U.E.L
         public int playerClass;//for skill icons
 
         Model[] towerModel = new Model[1];
+        Texture2D texture;
         
         public Player(Game game, Model[] modelComponents,
-            SpawnPoint spawnPoint, Class c, PlayerIndex pIndex
+            SpawnPoint spawnPoint, Class c, PlayerIndex pIndex, Texture2D texture
             )
             : base(game, modelComponents, spawnPoint.position, 10, 10, 10, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
@@ -140,6 +141,8 @@ namespace F.U.E.L
             selectedWeapon = 1;
 
             towerModel[0] = modelComponents[1];
+
+            this.texture = texture;
         }
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
@@ -464,7 +467,37 @@ namespace F.U.E.L
                 checkBox.Draw(camera);
             }
 
-            base.Draw(camera);
+            if (this.isAlive)
+            {
+                Matrix[] transforms = new Matrix[modelComponents[0].Bones.Count];
+                modelComponents[0].CopyAbsoluteBoneTransformsTo(transforms);
+
+                foreach (ModelMesh mesh in modelComponents[0].Meshes)
+                {
+                    foreach (BasicEffect be in mesh.Effects)
+                    {
+                        be.EnableDefaultLighting();
+                        be.TextureEnabled = true;
+                        be.Texture = texture;
+                        be.SpecularPower = 10f;
+                        be.Projection = camera.projection;
+                        be.View = camera.view;
+                        be.World = world * mesh.ParentBone.Transform;
+                    }
+                    /*
+                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    {
+                        part.Effect = effect;
+                        effect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
+                        effect.Parameters["View"].SetValue(camera.view);
+                        effect.Parameters["Projection"].SetValue(camera.projection);
+                        effect.Parameters["AmbientColor"].SetValue(Color.Green.ToVector4());
+                        effect.Parameters["AmbientIntensity"].SetValue(0.5f);
+                    }
+                    */
+                    mesh.Draw();
+                }
+            }
         }
     }
 }
