@@ -1038,11 +1038,13 @@ namespace F.U.E.L
                 if (aliveCount == 0 && Player.credit < Player.respawnCost) 
                 {
                     enterLoseMenu = true;
+                    inPauseMenu = false;//debug
                 }
 
                 if (Generator.functionalGeneratorNum == 5) 
                 {
                     enterWinMenu = true;
+                    inPauseMenu = false;//debug
                 }
 
                 #region Update Game Components
