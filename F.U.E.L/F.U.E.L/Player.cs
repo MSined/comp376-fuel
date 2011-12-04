@@ -28,7 +28,7 @@ namespace F.U.E.L
         protected SoundEffect soundEffectTowerPlaced;
         protected SoundEffect soundEffectWeaponSwitch;
 
-        public static int credit = 99990;
+        public static int credit = 500;
         public static int respawnCost = 500;
         
         public bool placingTower = false, checkBoxCollision = false, switching = false;
@@ -40,6 +40,7 @@ namespace F.U.E.L
         public int playerClass;//for skill icons
 
         Model[] towerModel = new Model[1];
+        Model[] bulletModel = new Model[1];
         Texture2D texture;
         
         public Player(Game game, Model[] modelComponents,
@@ -141,6 +142,7 @@ namespace F.U.E.L
             selectedWeapon = 1;
 
             towerModel[0] = modelComponents[1];
+            bulletModel[0] = bulletModelComponent[0];
 
             this.texture = texture;
         }
@@ -318,7 +320,7 @@ namespace F.U.E.L
                     {
                         credit -= Tower.towerCost;
                         Weapon[] towerWeapon = new Weapon[1];
-                        towerWeapon[0] = new AssaultRifle(game, modelComponents, new Vector3(0, 0, 0));
+                        towerWeapon[0] = new AssaultRifle(game, bulletModel, new Vector3(0, 0, 0));
                         game.Components.Add(new Tower(game, towerModel, 300, 0, position + lookDirection, spawnPoint, towerWeapon));
                         playSoundTowerPlaced(position, cameraTarget);
                     }
