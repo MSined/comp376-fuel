@@ -10,18 +10,41 @@ namespace F.U.E.L
 {
     class BuildBox : Object
     {
-        Player boundPlayer;
+        Character boundCharacter;
+        public Texture2D[] textures;
+        public int currentTexture = 0;
+        bool collided = false;
 
-        public BuildBox(Game game, Model[] modelComponents, Vector3 position, FloatRectangle bounds, Player boundPlayer)
+        public BuildBox(Game game, Model[] modelComponents, Vector3 position, FloatRectangle bounds, Character boundCharacter, Texture2D[] textures)
             : base(game, modelComponents, position, bounds, false)
         {
-            this.boundPlayer = boundPlayer;
+            this.boundCharacter = boundCharacter;
+            this.textures = textures;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
         {
+            foreach (Object o in colliders)
+            {
+                if (!(o is Bullet) && this.bounds.FloatIntersects(o.bounds))
+                {
+                    collided = true;
+                    boundCharacter.checkBoxCollision = true;
+                }
+            }
+            if (collided)
+            {
+                currentTexture = 1;
+                collided = false;
+            }
+            else
+            {
+                currentTexture = 0;
+                boundCharacter.checkBoxCollision = false;
+            }
+
             // Component-wise sum of two vectors to create the new position
-            position = boundPlayer.position + boundPlayer.lookDirection;
+            position = boundCharacter.position + boundCharacter.lookDirection;
 
             world = Matrix.CreateTranslation(position);
 
@@ -41,6 +64,8 @@ namespace F.U.E.L
                 foreach (BasicEffect be in mesh.Effects)
                 {
                     be.EnableDefaultLighting();
+                    be.TextureEnabled = true;
+                    be.Texture = textures[currentTexture];
                     be.SpecularPower = 10f;
                     be.Projection = camera.projection;
                     be.View = camera.view;

@@ -33,7 +33,9 @@ namespace F.U.E.L
         float scrollWheelValue = 0;
 
         private Game game;
-        //private Player player = null;
+
+        private Vector3 origPos, origTarget, origUp, origDir, origDistFromPlayer;
+        public bool saveCamera = true;
 
         private List<Player> players = new List<Player>();
 
@@ -52,6 +54,11 @@ namespace F.U.E.L
                                                              (float)Game.Window.ClientBounds.Width /
                                                              (float)Game.Window.ClientBounds.Height,
                                                              1, 1000);
+            origPos = pos;
+            origTarget = target;
+            origUp = up;
+            origDir = cameraDirection;
+            origDistFromPlayer = cameraDistFromPlayer;
         }
 
         public override void Initialize()
@@ -87,6 +94,7 @@ namespace F.U.E.L
             }
             else
             {
+                // Send camera to a specific point when all the players are dead
                 cameraTarget = new Vector3(-29, 0, 25);
             }
             cameraPosition = cameraTarget + (Vector3.UnitZ * 2.2f) + cameraDistFromPlayer;
@@ -118,12 +126,11 @@ namespace F.U.E.L
 
         public bool onScreen(Object o)
         {
-            //if (Math.Abs((o.position - (player.position+onScreenAdjust)).Length()) < 17) { return true; }
             if (o.position.Z > cameraTarget.Z + top &&
                 o.position.Z < cameraTarget.Z + bottom &&
                 o.position.X > cameraTarget.X + left &&
                 o.position.X < cameraTarget.X + right) { return true; }
-
+            
             else { return false; }
         }
 

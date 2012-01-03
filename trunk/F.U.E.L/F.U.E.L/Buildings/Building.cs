@@ -14,8 +14,8 @@ namespace F.U.E.L
         public bool isTree;
         
         public Building(Game game, Model[] modelComponents, Vector3 position,
-            float width, float depth, float angle, bool isTree)
-            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, width, depth), true)
+            float width, float height, float angle, bool isTree)
+            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, width, height), true)
         {
             model = modelComponents[0];
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);

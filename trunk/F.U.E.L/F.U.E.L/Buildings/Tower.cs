@@ -29,10 +29,10 @@ namespace F.U.E.L
             : base(game, modelComponents, new Vector3(position.X + (float)(rand.NextDouble() / 6),
                                                       position.Y,
                                                       position.Z + (float)(rand.NextDouble() / 6)),
-                   topHP, topSP, 0.1f, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, depth), true)
+                   topHP, topSP, 0.1f, anySpawnPoint, weapons, new FloatRectangle(position.X, position.Z, width, height), true)
         {
-            towerCost = 100 + numTowers * 50;
             ++numTowers;
+            towerCost = 200 + numTowers * 50;
 
             soundEffect = game.Content.Load<SoundEffect>(@"Sounds/buildingcollapse");
         }
@@ -42,13 +42,13 @@ namespace F.U.E.L
             float distance = float.PositiveInfinity;
             foreach (Enemy e in enemies)
             {
-                if ((e.position - this.position).Length() < distance)
+                if ((e.position - this.position).LengthSquared() < distance)
                 {
-                    distance = (e.position - this.position).Length();
+                    distance = (e.position - this.position).LengthSquared();
                     target = e;
                 }
             }
-            if (distance > weapons[selectedWeapon].range)//out of weapon range
+            if (distance > (weapons[selectedWeapon].range * weapons[selectedWeapon].range))//out of weapon range
             {
                 target = null;
             }
@@ -62,7 +62,7 @@ namespace F.U.E.L
             soundEffect.Play(scaledVol, 0.0f, 0.0f);
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget, List<Waypoint> waypointsList)
         {
             if (target == null || !target.isAlive)//choose target if it doesn't have one or the last one is dead
             {
@@ -78,8 +78,8 @@ namespace F.U.E.L
             }
             else
             {
-                float targetDist = (target.position - this.position).Length();
-                if (targetDist < weapons[selectedWeapon].range)
+                float targetDist = (target.position - this.position).LengthSquared();
+                if (targetDist < (weapons[selectedWeapon].range * weapons[selectedWeapon].range))
                 {
                     lookDirection = target.position - this.position;
                     weapons[selectedWeapon].shoot(this.position, lookDirection, false, gameTime, cameraTarget);
@@ -90,7 +90,7 @@ namespace F.U.E.L
                 }
             }
             weapons[selectedWeapon].Update(gameTime, colliders, cameraTarget);
-            base.Update(gameTime, colliders, cameraTarget);
+            base.Update(gameTime, colliders, cameraTarget, waypointsList);
         }
     }
 }

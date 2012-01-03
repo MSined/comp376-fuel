@@ -31,8 +31,7 @@ namespace F.U.E.L
         public static int credit = 500;
         public static int respawnCost = 500;
         
-        public bool placingTower = false, checkBoxCollision = false, switching = false;
-        public BuildBox checkBox;
+        public bool placingTower = false, switching = false;
         public int attackerNum=0;
 
         private PlayerIndex playerIndex;
@@ -42,11 +41,18 @@ namespace F.U.E.L
         Model[] towerModel = new Model[1];
         Model[] bulletModel = new Model[1];
         Texture2D texture;
+
+        // Debugging
+        //string waypointText = "";
+        //System.IO.StreamWriter file = new System.IO.StreamWriter("Waypoints3.txt");
+        //bool lDown = false;
+        //bool wDown = false, sDown = false, dDown = false, aDown = false;
+        //List<Tower> testList = new List<Tower>();
         
         public Player(Game game, Model[] modelComponents,
             SpawnPoint spawnPoint, Class c, PlayerIndex pIndex, Texture2D texture
             )
-            : base(game, modelComponents, spawnPoint.position, 10, 10, 10, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
+            : base(game, modelComponents, spawnPoint.position, 10, 10, 8, spawnPoint, new Weapon[4], new FloatRectangle(spawnPoint.position.X, spawnPoint.position.Z, width, depth), true)
         {
             soundEffectTowerPlaced = game.Content.Load<SoundEffect>(@"Sounds/towerplaced");
             soundEffectWeaponSwitch = game.Content.Load<SoundEffect>(@"Sounds/weaponswitch");
@@ -90,7 +96,7 @@ namespace F.U.E.L
             switch (c)
             {
                 case Class.Alchemist:
-                    weapons[0] = new Pistol(game, bulletModelComponent, new Vector3(0, 0, 0));
+                    weapons[0] = new AssaultRifle(game, bulletModelComponent, new Vector3(0, 0, 0));
                     weapons[1] = new Heal(game, bulletModelComponent, new Vector3(0, 0, 0));
                     weapons[2] = new Renew(game, bulletModelComponent, new Vector3(0, 0, 0));
                     weapons[3] = new PoisonRing(game, poisonBulletModelComponent, new Vector3(0, 0, 0));
@@ -147,16 +153,16 @@ namespace F.U.E.L
             this.texture = texture;
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
+        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget, List<Waypoint> waypointList)
         {
             
             #region Keyboard Controls
             //Hack to get it working on a computer
-            //KeyboardControls(gameTime, colliders, cameraTarget);
+            KeyboardControls(gameTime, colliders, cameraTarget);
             #endregion
 
             #region Gamepad Support
-            GamePadControls(gameTime, colliders, cameraTarget);
+            //GamePadControls(gameTime, colliders, cameraTarget);
             #endregion
             
             foreach (Weapon w in weapons)
@@ -164,7 +170,7 @@ namespace F.U.E.L
                 w.Update(gameTime, colliders, cameraTarget);
             }
 
-            base.Update(gameTime, colliders, cameraTarget);
+            base.Update(gameTime, colliders, cameraTarget, waypointList);
 
             if (this.position.X > cameraTarget.X + 9)
             {
@@ -191,6 +197,27 @@ namespace F.U.E.L
             {
                 if (this.isAlive)
                 {
+                    if (k.IsKeyDown(Keys.O))
+                        Game1.endGameSwarm = true;
+                    /*
+                    if (k.IsKeyDown(Keys.L) && !lDown)
+                    {
+                        lDown = true;
+                        waypointText = "(" + ((int)this.position.X).ToString() + "," + ((int)this.position.Y).ToString() + "," + ((int)this.position.Z).ToString() + ")";
+                        file.WriteLine(waypointText);
+                        testList.Add(new Tower(this.game, this.towerModel, 10, 10, this.position, spawnPoint, this.weapons));
+                    }
+                    else if (k.IsKeyUp(Keys.L))
+                    {
+                        lDown = false;
+                    }
+
+                    if (k.IsKeyDown(Keys.F12))
+                    {
+                        file.Close();
+                    }
+                    */
+
                     if (k.IsKeyDown(Keys.Up) || k.IsKeyDown(Keys.Down) || k.IsKeyDown(Keys.Left) || k.IsKeyDown(Keys.Right))
                     {
                         lookDirection = new Vector3(0, 0, 0);
@@ -210,17 +237,41 @@ namespace F.U.E.L
                     velocity = new Vector3(0, 0, 0);
                     if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.D))
                     {
-                        if (k.IsKeyDown(Keys.W))
+                        if (k.IsKeyDown(Keys.W))// && !wDown)
+                        {
                             velocity += new Vector3(0, 0, -1);
+                            //position += new Vector3(0, 0, -1);
+                            //wDown = true;
+                        }
+                        //else if (k.IsKeyUp(Keys.W))
+                        //    wDown = false;
 
-                        else if (k.IsKeyDown(Keys.S))
+                        if (k.IsKeyDown(Keys.S))// && !sDown)
+                        {
                             velocity += new Vector3(0, 0, 1);
+                            //position += new Vector3(0, 0, 1);
+                            //sDown = true;
+                        }
+                        //else if (k.IsKeyUp(Keys.S))
+                        //    sDown = false;
 
-                        if (k.IsKeyDown(Keys.A))
+                        if (k.IsKeyDown(Keys.A))// && !aDown)
+                        {
                             velocity += new Vector3(-1, 0, 0);
+                            //position += new Vector3(-1, 0, 0);
+                            //aDown = true;
+                        }
+                        //else if (k.IsKeyUp(Keys.A))
+                        //    aDown = false;
 
-                        else if (k.IsKeyDown(Keys.D))
+                        if (k.IsKeyDown(Keys.D))// && !dDown)
+                        {
                             velocity += new Vector3(1, 0, 0);
+                            //position += new Vector3(1, 0, 0);
+                            //dDown = true;
+                        }
+                        //else if (k.IsKeyUp(Keys.D))
+                        //    dDown = false;
                     }
 
                     if (k.IsKeyDown(Keys.R) && this.getUsableBuilding() is Generator)
@@ -249,28 +300,20 @@ namespace F.U.E.L
                     if (k.IsKeyDown(Keys.T))
                     {
                         placingTower = true;
-                        checkBox.Update(gameTime);
-                        foreach (Object o in colliders)
-                        {
-                            if (checkBox.bounds.FloatIntersects(o.bounds))
-                            {
-                                checkBoxCollision = true;
-                                break;
-                            }
-                            checkBoxCollision = false;
-                        }
+                        checkBox.isAlive = true;
                     }
-                    if (k.IsKeyUp(Keys.T) && placingTower)
+                    else if (k.IsKeyUp(Keys.T) && placingTower)
                     {
                         if (!checkBoxCollision && credit >= Tower.towerCost)
                         {
                             credit -= Tower.towerCost;
                             Weapon[] towerWeapon = new Weapon[1];
-                            towerWeapon[0] = new AssaultRifle(game, modelComponents, new Vector3(0, 0, 0));
+                            towerWeapon[0] = new AssaultRifle(game, bulletModel, new Vector3(0, 0, 0));
                             game.Components.Add(new Tower(game, towerModel, 200, 0, position + lookDirection, spawnPoint, towerWeapon));
                         }
                         placingTower = false;
                         checkBoxCollision = false;
+                        checkBox.isAlive = false;
                     }
                 }
 
@@ -303,29 +346,20 @@ namespace F.U.E.L
                 if (gp.IsButtonDown(Buttons.X))
                 {
                     placingTower = true;
-                    checkBox.Update(gameTime);
-                    foreach (Object o in colliders)
-                    {
-                        if (checkBox.bounds.FloatIntersects(o.bounds))
-                        {
-                            checkBoxCollision = true;
-                            break;
-                        }
-                        checkBoxCollision = false;
-                    }
+                    checkBox.isAlive = true;
                 }
-                else if (placingTower)
+                else if (gp.IsButtonUp(Buttons.X) && placingTower)
                 {
                     if (!checkBoxCollision && credit >= Tower.towerCost)
                     {
                         credit -= Tower.towerCost;
                         Weapon[] towerWeapon = new Weapon[1];
                         towerWeapon[0] = new AssaultRifle(game, bulletModel, new Vector3(0, 0, 0));
-                        game.Components.Add(new Tower(game, towerModel, 300, 0, position + lookDirection, spawnPoint, towerWeapon));
-                        playSoundTowerPlaced(position, cameraTarget);
+                        game.Components.Add(new Tower(game, towerModel, 200, 0, position + lookDirection, spawnPoint, towerWeapon));
                     }
                     placingTower = false;
                     checkBoxCollision = false;
+                    checkBox.isAlive = false;
                 }
 
                 if (gp.IsButtonDown(Buttons.LeftShoulder) && !switching)
@@ -486,20 +520,15 @@ namespace F.U.E.L
                         be.View = camera.view;
                         be.World = world * mesh.ParentBone.Transform;
                     }
-                    /*
-                    foreach (ModelMeshPart part in mesh.MeshParts)
-                    {
-                        part.Effect = effect;
-                        effect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
-                        effect.Parameters["View"].SetValue(camera.view);
-                        effect.Parameters["Projection"].SetValue(camera.projection);
-                        effect.Parameters["AmbientColor"].SetValue(Color.Green.ToVector4());
-                        effect.Parameters["AmbientIntensity"].SetValue(0.5f);
-                    }
-                    */
                     mesh.Draw();
                 }
             }
+
+            /* REMOVE AFTER DEBUGGING */
+            //foreach (Tower t in testList)
+            //{
+            //    t.Draw(camera);
+            //}
         }
     }
 }
