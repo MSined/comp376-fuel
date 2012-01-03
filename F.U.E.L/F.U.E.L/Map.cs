@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,12 +20,17 @@ namespace F.U.E.L
         // Map has list of spawnpoints first in the list is the player spawnpoint
         public List<SpawnPoint> spawnPoints { get; protected set; }
         public List<Building> usableBuildings { get; protected set; }
+        public List<Waypoint> waypointsList { get; protected set; }
 
         RasterizerState originalState, transparentState;
 
         DepthStencilState first, second, original;
 
         GraphicsDevice graphics;
+
+        string waypointsFileName = "WaypointsDetailed.txt";
+        StreamReader sr = new StreamReader("WaypointsDetailed.txt");
+        //StreamReader sr = new StreamReader("C:\\Users\\Nicholas\\Desktop\\F.U.E.L\\F.U.E.L\\F.U.E.L\\bin\\x86\\Debug\\WaypointsDetailed.txt");
 
         public Map(Game game, Model[] modelComponents, float leftX, float bottomY, GraphicsDevice graphics)
             : base(game)
@@ -53,28 +59,100 @@ namespace F.U.E.L
             buildings = new List<Building>();
             spawnPoints = new List<SpawnPoint>();
             usableBuildings = new List<Building>();
+            waypointsList = new List<Waypoint>();
 
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 24), true));
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-28, 0, 24), true));
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-30, 0, 26), true));
-            spawnPoints.Add(new SpawnPoint(modelComponents[5], new Vector3(-28, 0, 26), true));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[5], new Vector3(-30, 0, 24), true));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[5], new Vector3(-28, 0, 24), true));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[5], new Vector3(-30, 0, 26), true));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[5], new Vector3(-28, 0, 26), true));
 
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(24, 0.0f, -34), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(32, 0.0f, -34), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-26, 0.0f, -18), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-16, 0.0f, -22), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-8, 0.0f, -14), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-2, 0.0f, -18), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(4, 0.0f, -16), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(12, 0.0f, -12), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-22, 0.0f, -6), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-12, 0.0f, 2), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(12, 0.0f, 2), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(-6, 0.0f, 18), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(8, 0.0f, 16), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(16, 0.0f, 16), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(16, 0.0f, 22), false));
-            spawnPoints.Add(new SpawnPoint(modelComponents[6], new Vector3(18, 0.0f, 28), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(24, 0.0f, -34), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(32, 0.0f, -34), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(-26, 0.0f, -18), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(-16, 0.0f, -22), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(-8, 0.0f, -14), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(-2, 0.0f, -18), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(4, 0.0f, -16), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(12, 0.0f, -12), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(-22, 0.0f, -6), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(-12, 0.0f, 2), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(12, 0.0f, 2), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(-6, 0.0f, 18), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(8, 0.0f, 16), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(16, 0.0f, 16), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(16, 0.0f, 22), false));
+            spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[6], new Vector3(18, 0.0f, 28), false));
+
+            #region Read Waypoint Information from file
+            int ctr = 0;
+            try
+            {
+                // Create an instance of StreamReader to read from a file.
+                // The using statement also closes the StreamReader.
+                using (sr)
+                {
+                    int xPos = 0, yPos = 0, zPos = 0;
+                    char[] delimiterChars = { ' ', ',', '\n', ')', '(', '/' };
+                    string[] words = new string[10];
+                    String line;
+                    // Read and display lines from the file until the end of
+                    // the file is reached.
+                    while ((line = sr.ReadLine()) != null || line.Equals("Waypoint Connections"))
+                    {
+                        // If Waypoint Connections is reached, leave this block and enter the next
+                        if (line.Equals("Waypoint Connections"))
+                            break;
+
+                        else if (line.Equals("Waypoint Locations") || line[0] == '/')
+                            continue;
+
+                        words = line.Split(delimiterChars);
+                        xPos = int.Parse(words[1]);
+                        yPos = int.Parse(words[2]);
+                        zPos = int.Parse(words[3]);
+
+                        waypointsList.Add(new Waypoint(this.Game, new Vector3(xPos, yPos, zPos)));
+                        //spawnPoints.Add(new SpawnPoint(this.Game, modelComponents[5], new Vector3(xPos, yPos, zPos), true));
+                    }
+                    //int ctr = 0;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        // If the first char is a backslash, skip this line
+                        if(line[0] == '/')
+                        {
+                            continue;
+                        }
+
+                        // Split the line up by the delimiters
+                        words = line.Split(delimiterChars);
+
+                        Waypoint.Edge edge;
+                        for(int i = 0; i < words.Length; ++i){
+                            // If empty spot in array, skip it
+                            if(words[i] == null)
+                                continue;
+
+                            // Create new temporary edge
+                            edge = new Waypoint.Edge();
+                            // Assign its connected to counterpart
+                            edge.connectedTo = waypointsList[int.Parse(words[i]) - 1];
+                            // Get the distance between the twp points
+                            edge.length = (waypointsList[ctr].position - edge.connectedTo.position).LengthSquared();
+                            // Add the edge to the connectedEdges list of this spawn point
+                            waypointsList[ctr].connectedEdges.Add(edge);
+                        }
+                        // Increment the index counter for the spawnpoints list
+                        ++ctr;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Let the user know what went wrong.
+                Console.WriteLine("The waypoints file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+            #endregion
 
             usableBuildings.Add(new Generator(game, generator, new Vector3(-26, 0, 24), 0f));
             usableBuildings.Add(new Generator(game, generator, new Vector3(28, 0, 28), 0f));
@@ -216,10 +294,10 @@ namespace F.U.E.L
 
             foreach (SpawnPoint s in spawnPoints)
             {
-                //if (camera.onScreen((Object)s))
-                //{
+                if (camera.onScreen((Object)s))
+                {
                     s.Draw(camera);
-                //}
+                }
             }
 
             foreach (Building b in usableBuildings)

@@ -25,11 +25,12 @@ namespace F.U.E.L
 
         public int hp;
         public bool functional;
+        public bool requestGeneratorCinematic = false;
  
         public Generator(Game game, Model[] modelComponents, Vector3 position,
             float angle
             )
-            : base(game, modelComponents, position, 0.7f, 0.7f, angle, false)
+            : base(game, modelComponents, position, 1, 1, angle, false)
         {
             this.hp = 50;
             this.functional = false;
@@ -47,10 +48,18 @@ namespace F.U.E.L
         {
             long nowTick = DateTime.Now.Ticks;
 
-            if (lastRepair + repairRate < nowTick)
+            if (lastRepair + repairRate < nowTick && hp < topHP)
             {
-                hp += repairSpeed;
-                lastRepair = nowTick;
+                if (hp + repairSpeed > topHP)
+                {
+                    hp = topHP;
+                    lastRepair = nowTick;
+                }
+                else
+                {
+                    hp += repairSpeed;
+                    lastRepair = nowTick;
+                }
             }
         }
 
@@ -62,6 +71,9 @@ namespace F.U.E.L
                 functional = true;
                 ++functionalGeneratorNum;
                 playSoundAlive(position, cameraTarget);
+                // This was used while I was trying to make the cinematic of the generator being repaired
+                // Commented it out as I was getting annoyed
+                //requestGeneratorCinematic = true;
             }
 
             if (hp <= 0 && functional) {

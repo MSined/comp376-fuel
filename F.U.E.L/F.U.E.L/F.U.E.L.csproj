@@ -18,7 +18,8 @@
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Nicholas\Desktop\FUEL\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,10 +29,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -58,6 +59,18 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>A7A9D8FF5CB1A4940E0151B119D094EBC21E4711</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>F.U.E.L_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
@@ -107,7 +120,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildBox.cs" />
+    <Compile Include="BoundingShapes\FloatSphere.cs" />
+    <Compile Include="Tools\BuildBox.cs" />
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Buildings\Tower.cs" />
     <Compile Include="Bullets\Bullet.cs" />
@@ -122,8 +136,8 @@
     <Compile Include="Enemies\HunterEnemy.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="Buildings\Factory.cs" />
-    <Compile Include="FloatRectangle.cs" />
-    <Compile Include="FrameRateCounter.cs" />
+    <Compile Include="BoundingShapes\FloatRectangle.cs" />
+    <Compile Include="Tools\FrameRateCounter.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Buildings\Generator.cs" />
     <Compile Include="Menus\Button.cs">
@@ -158,10 +172,10 @@
     <Compile Include="Weapons\RocketLauncher.cs" />
     <Compile Include="Bullets\SeekingBullet.cs" />
     <Compile Include="Weapons\SnakeGun.cs" />
-    <Compile Include="SpatialHashGrid.cs" />
-    <Compile Include="SpawnPoint.cs" />
-    <Compile Include="UI.cs" />
-    <Compile Include="Waypoint.cs" />
+    <Compile Include="Tools\SpatialHashGrid.cs" />
+    <Compile Include="Waypoints\SpawnPoint.cs" />
+    <Compile Include="Tools\UI.cs" />
+    <Compile Include="Waypoints\Waypoint.cs" />
     <Compile Include="Weapons\Weapon.cs" />
     <Compile Include="Weapons\AssaultRifle.cs" />
     <Compile Include="Weapons\Grenade.cs" />
@@ -212,6 +226,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram3.cd" />
+    <None Include="F.U.E.L_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -38,21 +38,14 @@ namespace F.U.E.L
 
         public bool FloatIntersects(FloatRectangle other)
         {
+            // If this is somehow contained within other
             if (this.Right >= other.Left &&
                this.Left <= other.Right &&
                this.Top >= other.Bottom &&
                this.Bottom <= other.Top)
                 return true;
-            return false;
-        }
 
-        public bool FloatIntersectsExtended(FloatRectangle other)
-        {
-            if (this.Right + 0.1f > other.Left - 0.1f &&
-               this.Left - 0.1f < other.Right + 0.1f &&
-               this.Top - 0.1f > other.Bottom + 0.1f &&
-               this.Bottom + 0.1f < other.Top - 0.1f)
-                return true;
+            // No collision
             return false;
         }
     }

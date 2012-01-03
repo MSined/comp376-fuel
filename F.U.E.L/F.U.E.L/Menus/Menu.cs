@@ -29,9 +29,9 @@ namespace F.U.E.L
             Go_Deeper
         }public ButtonEvents ButtonEvent { get; set; }   //Feedback event to MenuManager
 
-        //protected Input inputHandle;                //Handle inputs
+        //protected Input inputHandle;              //Handle inputs
         protected SpriteFont titleFont;             //larger font to draw titles
-        protected SpriteFont subTitleFont;             //larger font to draw titles
+        protected SpriteFont subTitleFont;          //larger font to draw titles
         protected SpriteFont textFont;              //Font to draw menu text
 
         protected Texture2D backgroundImage;        //The image to show on background of menu
@@ -80,10 +80,13 @@ namespace F.U.E.L
 
             Vector2 titlePosition = new Vector2(width / 2 - (titleFont.MeasureString(title).X / 2), 50);
             Vector2 titlePositionOffset = new Vector2(3 + width / 2 - (titleFont.MeasureString(title).X / 2), 50 + 3);
+
             Vector2 titlePosition2 = new Vector2(width / 2 - (subTitleFont.MeasureString("Press Start To Choose Your Class").X / 2), 130);
             Vector2 titlePosition2Offset = new Vector2(3 + width / 2 - (subTitleFont.MeasureString("Press Start To Choose Your Class").X / 2), 130 + 3);
+
             spriteBatch.DrawString(titleFont, title, titlePosition, Color.RoyalBlue, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.1f);
             spriteBatch.DrawString(titleFont, title, titlePositionOffset, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
             if (this.title.Equals("Character Menu"))
             {
                 spriteBatch.DrawString(subTitleFont, "Press Start To Choose Your Class", titlePosition2, Color.RoyalBlue, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.1f);

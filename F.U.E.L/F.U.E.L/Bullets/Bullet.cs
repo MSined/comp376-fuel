@@ -21,7 +21,7 @@ namespace F.U.E.L
 
         public Bullet(Game game, Model[] modelComponents, Vector3 position,
             Vector3 direction, float range, int damage, Boolean shotByEnemy)
-            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Y, width, height), true)
+            : base(game, modelComponents, position, new FloatRectangle(position.X, position.Z, width, height), true)
         {
             this.range = range;
             this.damage = damage;

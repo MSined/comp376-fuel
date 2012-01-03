@@ -13,20 +13,20 @@ namespace F.U.E.L
         Model model;
         Matrix world = Matrix.Identity;
         float angle = 0;
-        public float spawnTimer = 0, spawnTimeDelay = 1000;
+        public float spawnTimer = 999, spawnTimeDelay = 1000;
         bool playerSpawnPoint = false;
-        public int spawnLimit = 2;
+        public int spawnLimit = 3;
         public int spawnCounter = 0;
 
-        public SpawnPoint(Model model, Vector3 position, bool isPlayersSpawn)
-            : base(position)
+        public SpawnPoint(Game game, Model model, Vector3 position, bool isPlayersSpawn)
+            : base(game, position)
         {
             this.model = model;
             playerSpawnPoint = isPlayersSpawn;
             world = Matrix.CreateRotationY(MathHelper.ToRadians(angle)) * Matrix.CreateTranslation(position);
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             spawnTimer += gameTime.ElapsedGameTime.Milliseconds;
         }
@@ -45,7 +45,7 @@ namespace F.U.E.L
             return false;
         }
 
-        public void Draw(Camera camera)
+        public override void Draw(Camera camera)
         {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);

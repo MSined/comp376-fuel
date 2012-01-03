@@ -12,8 +12,8 @@ namespace F.U.E.L
     class HeadShot : Weapon
     {
         private const float RANGE = 10;
-        private const int DAMAGE = 100;
-        private const int FIREDELAY = (int)(6f * 1000);
+        private const int DAMAGE = 200;
+        private const int FIREDELAY = (int)(7f * 1000);
         private const int SPCOST = 10;
 
         public HeadShot(Game game, Model[] modelComponents, Vector3 position/*,

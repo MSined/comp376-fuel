@@ -74,10 +74,6 @@ namespace F.U.E.L
             {
                 spriteBatch.DrawString(spriteFont, label, position, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-            //if (isSelectedFinal)
-            //{
-            //    spriteBatch.DrawString(spriteFont, label, position, Color.Yellow, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-            //}
             else
                 spriteBatch.DrawString(spriteFont, label, position, Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }

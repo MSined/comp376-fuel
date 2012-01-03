@@ -26,11 +26,13 @@ namespace F.U.E.L
         protected int[] attributes { get; private set; }
 
         public Vector3 lookDirection = new Vector3(1, 0, 0);
-        protected Vector3 velocity = new Vector3(0,0,0);
+        public Vector3 velocity = new Vector3(0,0,0);
         public float speed;
 
-        public Boolean poisoned = false;
+        public Boolean poisoned = false, checkBoxCollision = false;
         public int burningStacks = 0;
+        public BuildBox checkBox;
+        public bool wasUpdated = false;
 
         // Characters initial position is defined by the spawnpoint ther are associated with
         public Character(Game game, Model[] modelComponents, Vector3 position,
@@ -50,7 +52,7 @@ namespace F.U.E.L
             this.selectedWeapon = 0;
         }
 
-        public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget)
+        public virtual void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget, List<Waypoint> waypointList)
         {
             lookDirection.Normalize();
 
@@ -63,27 +65,34 @@ namespace F.U.E.L
             if (this is Tower) angle += MathHelper.ToRadians(90);
 
             world = Matrix.CreateRotationY(-angle) * Matrix.CreateTranslation(position);
-            
 
-            if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0))
+            // Don't perform this block of code if object is a tower
+            // towers do not need a velocity, or check for collisions, or check if dead, or check for sp recovery
+            if (!(this is Tower))
             {
-                velocity.Normalize();
-                position += speed * velocity;
-                this.bounds = new FloatRectangle(position.X, position.Z, this.bounds.Width, this.bounds.Height);
+                if (!(velocity.X == 0 && velocity.Y == 0 && velocity.Z == 0))
+                {
+                    velocity.Normalize();
+                    position += speed * velocity;
+                    this.bounds = new FloatRectangle(position.X, position.Z, this.bounds.Width, this.bounds.Height);
+                }
+                //check collisions after moved
+                CheckCollisions(colliders);
+
+                checkIfDead(cameraTarget);
+
+                if (this is Enemy)
+                    checkBox.Update(gameTime, colliders, cameraTarget);
+
+                spRecoverTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (sp < topSP && spRecoverTimer > spRecoverInterval)
+                {
+                    sp += spRecoverRate;
+                    spRecoverTimer = 0;
+                }
             }
-            //check collisions after moved
-            CheckCollisions(colliders);
 
-            checkIfDead(cameraTarget);
-
-            spRecoverTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (sp < topSP && spRecoverTimer > spRecoverInterval)
-            {
-                sp += spRecoverRate;
-                spRecoverTimer = 0;
-            }
-
-            base.Update(gameTime, colliders, cameraTarget);
+            //base.Update(gameTime, colliders, cameraTarget, waypointList);
         }
 
         public void checkIfDead(Vector3 cameraTarget)
@@ -145,17 +154,6 @@ namespace F.U.E.L
                         be.View = camera.view;
                         be.World = world * mesh.ParentBone.Transform;
                     }
-                    /*
-                    foreach (ModelMeshPart part in mesh.MeshParts)
-                    {
-                        part.Effect = effect;
-                        effect.Parameters["World"].SetValue(world * mesh.ParentBone.Transform);
-                        effect.Parameters["View"].SetValue(camera.view);
-                        effect.Parameters["Projection"].SetValue(camera.projection);
-                        effect.Parameters["AmbientColor"].SetValue(Color.Green.ToVector4());
-                        effect.Parameters["AmbientIntensity"].SetValue(0.5f);
-                    }
-                    */
                     mesh.Draw();
                 }
             }

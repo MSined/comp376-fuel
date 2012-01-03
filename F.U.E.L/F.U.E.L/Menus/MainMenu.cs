@@ -19,12 +19,13 @@ namespace F.U.E.L
     class MainMenu : Menu
     {
         public List<Button> buttons;
-        //bool wKeyDown = false;
-        //bool sKeyDown = false;
         public bool upButtonDown1 = false, upButtonDown2 = false, upButtonDown3 = false, upButtonDown4 = false, currentUpButtonDown = false;
         public bool downButtonDown1 = false, downButtonDown2 = false, downButtonDown3 = false, downButtonDown4 = false, currentDownButtonDown = false;
         public bool player1Chosen = false, player2Chosen = false, player3Chosen = false, player4Chosen = false;
         public bool allPlayersChose = false;
+
+        public bool singlePlayer = false;
+        public bool enterUp = false;
 
         int buttonLowerLimit = 0, buttonUpperLimit = 4;
 
@@ -58,8 +59,81 @@ namespace F.U.E.L
                 buttonUpperLimit = buttons.Count;
             }
 
+            #region Single Player Keyboard Controls
+            if (singlePlayer)
+            {
+                if(keyboard.IsKeyDown(Keys.W) && !upButtonDown1)
+                {
+                    int temp = 0;
+                    upButtonDown1 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((((i - 1) % buttonUpperLimit) + buttonUpperLimit) % buttonUpperLimit);
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+                        }
+                    }
+                }
+
+                if (keyboard.IsKeyUp(Keys.W) && upButtonDown1)
+                {
+                    upButtonDown1 = false;
+                }
+
+                if (keyboard.IsKeyDown(Keys.S) && !downButtonDown1)
+                {
+                    int temp = 0;
+                    downButtonDown1 = true;
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getSelected())
+                        {
+                            buttons[i].setSelected(false);
+                            int position = Math.Abs((i + 1) % buttonUpperLimit);
+                            temp = buttons[position].getID();
+                        }
+                    }
+
+                    for (int i = buttonLowerLimit; i < buttonUpperLimit; ++i)
+                    {
+                        if (buttons[i].getID() == temp)
+                        {
+                            buttons[i].setSelected(true);
+                        }
+                    }
+                }
+
+                if (keyboard.IsKeyUp(Keys.S) && downButtonDown1)
+                {
+                    downButtonDown1 = false;
+                }
+
+                if (keyboard.IsKeyUp(Keys.Enter))
+                    enterUp = true;
+
+                if (keyboard.IsKeyDown(Keys.Enter) && this.title.Equals("Character Menu") && enterUp)
+                {
+                    player1Chosen = true;
+                    player2Chosen = true;
+                    player3Chosen = true;
+                    player4Chosen = true;
+                    allPlayersChose = true;
+                }
+            }
+            #endregion
+
             #region Gamepad 1 Support
-            if (playerIndex == 1 && !player1Chosen)
+            if (!singlePlayer && playerIndex == 1 && !player1Chosen)
             {
                 if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown1))
                 {
@@ -118,12 +192,15 @@ namespace F.U.E.L
                 }
 
                 if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
+                {
                     player1Chosen = true;
+                    Game1.StartButtonDown1 = true;
+                }
             }
             #endregion
 
             #region Gamepad 2 Support
-            if (playerIndex == 2 && !player2Chosen)
+            if (!singlePlayer && playerIndex == 2 && !player2Chosen)
             {
                 if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown2))
                 {
@@ -186,12 +263,15 @@ namespace F.U.E.L
                 }
 
                 if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
+                {
                     player2Chosen = true;
+                    Game1.StartButtonDown2 = true;
+                }
             }
             #endregion
 
             #region Gamepad 3 Support
-            if (playerIndex == 3 && !player3Chosen)
+            if (!singlePlayer && playerIndex == 3 && !player3Chosen)
             {
                 if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown3))
                 {
@@ -254,12 +334,15 @@ namespace F.U.E.L
                 }
 
                 if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
+                {
                     player3Chosen = true;
+                    Game1.StartButtonDown3 = true;
+                }
             }
             #endregion
 
             #region Gamepad 4 Support
-            if (playerIndex == 4 && !player4Chosen)
+            if (!singlePlayer && playerIndex == 4 && !player4Chosen)
             {
                 if ((gamepad.IsButtonDown(Buttons.DPadUp) && !upButtonDown4))
                 {
@@ -322,11 +405,14 @@ namespace F.U.E.L
                 }
 
                 if (gamepad.IsButtonDown(Buttons.Start) && this.title.Equals("Character Menu"))
+                {
                     player4Chosen = true;
+                    Game1.StartButtonDown4 = true;
+                }
             }
             #endregion
 
-            if ((player1Chosen) && (player2Chosen) && (player3Chosen) && (player4Chosen))
+            if (this.title.Equals("Character Menu") && player1Chosen && player2Chosen && player3Chosen && player4Chosen)
                 allPlayersChose = true;
 
             base.Update(keyboard, gamepad, playerIndex);
