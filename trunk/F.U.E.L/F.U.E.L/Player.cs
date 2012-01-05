@@ -155,16 +155,13 @@ namespace F.U.E.L
 
         public override void Update(GameTime gameTime, List<Object> colliders, Vector3 cameraTarget, List<Waypoint> waypointList)
         {
-            
-            #region Keyboard Controls
-            //Hack to get it working on a computer
-            KeyboardControls(gameTime, colliders, cameraTarget);
+            #region Toggle which control scheme to use automagically
+            if (Game1.useGamepad)
+                GamePadControls(gameTime, colliders, cameraTarget);
+            else
+                KeyboardControls(gameTime, colliders, cameraTarget);
             #endregion
 
-            #region Gamepad Support
-            //GamePadControls(gameTime, colliders, cameraTarget);
-            #endregion
-            
             foreach (Weapon w in weapons)
             {
                 w.Update(gameTime, colliders, cameraTarget);
@@ -197,6 +194,7 @@ namespace F.U.E.L
             {
                 if (this.isAlive)
                 {
+                    /* DEBUGGIGN TOOL ONLY */
                     if (k.IsKeyDown(Keys.O))
                         Game1.endGameSwarm = true;
                     /*
@@ -337,6 +335,10 @@ namespace F.U.E.L
             GamePadState gp = GamePad.GetState(playerIndex);
             if (this.isAlive)
             {
+                /* DEBUGGING ONLY */
+                if (gp.IsButtonDown(Buttons.Back))
+                    Game1.endGameSwarm = true;
+
                 if (!(gp.ThumbSticks.Right.X == 0 && gp.ThumbSticks.Right.Y == 0))
                 {
                     lookDirection = new Vector3(gp.ThumbSticks.Right.X, 0, -gp.ThumbSticks.Right.Y);

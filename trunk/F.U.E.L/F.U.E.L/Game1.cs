@@ -93,8 +93,8 @@ namespace F.U.E.L
 
         private int currentEnemyUpdates = 0, numEnemyUpdatesPerFrame = 0;
 
-        public static int endGameTimeLimit = 60000, endGameTimer = 60000;
-        public static bool endGameSwarm = false;
+        public static int endGameTimeLimit = 60000, endGameTimer = 60000; // These equate to 1 minute
+        public static bool endGameSwarm = false, useGamepad = false;
 
         public Game1()
         {
@@ -410,6 +410,11 @@ namespace F.U.E.L
 
         protected override void Update(GameTime gameTime)
         {
+            if (gamepad1.IsConnected)
+                useGamepad = true;
+            else
+                useGamepad = false;
+
             // Few variables used for scheduling the enemy updates
             numEnemyUpdatesPerFrame = enemyList.Count / 2;
             currentEnemyUpdates = 0;
@@ -750,6 +755,8 @@ namespace F.U.E.L
                         inPauseMenu = false;
                         inWinMenu = false;
                         inLoseMenu = false;
+                        menuManager.Exit();
+                        menuManager.Show("Main Menu");
                     }
                 }
                 else if (keyboard.IsKeyUp(Keys.Enter))
@@ -846,6 +853,8 @@ namespace F.U.E.L
                             inPauseMenu = false;
                             inWinMenu = false;
                             inLoseMenu = false;
+                            menuManager.Exit();
+                            menuManager.Show("Main Menu");
                         }
                     }
                     else if (gamepad1.IsButtonUp(Buttons.A))
@@ -943,6 +952,8 @@ namespace F.U.E.L
                             inPauseMenu = false;
                             inWinMenu = false;
                             inLoseMenu = false;
+                            menuManager.Exit();
+                            menuManager.Show("Main Menu");
                         }
                     }
                     else if (gamepad2.IsButtonUp(Buttons.A))
@@ -1040,6 +1051,8 @@ namespace F.U.E.L
                             inPauseMenu = false;
                             inWinMenu = false;
                             inLoseMenu = false;
+                            menuManager.Exit();
+                            menuManager.Show("Main Menu");
                         }
                     }
                     else if (gamepad3.IsButtonUp(Buttons.A))
@@ -1137,6 +1150,8 @@ namespace F.U.E.L
                             inPauseMenu = false;
                             inWinMenu = false;
                             inLoseMenu = false;
+                            menuManager.Exit();
+                            menuManager.Show("Main Menu");
                         }
                     }
                     else if (gamepad4.IsButtonUp(Buttons.A))
